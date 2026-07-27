@@ -1,0 +1,662 @@
+{
+  "url": "https://www.clubraia.com/",
+  "title": "Raia | Jakarta's best Nightlife Experience",
+  "inner": {
+    "w": 390,
+    "h": 844
+  },
+  "classes": "home",
+  "selectors": {
+    "header": null,
+    ".header": {
+      "tag": "DIV",
+      "className": "header",
+      "text": "Home Close Close Close + all about contact",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 30
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "30px 0px 0px",
+        "margin": "0px",
+        "width": "390px",
+        "height": "30px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "814px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    "#loading": {
+      "tag": "DIV",
+      "className": "loading",
+      "text": "Club Raia Best Nightlife Experience Click to Explore",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgb(11, 11, 13)",
+        "background": "rgb(11, 11, 13) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "390px",
+        "height": "0px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "hidden",
+        "clipPath": "none"
+      }
+    },
+    ".loading": {
+      "tag": "DIV",
+      "className": "loading",
+      "text": "Club Raia Best Nightlife Experience Click to Explore",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgb(11, 11, 13)",
+        "background": "rgb(11, 11, 13) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "390px",
+        "height": "0px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "hidden",
+        "clipPath": "none"
+      }
+    },
+    ".logo": {
+      "tag": "A",
+      "className": "logo internal-link",
+      "text": "",
+      "rect": {
+        "x": 172.5,
+        "y": 30,
+        "w": 45,
+        "h": 73.75
+      },
+      "styles": {
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "19.8px",
+        "letterSpacing": "3px",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "uppercase",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "45px",
+        "height": "73.75px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "absolute",
+        "top": "30px",
+        "right": "150px",
+        "bottom": "-73.75px",
+        "left": "195px",
+        "zIndex": "999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -22.5, 0)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    ".slide-title": null,
+    ".mask": null,
+    ".image-mask": null,
+    ".slide": null,
+    ".slide.active": null,
+    ".page-dots": null,
+    ".nav-item.next": null,
+    ".nav-item.prev": null
+  },
+  "assets": {
+    "images": [
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide06.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide01.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide02.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide04.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide05.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide07.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/back.svg",
+        "alt": "Back to Home",
+        "cls": "",
+        "w": 67,
+        "h": 23,
+        "rect": {
+          "x": -11,
+          "y": 54.140625,
+          "w": 40,
+          "h": 13.71875
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/logo.svg",
+        "alt": "",
+        "cls": "",
+        "w": 49,
+        "h": 74,
+        "rect": {
+          "x": 172.5,
+          "y": 30,
+          "w": 45,
+          "h": 67.953125
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 344.5,
+          "y": 90.9765625,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 344.5,
+          "y": 90.9765625,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 344.5,
+          "y": 90.9765625,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/logo.svg",
+        "alt": "",
+        "cls": "",
+        "w": 49,
+        "h": 74,
+        "rect": {
+          "x": 170,
+          "y": 31.059375762939453,
+          "w": 50,
+          "h": 75.5
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide01.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide02.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide04.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide05.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide06.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide07.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/load.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/black.png",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/arrowleft.svg",
+        "alt": "",
+        "cls": "",
+        "w": 12,
+        "h": 23,
+        "rect": {
+          "x": 39.5,
+          "y": 677.5,
+          "w": 12,
+          "h": 23
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/arrowright.svg",
+        "alt": "",
+        "cls": "",
+        "w": 13,
+        "h": 23,
+        "rect": {
+          "x": 337.5,
+          "y": 677.5,
+          "w": 13,
+          "h": 23
+        }
+      }
+    ],
+    "bg": [
+      {
+        "el": "DIV.background",
+        "bg": "url(\"https://www.clubraia.com/assets/img/general/about.jpg\")"
+      },
+      {
+        "el": "DIV.background",
+        "bg": "url(\"https://www.clubraia.com/assets/img/general/contact.jpg\")"
+      },
+      {
+        "el": "DIV.all-vignette",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 96%)"
+      },
+      {
+        "el": "DIV.header-overlay",
+        "bg": "linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%)"
+      },
+      {
+        "el": "DIV.canvas-overlay-vignette",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 96%)"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide01.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide02.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide04.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide05.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide07.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide08.jpg\")"
+      },
+      {
+        "el": "DIV.vignette-overlay",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 100%)"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide01.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide02.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide04.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide05.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide07.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide08.jpg\")"
+      }
+    ]
+  },
+  "links": [
+    {
+      "text": "Fléava.",
+      "href": "https://fleava.com/",
+      "cls": ""
+    },
+    {
+      "text": "info@clubraia.com",
+      "href": "mailto:info@clubraia.com",
+      "cls": ""
+    },
+    {
+      "text": "+62 811-8691-223",
+      "href": "https://wa.me/628118691223",
+      "cls": ""
+    },
+    {
+      "text": "View on Google Maps",
+      "href": "https://goo.gl/maps/nsRxcQkbHRbKsaG29",
+      "cls": ""
+    },
+    {
+      "text": "Home",
+      "href": "https://www.clubraia.com/",
+      "cls": "internal-link"
+    },
+    {
+      "text": "The Great Gatsby",
+      "href": "https://www.clubraia.com/lounge",
+      "cls": "internal-link"
+    },
+    {
+      "text": "The Suites",
+      "href": "https://www.clubraia.com/suites",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Concept",
+      "href": "https://www.clubraia.com/concept",
+      "cls": "internal-link"
+    },
+    {
+      "text": "F&B",
+      "href": "https://www.clubraia.com/fnb",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Events",
+      "href": "https://www.clubraia.com/events",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Home",
+      "href": "https://www.clubraia.com/",
+      "cls": "global-close hide internal-link"
+    },
+    {
+      "text": "",
+      "href": "https://www.clubraia.com/",
+      "cls": "logo internal-link"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "about-close main-close"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "contact-close main-close"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "all-close main-close"
+    },
+    {
+      "text": "+ all",
+      "href": "",
+      "cls": "all-link main-link"
+    },
+    {
+      "text": "about",
+      "href": "",
+      "cls": "about-link main-link"
+    },
+    {
+      "text": "contact",
+      "href": "",
+      "cls": "main-link"
+    },
+    {
+      "text": "Click to Explore",
+      "href": "",
+      "cls": "explore"
+    },
+    {
+      "text": "The Great Gatsby Explore",
+      "href": "https://www.clubraia.com/lounge",
+      "cls": "slider-content internal-link active"
+    }
+  ]
+}

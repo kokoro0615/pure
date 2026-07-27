@@ -1,0 +1,115 @@
+- generic [active] [ref=e1] [box=0,0,1440,1000]:
+  - generic [box=0,0,1440,1000]:
+    - generic [box=144,0,1152,0]:
+      - generic [box=144,100,1152,1365]:
+        - generic [box=144,400,1152,94]:
+          - generic [box=159,400,1137,94]:
+            - link "Home" [box=159,400,1137,94]:
+              - /url: /
+        - generic [box=144,494,1152,94]:
+          - generic [box=159,494,1137,94]:
+            - link "The Great Gatsby" [box=159,494,1137,94]:
+              - /url: /lounge
+        - generic [box=144,588,1152,94]:
+          - generic [box=159,588,1137,94]:
+            - link "The Suites" [box=159,588,1137,94]:
+              - /url: /suites
+        - generic [box=144,682,1152,94]:
+          - generic [box=159,682,1137,94]:
+            - link "Concept" [box=159,682,1137,94]:
+              - /url: /concept
+        - generic [box=144,776,1152,94]:
+          - generic [box=159,776,1137,94]:
+            - link "F&B" [box=159,776,1137,94]:
+              - /url: /fnb
+        - generic [box=144,871,1152,94]:
+          - generic [box=159,871,1137,94]:
+            - link "Events" [box=159,871,1137,94]:
+              - /url: /events
+  - generic [ref=e2] [box=0,0,1440,30]:
+    - generic [box=0,30,1440,0]:
+      - link "Back to Home Home" [box=45,58,125,20]:
+        - /url: /
+        - img "Back to Home" [box=45,59,55,19]
+        - generic [box=45,58,125,20]: Home
+      - link [ref=e3] [cursor=pointer] [box=695,30,50,81]:
+        - /url: /
+      - generic [ref=e5] [box=720,30,576,60]:
+        - generic [box=1122,79,174,22]:
+          - text: Close
+          - img "Close" [box=1288,92,0,0]
+        - generic [box=1122,79,174,22]:
+          - text: Close
+          - img "Close" [box=1288,92,0,0]
+        - generic [box=1122,79,174,22]:
+          - text: Close
+          - img "Close" [box=1288,92,0,0]
+        - generic [ref=e103] [cursor=pointer] [box=1031,50,43,20]: + all
+        - generic [ref=e104] [cursor=pointer] [box=1124,50,52,20]: about
+        - generic [ref=e6] [cursor=pointer] [box=1225,50,71,20]: contact
+  - generic [ref=e12] [cursor=pointer] [box=491,0,458,145]:
+    - heading "C l u b R a i a" [level=1] [ref=e13] [box=491,0,458,60]:
+      - generic [ref=e14] [box=491,60,56,60]: C
+      - generic [ref=e15] [box=547,60,50,60]: l
+      - generic [ref=e16] [box=597,60,56,60]: u
+      - generic [ref=e17] [box=653,60,52,60]: b
+      - generic [ref=e18] [box=748,60,54,60]: R
+      - generic [ref=e19] [box=801,60,53,60]: a
+      - generic [ref=e20] [box=854,60,42,60]: i
+      - generic [ref=e21] [box=896,60,53,60]: a
+    - heading "Best Nightlife Experience" [level=3] [ref=e22] [box=491,112,458,216]
+    - generic [ref=e23] [box=610,130,220,38]: Click to Explore
+  - generic [ref=e26] [box=0,0,1440,1000]:
+    - list [ref=e42] [box=1116,892,180,8]:
+      - listitem "Page dot 1" [ref=e43] [cursor=pointer] [box=1126,892,8,8]:
+        - generic [box=1124,892,8,10]: "01"
+      - listitem "Page dot 2" [ref=e44] [cursor=pointer] [box=1152,892,8,8]:
+        - generic [box=1142,892,8,10]: "02"
+      - listitem "Page dot 3" [ref=e45] [cursor=pointer] [box=1178,892,8,8]:
+        - generic [box=1168,892,8,10]: "03"
+      - listitem "Page dot 4" [ref=e46] [cursor=pointer] [box=1204,892,8,8]:
+        - generic [box=1194,892,8,10]: "04"
+      - listitem "Page dot 5" [ref=e47] [cursor=pointer] [box=1230,892,8,8]:
+        - generic [box=1220,892,8,10]: "05"
+      - listitem "Page dot 6" [ref=e48] [cursor=pointer] [box=1256,892,8,8]:
+        - generic [box=1246,892,8,10]: "06"
+    - generic [box=80,0,1280,0]:
+      - generic [box=130,0,1180,0]:
+        - link [ref=e76] [cursor=pointer] [box=320,476,800,162]:
+          - /url: lounge
+          - heading "T h e G r e a t G a t s b y" [level=2] [ref=e77] [box=320,476,800,60]:
+            - generic [ref=e78] [box=363,476,47,60]: T
+            - generic [ref=e79] [box=410,476,55,60]: h
+            - generic [ref=e80] [box=465,476,47,60]: e
+            - generic [ref=e81] [box=544,476,52,60]: G
+            - generic [ref=e82] [box=595,476,49,60]: r
+            - generic [ref=e83] [box=644,476,47,60]: e
+            - generic [ref=e84] [box=691,476,48,60]: a
+            - generic [ref=e85] [box=739,476,47,60]: t
+            - generic [ref=e86] [box=818,476,52,60]: G
+            - generic [ref=e87] [box=870,476,48,60]: a
+            - generic [ref=e88] [box=918,476,47,60]: t
+            - generic [ref=e89] [box=965,476,43,60]: s
+            - generic [ref=e90] [box=1008,476,47,60]: b
+            - generic [ref=e91] [box=1056,476,46,60]: "y"
+          - heading "Explore" [level=6] [ref=e92] [box=669,606,103,32]
+        - link "The Suites Explore" [box=320,476,800,162]:
+          - /url: suites
+          - heading "The Suites" [level=2] [box=320,486,800,60]
+          - heading "Explore" [level=6] [box=669,616,103,32]
+        - link "Concept Explore" [box=320,476,800,162]:
+          - /url: concept
+          - heading "Concept" [level=2] [box=320,486,800,60]
+          - heading "Explore" [level=6] [box=669,616,103,32]
+        - link "F&B Explore" [box=320,476,800,162]:
+          - /url: fnb
+          - heading "F&B" [level=2] [box=320,486,800,60]
+          - heading "Explore" [level=6] [box=669,616,103,32]
+        - link "Events Explore" [box=320,476,800,162]:
+          - /url: events
+          - heading "Events" [level=2] [box=320,486,800,60]
+          - heading "Explore" [level=6] [box=669,616,103,32]
+        - link "About Raia Explore" [box=320,476,800,162]:
+          - /url: "#"
+          - heading "About Raia" [level=2] [box=320,486,800,60]
+          - heading "Explore" [level=6] [box=669,616,103,32]

@@ -1,0 +1,455 @@
+.panel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 90;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    width 1s cubic-bezier(0.87, 0, 0.13, 1),
+    visibility 0s linear 1.05s;
+}
+
+.panel.open {
+  width: 100%;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    width 1s cubic-bezier(0.87, 0, 0.13, 1) 0.3s,
+    visibility 0s linear 0s;
+}
+
+.about {
+  color: #f8f3e7;
+  background: oklch(14% 0.025 255deg);
+}
+
+.contact {
+  color: #f8f3e7;
+  background: #13171e;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+
+.imageWrapper {
+  position: absolute;
+  top: calc(50% + 50px);
+  left: 0;
+  width: 50%;
+  height: calc(100% - 200px);
+  max-height: 560px;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+
+.about .imageWrapper::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent 68%,
+    oklch(14% 0.025 255deg / 78%) 100%
+  );
+  pointer-events: none;
+}
+
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(2);
+  transform-origin: center;
+  transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.about .backgroundImage {
+  object-position: 61% 50%;
+}
+
+.open .backgroundImage {
+  transform: scale(1);
+  transition-delay: 0.5s;
+}
+
+.text {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  z-index: 2;
+  width: 50%;
+  padding: 0 80px;
+}
+
+.about .text {
+  top: clamp(120px, 22vh, 200px);
+}
+
+.title {
+  height: 60px;
+  margin: 0 0 80px;
+  overflow: hidden;
+  color: #f8f3e7;
+  font-family: var(--font-playfair), "Playfair Display", serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: 24px;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.about .title {
+  width: calc(100% + 160px);
+  margin-bottom: 44px;
+  margin-left: -160px;
+  font-size: clamp(40px, 3.9vw, 56px);
+  letter-spacing: clamp(14px, 1.67vw, 24px);
+}
+
+.contact .title {
+  color: #c39b54;
+  font-size: 50px;
+}
+
+.titleCharacter,
+.titleSpace {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.65s cubic-bezier(0.77, 0, 0.18, 1);
+  transition-delay: calc((var(--character-index) * 0.02s));
+}
+
+.titleSpace {
+  width: 0.36em;
+}
+
+.open .titleCharacter,
+.open .titleSpace {
+  transform: translateY(0);
+  transition-duration: 1s;
+  transition-delay: calc(0.7s + (var(--character-index) * 0.03s));
+}
+
+.copy {
+  color: #f8f3e7;
+  font-family: var(--font-lora), "Lora", serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  -webkit-mask-image: linear-gradient(170deg, #000 -40%, transparent 0%);
+  mask-image: linear-gradient(170deg, #000 -40%, transparent 0%);
+  transition:
+    opacity 0.75s ease,
+    -webkit-mask-image 1s cubic-bezier(0.19, 1, 0.22, 1),
+    mask-image 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.open .copy {
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(170deg, #000 60%, transparent 120%);
+  mask-image: linear-gradient(170deg, #000 60%, transparent 120%);
+  transition-delay: 0.7s;
+}
+
+.copy p {
+  margin-top: 0;
+}
+
+.aboutCopy {
+  max-width: 520px;
+  margin-bottom: 16px;
+  font-family:
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo",
+    sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: 0.045em;
+}
+
+.aboutFacts {
+  display: flex;
+  max-width: 520px;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 18px;
+  color: oklch(82% 0.07 235deg);
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.aboutFacts span + span {
+  padding-left: 0;
+}
+
+.aboutFacts span + span::before {
+  display: none;
+}
+
+.aboutStatement {
+  max-width: 520px;
+  margin-bottom: 22px;
+  color: #f8f3e7;
+  font-family: var(--font-playfair), "Playfair Display", serif;
+  font-size: clamp(25px, 2.05vw, 31px);
+  line-height: 1.08;
+  letter-spacing: 0.015em;
+  text-wrap: balance;
+  text-transform: uppercase;
+}
+
+.aboutCopyEnglish {
+  max-width: 520px;
+  margin-bottom: 22px;
+  color: rgb(248 243 231 / 67%);
+  font-size: 13px;
+  line-height: 1.7;
+  letter-spacing: 0.025em;
+}
+
+.copyright {
+  max-width: 450px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  line-height: 34px;
+}
+
+.copyright a,
+.contactDetails a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.contact .copy {
+  max-width: 350px;
+}
+
+.address {
+  margin-bottom: 36px;
+}
+
+.contactDetails {
+  margin-bottom: 0;
+}
+
+.copy a {
+  transition: color 250ms ease;
+}
+
+.copy a:hover,
+.copy a:focus-visible {
+  color: #c39b54;
+}
+
+.copy a:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (max-width: 812px) {
+  .panel {
+    overflow: hidden;
+  }
+
+  .canvas {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .imageWrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100%;
+    max-height: none;
+    opacity: 0.2;
+    transform: none;
+  }
+
+  .about .imageWrapper::after {
+    background: linear-gradient(
+      180deg,
+      oklch(14% 0.025 255deg / 48%) 0%,
+      oklch(14% 0.025 255deg / 62%) 54%,
+      oklch(14% 0.025 255deg / 97%) 100%
+    );
+  }
+
+  .about .imageWrapper {
+    opacity: 1;
+  }
+
+  .about .backgroundImage {
+    object-position: 68% 50%;
+    opacity: 0.38;
+  }
+
+  .text {
+    top: 200px;
+    left: 0;
+    width: 100%;
+    min-height: calc(100% - 200px);
+    padding: 0 10% 60px;
+  }
+
+  .title,
+  .about .title,
+  .contact .title {
+    width: auto;
+    height: auto;
+    min-height: 45px;
+    margin: 0 0 30px;
+    padding: 0 5%;
+    overflow: visible;
+    font-size: 28px;
+    line-height: 1.6;
+    letter-spacing: 15px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .titleCharacter,
+  .titleSpace {
+    transform: translateY(70%);
+    opacity: 0;
+    transition:
+      transform 0.6s cubic-bezier(0.77, 0, 0.18, 1),
+      opacity 0.45s ease;
+  }
+
+  .contact .title {
+    max-width: none;
+    margin-right: auto;
+    margin-left: auto;
+    letter-spacing: 20px;
+  }
+
+  .about .title {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0;
+    font-size: 25px;
+    letter-spacing: 10px;
+    white-space: nowrap;
+  }
+
+  .contact .titleCharacter:last-child {
+    display: block;
+  }
+
+  .open .titleCharacter,
+  .open .titleSpace {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .copy,
+  .contact .copy,
+  .aboutCopy,
+  .aboutCopyEnglish,
+  .aboutFacts,
+  .aboutStatement,
+  .copyright {
+    width: 100%;
+    max-width: none;
+  }
+
+  .aboutFacts {
+    justify-content: center;
+    margin-bottom: 22px;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  .aboutFacts span + span {
+    padding-left: 0;
+  }
+
+  .aboutStatement {
+    margin-bottom: 22px;
+    font-size: clamp(25px, 8vw, 32px);
+    text-align: center;
+  }
+
+  .aboutCopy {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .aboutCopyEnglish {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .about .copyright {
+    padding-bottom: env(safe-area-inset-bottom);
+    line-height: 1.6;
+  }
+
+  .contact .copy {
+    font-size: 18px;
+    line-height: 34px;
+    text-align: center;
+  }
+
+  .address {
+    margin-bottom: 36px;
+  }
+}
+
+@media (min-width: 813px) and (max-height: 700px) {
+  .about .canvas {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .about .text {
+    padding-bottom: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel.open,
+  .backgroundImage,
+  .open .backgroundImage,
+  .titleCharacter,
+  .titleSpace,
+  .open .titleCharacter,
+  .open .titleSpace,
+  .copy,
+  .open .copy,
+  .copy a {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+
+  .backgroundImage,
+  .open .backgroundImage {
+    transform: scale(1);
+  }
+}

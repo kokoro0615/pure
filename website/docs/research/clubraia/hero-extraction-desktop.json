@@ -1,0 +1,1416 @@
+{
+  "url": "https://www.clubraia.com/",
+  "title": "Raia | Jakarta's best Nightlife Experience",
+  "inner": {
+    "w": 1440,
+    "h": 900
+  },
+  "selectors": {
+    "body": {
+      "tag": "BODY",
+      "className": "home",
+      "text": "About Raia Located in ELYSEE Mall at the heart of SCBD Jakarta, we are presenting to you the most Elegant KTV and Lounge for the best lifestyle experience. Strong lines, bold contr",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 900
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgb(11, 11, 13)",
+        "background": "rgb(11, 11, 13) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "1440px",
+        "height": "900px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "static",
+        "top": "auto",
+        "right": "auto",
+        "bottom": "auto",
+        "left": "auto",
+        "zIndex": "auto",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "hidden",
+        "clipPath": "none"
+      }
+    },
+    "header": null,
+    ".header": {
+      "tag": "DIV",
+      "className": "header",
+      "text": "Home Close Close Close + all about contact",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 30
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "30px 0px 0px",
+        "margin": "0px",
+        "width": "1440px",
+        "height": "30px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "870px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    "#loading": {
+      "tag": "DIV",
+      "className": "loading",
+      "text": "Club Raia Best Nightlife Experience Click to Explore",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgb(11, 11, 13)",
+        "background": "rgb(11, 11, 13) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "1440px",
+        "height": "0px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "hidden",
+        "clipPath": "none"
+      }
+    },
+    ".loading": {
+      "tag": "DIV",
+      "className": "loading",
+      "text": "Club Raia Best Nightlife Experience Click to Explore",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgb(11, 11, 13)",
+        "background": "rgb(11, 11, 13) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "1440px",
+        "height": "0px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px",
+        "zIndex": "99",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "hidden",
+        "clipPath": "none"
+      }
+    },
+    ".logo": {
+      "tag": "A",
+      "className": "logo internal-link",
+      "text": "",
+      "rect": {
+        "x": 695,
+        "y": 30,
+        "w": 50,
+        "h": 81.296875
+      },
+      "styles": {
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "19.8px",
+        "letterSpacing": "3px",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "uppercase",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "50px",
+        "height": "81.2969px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "absolute",
+        "top": "30px",
+        "right": "670px",
+        "bottom": "-81.2969px",
+        "left": "720px",
+        "zIndex": "auto",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -25, 0)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    ".bg-track": null,
+    ".mask-track": null,
+    ".progress-line": null,
+    ".progress-line-mobile": null,
+    ".progress-bar": null,
+    ".page-dots": null,
+    ".slider-number": {
+      "tag": "DIV",
+      "className": "slider-number",
+      "text": "01 06",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "100px",
+        "height": "auto",
+        "display": "none",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "position": "absolute",
+        "top": "auto",
+        "right": "auto",
+        "bottom": "5%",
+        "left": "10%",
+        "zIndex": "3",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    ".slider-navigation": {
+      "tag": "DIV",
+      "className": "slider-navigation",
+      "text": "",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 0
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "1440px",
+        "height": "0px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "static",
+        "top": "auto",
+        "right": "auto",
+        "bottom": "auto",
+        "left": "auto",
+        "zIndex": "auto",
+        "opacity": "1",
+        "transform": "none",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    ".slider-button-next": null,
+    ".slider-button-prev": null
+  },
+  "titleLinks": [
+    {
+      "tag": "A",
+      "className": "explore",
+      "text": "Click to Explore",
+      "rect": {
+        "x": 610.125,
+        "y": 113,
+        "w": 219.75,
+        "h": 31.59375
+      },
+      "styles": {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "fontFamily": "\"Open Sans\", sans-serif",
+        "lineHeight": "21.6px",
+        "letterSpacing": "7px",
+        "color": "rgb(255, 255, 255)",
+        "textTransform": "uppercase",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px 0px 10px 3px",
+        "margin": "0px",
+        "width": "219.75px",
+        "height": "31.5938px",
+        "display": "inline-block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "relative",
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px",
+        "zIndex": "auto",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content internal-link active",
+      "text": "The Great Gatsby Explore",
+      "rect": {
+        "x": 320,
+        "y": 416.76092529296875,
+        "w": 800,
+        "h": 221.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "221.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-671.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -33.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content internal-link",
+      "text": "The Suites Explore",
+      "rect": {
+        "x": 320,
+        "y": 425.76092529296875,
+        "w": 800,
+        "h": 161.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "161.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-611.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -24.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content internal-link",
+      "text": "Concept Explore",
+      "rect": {
+        "x": 320,
+        "y": 425.76092529296875,
+        "w": 800,
+        "h": 161.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "161.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-611.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -24.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content internal-link",
+      "text": "F&B Explore",
+      "rect": {
+        "x": 320,
+        "y": 425.76092529296875,
+        "w": 800,
+        "h": 161.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "161.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-611.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -24.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content internal-link",
+      "text": "Events Explore",
+      "rect": {
+        "x": 320,
+        "y": 425.76092529296875,
+        "w": 800,
+        "h": 161.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "161.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-611.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -24.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    },
+    {
+      "tag": "A",
+      "className": "slider-content",
+      "text": "About Raia Explore",
+      "rect": {
+        "x": 320,
+        "y": 425.76092529296875,
+        "w": 800,
+        "h": 161.59375
+      },
+      "styles": {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "fontFamily": "Lora, serif",
+        "lineHeight": "25.2px",
+        "letterSpacing": "normal",
+        "color": "rgb(248, 243, 231)",
+        "textTransform": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "padding": "0px",
+        "margin": "0px",
+        "width": "800px",
+        "height": "161.594px",
+        "display": "block",
+        "justifyContent": "normal",
+        "alignItems": "normal",
+        "position": "fixed",
+        "top": "450px",
+        "right": "-210px",
+        "bottom": "-611.594px",
+        "left": "590px",
+        "zIndex": "9999",
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, -400, -24.2391)",
+        "transition": "all",
+        "objectFit": "fill",
+        "objectPosition": "50% 50%",
+        "mixBlendMode": "normal",
+        "filter": "none",
+        "overflow": "visible",
+        "clipPath": "none"
+      }
+    }
+  ],
+  "text": {
+    "gatsby": [
+      {
+        "tag": "SPAN",
+        "className": "page-link-title",
+        "text": "The Great Gatsby",
+        "rect": {
+          "x": 357.421875,
+          "y": 510.1875,
+          "w": 740.15625,
+          "h": 72
+        },
+        "styles": {
+          "fontSize": "54px",
+          "fontWeight": "400",
+          "fontFamily": "\"Playfair Display\", serif",
+          "lineHeight": "124.2px",
+          "letterSpacing": "15px",
+          "color": "rgba(255, 255, 255, 0.3)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px",
+          "margin": "0px",
+          "width": "auto",
+          "height": "auto",
+          "display": "inline",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "static",
+          "top": "auto",
+          "right": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      }
+    ],
+    "explore": [
+      {
+        "tag": "H6",
+        "className": "slider-link",
+        "text": "Explore",
+        "rect": {
+          "x": 668.75,
+          "y": 606.7609252929688,
+          "w": 102.5,
+          "h": 31.59375
+        },
+        "styles": {
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "fontFamily": "\"Open Sans\"",
+          "lineHeight": "21.6px",
+          "letterSpacing": "7px",
+          "color": "rgb(255, 255, 255)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px 0px 10px 3px",
+          "margin": "70px 0px 0px",
+          "width": "102.5px",
+          "height": "31.5938px",
+          "display": "inline-block",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "relative",
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px",
+          "zIndex": "auto",
+          "opacity": "1",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      },
+      {
+        "tag": "H6",
+        "className": "slider-link",
+        "text": "Explore",
+        "rect": {
+          "x": 668.75,
+          "y": 565.7609252929688,
+          "w": 102.5,
+          "h": 31.59375
+        },
+        "styles": {
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "fontFamily": "\"Open Sans\"",
+          "lineHeight": "21.6px",
+          "letterSpacing": "7px",
+          "color": "rgb(255, 255, 255)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px 0px 10px 3px",
+          "margin": "70px 0px 0px",
+          "width": "102.5px",
+          "height": "31.5938px",
+          "display": "inline-block",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "relative",
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px",
+          "zIndex": "auto",
+          "opacity": "0",
+          "transform": "matrix(1, 0, 0, 1, 0, 10)",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      },
+      {
+        "tag": "H6",
+        "className": "slider-link",
+        "text": "Explore",
+        "rect": {
+          "x": 668.75,
+          "y": 565.7609252929688,
+          "w": 102.5,
+          "h": 31.59375
+        },
+        "styles": {
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "fontFamily": "\"Open Sans\"",
+          "lineHeight": "21.6px",
+          "letterSpacing": "7px",
+          "color": "rgb(255, 255, 255)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px 0px 10px 3px",
+          "margin": "70px 0px 0px",
+          "width": "102.5px",
+          "height": "31.5938px",
+          "display": "inline-block",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "relative",
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px",
+          "zIndex": "auto",
+          "opacity": "0",
+          "transform": "matrix(1, 0, 0, 1, 0, 10)",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      },
+      {
+        "tag": "H6",
+        "className": "slider-link",
+        "text": "Explore",
+        "rect": {
+          "x": 668.75,
+          "y": 565.7609252929688,
+          "w": 102.5,
+          "h": 31.59375
+        },
+        "styles": {
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "fontFamily": "\"Open Sans\"",
+          "lineHeight": "21.6px",
+          "letterSpacing": "7px",
+          "color": "rgb(255, 255, 255)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px 0px 10px 3px",
+          "margin": "70px 0px 0px",
+          "width": "102.5px",
+          "height": "31.5938px",
+          "display": "inline-block",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "relative",
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px",
+          "zIndex": "auto",
+          "opacity": "0",
+          "transform": "matrix(1, 0, 0, 1, 0, 10)",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      },
+      {
+        "tag": "H6",
+        "className": "slider-link",
+        "text": "Explore",
+        "rect": {
+          "x": 668.75,
+          "y": 565.7609252929688,
+          "w": 102.5,
+          "h": 31.59375
+        },
+        "styles": {
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "fontFamily": "\"Open Sans\"",
+          "lineHeight": "21.6px",
+          "letterSpacing": "7px",
+          "color": "rgb(255, 255, 255)",
+          "textTransform": "uppercase",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+          "padding": "0px 0px 10px 3px",
+          "margin": "70px 0px 0px",
+          "width": "102.5px",
+          "height": "31.5938px",
+          "display": "inline-block",
+          "justifyContent": "normal",
+          "alignItems": "normal",
+          "position": "relative",
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px",
+          "zIndex": "auto",
+          "opacity": "0",
+          "transform": "matrix(1, 0, 0, 1, 0, 10)",
+          "transition": "all",
+          "objectFit": "fill",
+          "objectPosition": "50% 50%",
+          "mixBlendMode": "normal",
+          "filter": "none",
+          "overflow": "visible",
+          "clipPath": "none"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "images": [
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide06.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide01.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide02.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide04.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide05.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide07.jpg",
+        "alt": "",
+        "cls": "content__img",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/back.svg",
+        "alt": "Back to Home",
+        "cls": "",
+        "w": 67,
+        "h": 23,
+        "rect": {
+          "x": 94,
+          "y": 51.453125,
+          "w": 55,
+          "h": 18.875
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/logo.svg",
+        "alt": "",
+        "cls": "",
+        "w": 49,
+        "h": 74,
+        "rect": {
+          "x": 695,
+          "y": 30,
+          "w": 50,
+          "h": 75.5
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 1287.5,
+          "y": 92.09375,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 1287.5,
+          "y": 92.09375,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/close.svg",
+        "alt": "Close",
+        "cls": "",
+        "w": 17,
+        "h": 16,
+        "rect": {
+          "x": 1287.5,
+          "y": 92.09375,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/logo.svg",
+        "alt": "",
+        "cls": "",
+        "w": 49,
+        "h": 74,
+        "rect": {
+          "x": 695,
+          "y": 31.059375762939453,
+          "w": 50,
+          "h": 75.5
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide01.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide02.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide04.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide05.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide06.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/home/slide07.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/load.jpg",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/black.png",
+        "alt": "",
+        "cls": "",
+        "w": 1920,
+        "h": 1279,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/arrowleft.svg",
+        "alt": "",
+        "cls": "",
+        "w": 12,
+        "h": 23,
+        "rect": {
+          "x": 92,
+          "y": 438.5,
+          "w": 12,
+          "h": 23
+        }
+      },
+      {
+        "src": "https://www.clubraia.com/assets/img/general/arrowright.svg",
+        "alt": "",
+        "cls": "",
+        "w": 13,
+        "h": 23,
+        "rect": {
+          "x": 1335,
+          "y": 438.5,
+          "w": 13,
+          "h": 23
+        }
+      }
+    ],
+    "bg": [
+      {
+        "el": "DIV.background",
+        "classes": "background",
+        "bg": "url(\"https://www.clubraia.com/assets/img/general/about.jpg\")"
+      },
+      {
+        "el": "DIV.background",
+        "classes": "background",
+        "bg": "url(\"https://www.clubraia.com/assets/img/general/contact.jpg\")"
+      },
+      {
+        "el": "DIV.all-vignette",
+        "classes": "all-vignette",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 96%)"
+      },
+      {
+        "el": "DIV.header-overlay",
+        "classes": "header-overlay",
+        "bg": "linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%)"
+      },
+      {
+        "el": "DIV.canvas-overlay-vignette",
+        "classes": "canvas-overlay-vignette",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 96%)"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide01.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide02.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide04.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide05.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide07.jpg\")"
+      },
+      {
+        "el": "DIV.background-image",
+        "classes": "background-image",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide08.jpg\")"
+      },
+      {
+        "el": "DIV.vignette-overlay",
+        "classes": "vignette-overlay",
+        "bg": "radial-gradient(circle, rgba(0, 0, 0, 0) 36%, rgb(0, 0, 0) 100%)"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide01.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide02.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide04.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide05.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide07.jpg\")"
+      },
+      {
+        "el": "DIV.background-image-mask",
+        "classes": "background-image-mask",
+        "bg": "url(\"https://www.clubraia.com/assets/img/home/slide08.jpg\")"
+      }
+    ]
+  },
+  "links": [
+    {
+      "text": "Fléava.",
+      "href": "https://fleava.com/",
+      "cls": ""
+    },
+    {
+      "text": "info@clubraia.com",
+      "href": "mailto:info@clubraia.com",
+      "cls": ""
+    },
+    {
+      "text": "+62 811-8691-223",
+      "href": "https://wa.me/628118691223",
+      "cls": ""
+    },
+    {
+      "text": "View on Google Maps",
+      "href": "https://goo.gl/maps/nsRxcQkbHRbKsaG29",
+      "cls": ""
+    },
+    {
+      "text": "Home",
+      "href": "https://www.clubraia.com/",
+      "cls": "internal-link"
+    },
+    {
+      "text": "The Great Gatsby",
+      "href": "https://www.clubraia.com/lounge",
+      "cls": "internal-link"
+    },
+    {
+      "text": "The Suites",
+      "href": "https://www.clubraia.com/suites",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Concept",
+      "href": "https://www.clubraia.com/concept",
+      "cls": "internal-link"
+    },
+    {
+      "text": "F&B",
+      "href": "https://www.clubraia.com/fnb",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Events",
+      "href": "https://www.clubraia.com/events",
+      "cls": "internal-link"
+    },
+    {
+      "text": "Home",
+      "href": "https://www.clubraia.com/",
+      "cls": "global-close hide internal-link"
+    },
+    {
+      "text": "",
+      "href": "https://www.clubraia.com/",
+      "cls": "logo internal-link"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "about-close main-close"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "contact-close main-close"
+    },
+    {
+      "text": "Close",
+      "href": "",
+      "cls": "all-close main-close"
+    },
+    {
+      "text": "+ all",
+      "href": "",
+      "cls": "all-link main-link"
+    },
+    {
+      "text": "about",
+      "href": "",
+      "cls": "about-link main-link"
+    },
+    {
+      "text": "contact",
+      "href": "",
+      "cls": "main-link"
+    },
+    {
+      "text": "Click to Explore",
+      "href": "",
+      "cls": "explore"
+    },
+    {
+      "text": "The Great Gatsby Explore",
+      "href": "https://www.clubraia.com/lounge",
+      "cls": "slider-content internal-link active"
+    },
+    {
+      "text": "The Suites Explore",
+      "href": "https://www.clubraia.com/suites",
+      "cls": "slider-content internal-link"
+    },
+    {
+      "text": "Concept Explore",
+      "href": "https://www.clubraia.com/concept",
+      "cls": "slider-content internal-link"
+    },
+    {
+      "text": "F&B Explore",
+      "href": "https://www.clubraia.com/fnb",
+      "cls": "slider-content internal-link"
+    },
+    {
+      "text": "Events Explore",
+      "href": "https://www.clubraia.com/events",
+      "cls": "slider-content internal-link"
+    },
+    {
+      "text": "About Raia Explore",
+      "href": "https://www.clubraia.com/#",
+      "cls": "slider-content"
+    }
+  ]
+}

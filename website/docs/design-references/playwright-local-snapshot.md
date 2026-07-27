@@ -1,0 +1,12 @@
+- generic [active] [ref=e1] [box=0,0,1440,1000]:
+  - main [ref=e2] [box=0,0,1440,1000]:
+    - region "Club Raia hero" [ref=e3] [box=0,0,1440,1000]:
+      - generic [box=0,0,1440,30]
+      - generic [ref=e11] [box=279,500,882,216]
+      - img [box=80,112,1280,776]
+      - img [box=80,112,1280,776]
+      - link "T H E G R E A T G A T S B Y Explore" [ref=e47] [cursor=pointer] [box=320,468,800,212]:
+        - /url: /lounge
+      - generic [ref=e66] [box=1116,892,180,8]
+      - navigation "Slide navigation" [box=0,0,1440,1000]
+  - alert [ref=e75] [box=-1,999,1,1]

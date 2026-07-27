@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="23px" viewBox="0 0 12 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Website-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.3.-Home-V1-Shape-3" transform="translate(-80.000000, -377.000000)" fill="#F7F1E4">
+            <g id="Group-3" transform="translate(80.000000, 376.000000)">
+                <g id="Group-2" transform="translate(34.000000, 12.500000) rotate(-360.000000) translate(-34.000000, -12.500000) translate(0.000000, 1.000000)">
+                    <path d="M1.55504357,11.5582495 L11.8107374,1.62273494 C12.0630875,1.37826312 12.0630875,0.986543423 11.8107374,0.742071603 C11.5586253,0.497772678 11.1540442,0.497772678 10.901932,0.742071603 L0.189128729,11.1204248 C-0.0630429098,11.3646661 -0.0630429098,11.7566163 0.189128729,12.0008576 L10.901932,22.374485 C11.0255491,22.4944733 11.1921763,22.5588474 11.3538659,22.5588474 C11.5156151,22.5588474 11.6822423,22.4989685 11.8060973,22.374485 C12.0582095,22.1302437 12.0582095,21.7382935 11.8060973,21.4940522 L1.55504357,11.5582495 Z" id="Fill-1"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

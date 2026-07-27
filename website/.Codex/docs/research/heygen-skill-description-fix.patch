@@ -1,0 +1,62 @@
+--- a/home/kokoro/.codex/plugins/cache/openai-curated/heygen/dc902811/skills/heygen-video/SKILL.md
++++ b/home/kokoro/.codex/plugins/cache/openai-curated/heygen/dc902811/skills/heygen-video/SKILL.md
+@@ -4,18 +4,10 @@
+-description: |
+-  Generate HeyGen presenter videos via the v3 Video Agent pipeline — handles Frame Check
+-  (aspect ratio correction), prompt engineering, avatar resolution, and voice selection.
+-  Required for any HeyGen video generation. Replaces deprecated endpoints with v3.
+-  Use when: (1) generating any HeyGen video (via API or otherwise),
+-  (2) sending a personalized video message (outreach, update, announcement, pitch, knowledge),
+-  (3) creating a HeyGen presenter-led explainer, tutorial, or product demo with a human face,
+-  (4) "make a video of me saying...", "send a video to my leads", "record an update for my team",
+-  "create a video pitch", "make a loom-style message", "I want to appear in this video",
+-  "generate a HeyGen video", "make a talking head video".
+-  Accepts avatar_id from heygen-avatar for identity-first HeyGen videos, or uses a stock presenter.
+-  Returns video share URL + HeyGen session URL for iteration.
+-  Chain signal: when the user wants to create/design an avatar AND make a video in the same request,
+-  run heygen-avatar first, then return here. Conjunctions to watch: "and then", "and immediately",
+-  "first...then", "X and make a video", "design [presenter] and record" = always CHAIN.
+-  If the user provides a photo AND wants a video, route to heygen-avatar first.
+-  NOT for: avatar creation or identity setup (use heygen-avatar first), cinematic footage
+-  or b-roll without a presenter, translating videos, TTS-only, or streaming avatars.
++description: |
++  Generate HeyGen presenter videos with the v3 Video Agent pipeline.
++  Use for personalized messages, presenter-led explainers, tutorials,
++  product demos, talking-head videos, or requests like "make a video of
++  me saying..." and "create a video pitch".
++  Accepts avatar_id from heygen-avatar or uses a stock presenter.
++  Chain after heygen-avatar when the request includes avatar or identity
++  creation plus video generation, or when a photo is provided for a video.
++  Not for avatar creation, video translation, TTS-only, streaming avatars,
++  cinematic footage, or b-roll without a presenter.
+--- a/home/kokoro/.codex/plugins/cache/openai-curated/heygen/dc902811/skills/heygen-avatar/SKILL.md
++++ b/home/kokoro/.codex/plugins/cache/openai-curated/heygen/dc902811/skills/heygen-avatar/SKILL.md
+@@ -4,18 +4,10 @@
+-description: |
+-  Create a persistent HeyGen avatar — a reusable face + voice identity for the agent,
+-  the user, or any named character — powered by HeyGen Avatar V technology.
+-  Prompt-based creation by default (description → HeyGen builds it); photo upload is
+-  optional for real-person digital twins.
+-  Use when: (1) giving the agent a face + voice so it can present videos
+-  ("bring yourself to life", "create your avatar", "give yourself an avatar",
+-  "design a presenter", "set up an avatar", "let's make an avatar"),
+-  (2) the user wants to appear in videos as themselves ("create my avatar",
+-  "I want my face in a video", "digital twin of me", "build me an avatar"),
+-  (3) building a named character presenter ("create an avatar called Cleo",
+-  "design a character named X"), (4) establishing HeyGen identity before making videos —
+-  the correct FIRST step when no avatar exists yet.
+-  Chain signal: when the user says both an identity/avatar action AND a video action in the same
+-  request ("create an avatar AND make a video", "set up identity THEN create a video",
+-  "design a presenter AND immediately record"), run heygen-avatar first, then heygen-video.
+-  Returns avatar_id + voice_id — pass directly to heygen-video to create HeyGen videos.
+-  NOT for: generating videos (use heygen-video), translating videos, or TTS-only tasks.
++description: |
++  Create a persistent HeyGen avatar: a reusable face and voice identity
++  for the agent, user, or a named presenter. Use for prompt-based avatar
++  creation by default, or photo-based digital twins when the user provides
++  a real-person image.
++  Trigger for requests such as creating the agent's avatar, making the
++  user appear in videos, building a named character presenter, or setting
++  up identity before video generation.
++  Chain before heygen-video when a request includes both avatar creation
++  and video generation. Not for generating videos, translation, or TTS-only.
