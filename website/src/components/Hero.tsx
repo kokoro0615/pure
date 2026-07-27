@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -216,7 +217,12 @@ export function Hero() {
           onClick={goToPrevious}
           aria-label="Previous slide"
         >
-          <img src="/clubraia/arrowleft.svg" alt="" />
+          <Image
+            src="/clubraia/arrowleft.svg"
+            alt=""
+            width={12}
+            height={23}
+          />
         </button>
         <button
           className="clubraia-slider-button clubraia-slider-button-next pure-slider-button pure-slider-button-next"
@@ -224,7 +230,12 @@ export function Hero() {
           onClick={goToNext}
           aria-label="Next slide"
         >
-          <img src="/clubraia/arrowright.svg" alt="" />
+          <Image
+            src="/clubraia/arrowright.svg"
+            alt=""
+            width={13}
+            height={23}
+          />
         </button>
       </nav>
 

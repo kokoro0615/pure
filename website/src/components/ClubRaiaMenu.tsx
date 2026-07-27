@@ -29,11 +29,12 @@ type ClubRaiaMenuProps = {
 export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
   const [activePanel, setActivePanel] = useState<ClubRaiaPanel>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
   const isOpen = activePanel !== null;
 
   const closePanel = useCallback(() => {
     setActivePanel(null);
-    window.setTimeout(() => triggerRef.current?.focus(), 500);
+    window.requestAnimationFrame(() => triggerRef.current?.focus());
   }, []);
 
   const openPanel = useCallback(
@@ -46,8 +47,25 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
 
   useEffect(() => {
     document.documentElement.classList.toggle("clubraia-menu-is-open", isOpen);
-    return () => document.documentElement.classList.remove("clubraia-menu-is-open");
+    const pageMain = document.querySelector<HTMLElement>("body > main");
+
+    if (isOpen) {
+      pageMain?.setAttribute("inert", "");
+    } else {
+      pageMain?.removeAttribute("inert");
+    }
+
+    return () => {
+      document.documentElement.classList.remove("clubraia-menu-is-open");
+      pageMain?.removeAttribute("inert");
+    };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (activePanel) {
+      window.requestAnimationFrame(() => closeRef.current?.focus());
+    }
+  }, [activePanel]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -71,14 +89,27 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
         aria-hidden="true"
       />
 
-      <ClubRaiaAllPanel isOpen={activePanel === "all"} onNavigate={closePanel} />
+      <ClubRaiaAllPanel
+        isOpen={activePanel === "all"}
+        onNavigate={closePanel}
+        onOpenAbout={() => setActivePanel("about")}
+        onOpenContact={() => {
+          setActivePanel(null);
+          onContact();
+        }}
+      />
       <ClubRaiaInfoPanel panel="about" isOpen={activePanel === "about"} />
       <ClubRaiaInfoPanel panel="contact" isOpen={activePanel === "contact"} />
 
       <header className={styles.header} aria-label="PURE navigation">
         <div className={styles.headerOverlay} aria-hidden="true" />
 
-        <Link className="pure-corner-logo" href="/" aria-label="PURE Osaka home">
+        <Link
+          className="pure-corner-logo"
+          href="/"
+          aria-label="PURE Osaka home"
+          tabIndex={isOpen ? -1 : 0}
+        >
           <Image
             src="/pure/purelogo.png"
             alt="PURE Osaka"
@@ -106,41 +137,56 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
 
                   openPanel(panel, event.currentTarget);
                 }}
-                aria-expanded={activePanel === panel}
-                aria-controls={`clubraia-${panel}-panel`}
+                aria-expanded={
+                  panel === "contact" ? undefined : activePanel === panel
+                }
+                aria-controls={
+                  panel === "contact"
+                    ? undefined
+                    : `clubraia-${panel}-panel`
+                }
+                aria-haspopup="dialog"
+                tabIndex={isOpen ? -1 : 0}
                 key={panel}
               >
-                {PANEL_LABELS[panel]}
+                <span>{PANEL_LABELS[panel]}</span>
+                {panel === "all" ? (
+                  <span className={styles.menuIcon} aria-hidden="true">
+                    <span />
+                    <span />
+                  </span>
+                ) : null}
               </button>
             ),
           )}
 
-          {(Object.keys(PANEL_LABELS) as Exclude<ClubRaiaPanel, null>[]).map(
-            (panel) => (
-              <button
-                className={`${styles.closeControl} ${
-                  activePanel === panel ? styles.closeControlActive : ""
-                }`}
-                type="button"
-                onClick={closePanel}
-                aria-label={`Close ${PANEL_LABELS[panel]} panel`}
-                tabIndex={activePanel === panel ? 0 : -1}
-                key={`${panel}-close`}
-              >
-                <span>Close</span>
-                <span className={styles.closeLine} aria-hidden="true">
-                  <span />
-                </span>
-                <Image
-                  className={styles.closeIcon}
-                  src="/clubraia/close.svg"
-                  alt=""
-                  width={17}
-                  height={16}
-                />
-              </button>
-            ),
-          )}
+          <button
+            ref={closeRef}
+            className={`${styles.closeControl} ${
+              isOpen ? styles.closeControlActive : ""
+            }`}
+            type="button"
+            onClick={closePanel}
+            aria-label={`Close ${
+              activePanel ? PANEL_LABELS[activePanel] : "navigation"
+            } panel`}
+            aria-controls={
+              activePanel ? `clubraia-${activePanel}-panel` : undefined
+            }
+            tabIndex={isOpen ? 0 : -1}
+          >
+            <span>Close</span>
+            <span className={styles.closeLine} aria-hidden="true">
+              <span />
+            </span>
+            <Image
+              className={styles.closeIcon}
+              src="/clubraia/close.svg"
+              alt=""
+              width={17}
+              height={16}
+            />
+          </button>
         </div>
       </header>
     </>

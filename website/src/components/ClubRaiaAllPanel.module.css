@@ -96,6 +96,10 @@
   text-transform: uppercase;
 }
 
+.mobileUtilities {
+  display: none;
+}
+
 .list {
   display: grid;
   width: 100%;
@@ -159,6 +163,8 @@
   color: #fff;
   text-decoration: none;
   background: #171717;
+  outline: 2px solid transparent;
+  outline-offset: -3px;
   isolation: isolate;
 }
 
@@ -265,9 +271,8 @@
   transform: translate(-1px, 1px);
 }
 
-.link:hover,
 .link:focus-visible {
-  outline: none;
+  outline-color: #f7f0e5;
 }
 
 .link:hover .image,
@@ -347,6 +352,41 @@
     display: none;
   }
 
+  .mobileUtilities {
+    display: grid;
+    margin-top: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobileUtilities button {
+    min-height: 44px;
+    border: 1px solid rgb(255 255 255 / 22%);
+    color: rgb(255 255 255 / 82%);
+    font-family: var(--font-open-sans), "Open Sans", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .mobileUtilities button:hover,
+  .mobileUtilities button:active,
+  .mobileUtilities button:focus-visible {
+    border-color: rgb(255 255 255 / 72%);
+    color: #fff;
+    background: rgb(255 255 255 / 7%);
+  }
+
+  .mobileUtilities button:focus-visible {
+    outline: 2px solid #f7f0e5;
+    outline-offset: 2px;
+  }
+
   .list {
     display: block;
     min-height: 0;
@@ -383,6 +423,10 @@
   .arrow {
     transition-duration: 0.01ms;
     transition-delay: 0ms;
+  }
+
+  .mobileUtilities button {
+    transition-duration: 0.01ms;
   }
 
   .isOpen .item,

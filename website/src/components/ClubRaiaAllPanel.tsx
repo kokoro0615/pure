@@ -72,6 +72,8 @@ const NAVIGATION_ITEMS: readonly NavigationItem[] = [
 export type ClubRaiaAllPanelProps = {
   isOpen: boolean;
   onNavigate?: (href: string) => void;
+  onOpenAbout: () => void;
+  onOpenContact: () => void;
 };
 
 /**
@@ -81,6 +83,8 @@ export type ClubRaiaAllPanelProps = {
 export function ClubRaiaAllPanel({
   isOpen,
   onNavigate,
+  onOpenAbout,
+  onOpenContact,
 }: ClubRaiaAllPanelProps) {
   const panelRef = useRef<HTMLElement>(null);
 
@@ -109,6 +113,15 @@ export function ClubRaiaAllPanel({
           <p className={styles.prompt}>Choose your night</p>
           <span className={styles.count}>06 destinations</span>
         </div>
+
+        <nav className={styles.mobileUtilities} aria-label="PURE information">
+          <button type="button" onClick={onOpenAbout}>
+            About PURE
+          </button>
+          <button type="button" onClick={onOpenContact}>
+            Contact
+          </button>
+        </nav>
 
         <ul className={styles.list}>
           {NAVIGATION_ITEMS.map((item, index) => (
