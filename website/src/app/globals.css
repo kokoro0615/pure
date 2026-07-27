@@ -186,17 +186,43 @@ a { color: inherit; text-decoration: none; }
   .the-cross-contact__note, .the-cross-contact__success { margin-top: 20px; }
 }
 
-/* Home hero: kept deliberately isolated from the The Cross contact overlay. */
+/*
+ * The source logo is a 1024px square, but its visible mark only occupies
+ * x:203–819 and y:169–864. Keep that source asset intact and crop its baked-in
+ * transparent padding here, so placement and sizing follow the visible mark.
+ */
 .pure-corner-logo {
+  --pure-logo-width: clamp(58px, 5.2vw, 76px);
   position: absolute;
-  top: -18px;
-  left: clamp(20px, 4.6vw, 72px);
+  top: max(env(safe-area-inset-top), clamp(18px, 2vw, 28px));
+  left: max(env(safe-area-inset-left), clamp(20px, 3.5vw, 52px));
   display: block;
-  width: clamp(122px, 12.5vw, 188px);
-  height: 96px;
-  filter: drop-shadow(0 14px 24px rgb(0 0 0 / 50%));
+  width: var(--pure-logo-width);
+  aspect-ratio: 617 / 696;
+  overflow: hidden;
+  filter: drop-shadow(0 5px 12px rgb(0 0 0 / 38%));
+  transition: filter 180ms ease, transform 180ms ease;
 }
-.pure-corner-logo img { width: 100%; height: auto; }
+
+.pure-corner-logo img {
+  position: absolute;
+  top: -27.4%;
+  left: -32.9%;
+  display: block;
+  width: 166%;
+  max-width: none;
+  height: auto;
+}
+
+.pure-corner-logo:hover {
+  filter: drop-shadow(0 7px 15px rgb(0 0 0 / 48%));
+  transform: translateY(-1px);
+}
+
+.pure-corner-logo:focus-visible {
+  outline: 2px solid #f8f3e7;
+  outline-offset: 5px;
+}
 
 .clubraia-hero {
   position: relative;
