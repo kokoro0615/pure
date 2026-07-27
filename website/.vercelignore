@@ -1,0 +1,12 @@
+# Working reference media; production assets are kept in public/pure/.
+image/
+
+# Local tooling and build output.
+.next/
+node_modules/
+.claude/
+.Codex/
+.codex/
+.serena/
+docs/
+ushuaia-*
