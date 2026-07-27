@@ -82,8 +82,9 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
           <Image
             src="/pure/purelogo.png"
             alt="PURE Osaka"
-            width={1565}
-            height={1005}
+            width={1024}
+            height={1024}
+            sizes="(max-width: 812px) 58px, 76px"
             priority
           />
         </Link>
