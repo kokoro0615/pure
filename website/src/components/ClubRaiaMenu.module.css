@@ -65,10 +65,6 @@
   outline-offset: 4px;
 }
 
-.menuIcon {
-  display: none;
-}
-
 .mainLinkInactive {
   transform: translateY(-30px);
   opacity: 0;
@@ -152,94 +148,31 @@
 }
 
 @media (max-width: 812px) {
-  .header {
-    height: 96px;
-    padding-top: 0;
-  }
-
-  .headerOverlay {
-    height: 132px;
-    background: linear-gradient(
-      180deg,
-      rgb(0 0 0 / 55%) 0%,
-      rgb(0 0 0 / 18%) 64%,
-      transparent 100%
-    );
-  }
-
   .controls {
-    top: max(env(safe-area-inset-top), 18px);
-    right: max(env(safe-area-inset-right), 16px);
-    width: auto;
-    height: 48px;
+    top: max(env(safe-area-inset-top), 30px);
+    right: max(env(safe-area-inset-right), 12px);
+    width: min(65vw, 270px);
+    gap: clamp(8px, 2.2vw, 18px);
+  }
+
+  .mainLink,
+  .closeControl {
+    font-size: clamp(9px, 2.65vw, 11.5px);
   }
 
   .mainLink {
-    font-size: 13px;
-  }
-
-  .aboutLink,
-  .contactLink {
-    display: none;
-  }
-
-  .allLink {
-    display: flex;
-    min-width: 108px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    gap: 13px;
     margin-left: 0;
-    padding: 0 17px 0 19px;
-    border: 1px solid rgb(248 243 231 / 72%);
-    border-radius: 999px;
-    background: rgb(0 0 0 / 18%);
-    box-shadow: 0 5px 20px rgb(0 0 0 / 16%);
-    backdrop-filter: blur(8px);
-    letter-spacing: 2px;
-    touch-action: manipulation;
-  }
-
-  .allLink:hover,
-  .allLink:active {
-    border-color: #f8f3e7;
-    background: rgb(248 243 231 / 12%);
-  }
-
-  .menuIcon {
-    display: flex;
-    width: 19px;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .menuIcon > span {
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
+    letter-spacing: clamp(1px, 0.35vw, 1.6px);
   }
 
   .closeControl {
-    top: 50%;
-    right: 0;
-    width: 108px;
-    height: 48px;
-    justify-content: center;
-    gap: 12px;
-    margin: 0;
-    border: 1px solid rgb(248 243 231 / 72%);
-    border-radius: 999px;
-    font-size: 11px;
-    letter-spacing: 1.8px;
-    background: rgb(0 0 0 / 18%);
-    backdrop-filter: blur(8px);
-    touch-action: manipulation;
+    width: 88.1px;
   }
 
   .closeLine {
-    display: none;
+    width: 15px;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .closeControl > span:first-child {
@@ -247,8 +180,7 @@
   }
 
   .closeIcon {
-    position: static;
-    width: 14px;
+    width: 13px;
     height: auto;
   }
 }
