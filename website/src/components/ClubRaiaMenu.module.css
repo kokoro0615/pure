@@ -141,10 +141,6 @@
 }
 
 @media (max-width: 812px) {
-  .allLink {
-    display: none;
-  }
-
   .controls {
     right: 20px;
     width: auto;
@@ -156,7 +152,8 @@
   }
 
   .mainLink {
-    margin-left: 24px;
+    margin-left: 18px;
+    letter-spacing: 2px;
   }
 
   .closeControl {
