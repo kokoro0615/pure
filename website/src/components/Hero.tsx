@@ -37,6 +37,18 @@ const slides: Slide[] = [
   },
 ];
 
+function playFromStart(video: HTMLVideoElement) {
+  if (video.readyState === 0) {
+    video.load();
+  } else {
+    video.currentTime = 0;
+  }
+
+  void video.play().catch(() => {
+    // The poster remains visible if the browser blocks background playback.
+  });
+}
+
 function renderTitle(title: string) {
   return title.split("").map((letter, index) => (
     <span
@@ -52,6 +64,7 @@ export function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isIntroVisible, setIsIntroVisible] = useState(true);
   const lastWheelAtRef = useRef(0);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   const goToPrevious = useCallback(() => {
     setActiveIndex((current) =>
@@ -66,13 +79,11 @@ export function Hero() {
   const revealHero = useCallback(() => {
     setIsIntroVisible(false);
 
-    document.querySelectorAll("video").forEach((video) => {
-      if (video.readyState > 0) {
-        video.currentTime = 0;
-      }
-      void video.play();
-    });
-  }, []);
+    const activeVideo = videoRefs.current[activeIndex];
+    if (activeVideo) {
+      playFromStart(activeVideo);
+    }
+  }, [activeIndex]);
 
   const handleWheel = useCallback(
     (event: WheelEvent<HTMLElement>) => {
@@ -112,6 +123,24 @@ export function Hero() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrevious]);
+
+  useEffect(() => {
+    const activeVideo = videoRefs.current[activeIndex];
+
+    videoRefs.current.forEach((video, index) => {
+      if (video && index !== activeIndex) {
+        video.pause();
+      }
+    });
+
+    if (isIntroVisible || !activeVideo) {
+      return;
+    }
+
+    playFromStart(activeVideo);
+
+    return () => activeVideo.pause();
+  }, [activeIndex, isIntroVisible]);
 
   const slideCount = slides.length.toString().padStart(2, "0");
   const currentSlideNumber = (activeIndex + 1).toString().padStart(2, "0");
@@ -161,13 +190,15 @@ export function Hero() {
             key={`${slide.title}-${index}`}
           >
             <video
+              ref={(video) => {
+                videoRefs.current[index] = video;
+              }}
               className="clubraia-bg-image pure-bg-video"
-              src={index === activeIndex ? slide.video : undefined}
-              autoPlay={index === activeIndex}
+              src={slide.video}
               loop
               muted
               playsInline
-              preload={index === activeIndex ? "auto" : "none"}
+              preload={index === 0 ? "metadata" : "none"}
               poster={slide.poster}
             />
           </div>
