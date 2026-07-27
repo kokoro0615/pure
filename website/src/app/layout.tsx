@@ -7,8 +7,28 @@ const openSans = Open_Sans({ subsets: ["latin"], weight: "400", variable: "--fon
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "Contact | PURE Osaka",
-  description: "Contact PURE Osaka.",
+  metadataBase: new URL("https://www.club-pure.com"),
+  title: "PURE Osaka | Premium Nightlife in Shinsaibashi",
+  description:
+    "大阪・心斎橋のナイトクラブ PURE Osaka。HIPHOP、LATIN、REGGAETONが交わるプレミアムなナイトライフをお楽しみください。",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    url: "/",
+    siteName: "PURE Osaka",
+    title: "PURE Osaka | Premium Nightlife in Shinsaibashi",
+    description:
+      "大阪・心斎橋で20年以上。音楽と人が国境を越えて交わる、PURE Osakaのプレミアムナイトライフ。",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PURE Osaka | Premium Nightlife in Shinsaibashi",
+    description:
+      "大阪・心斎橋で20年以上。音楽と人が国境を越えて交わる、PURE Osakaのプレミアムナイトライフ。",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
