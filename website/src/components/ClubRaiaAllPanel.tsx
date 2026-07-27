@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   useEffect,
   useRef,
-  useState,
   type CSSProperties,
 } from "react";
 
@@ -12,21 +11,62 @@ import styles from "./ClubRaiaAllPanel.module.css";
 
 type NavigationItem = {
   label: string;
+  detail: string;
+  japaneseLabel: string;
   href: string;
   image: string;
+  position?: string;
 };
 
 const NAVIGATION_ITEMS: readonly NavigationItem[] = [
-  { label: "Home", href: "/", image: "/clubraia/slide06.jpg" },
   {
-    label: "The Great Gatsby",
-    href: "#the-great-gatsby",
-    image: "/clubraia/slide01.jpg",
+    label: "Events",
+    detail: "Upcoming nights",
+    japaneseLabel: "今後のイベント",
+    href: "#events",
+    image: "/pure/menu/events.webp",
+    position: "50% 42%",
   },
-  { label: "The Suites", href: "#the-suites", image: "/clubraia/slide02.jpg" },
-  { label: "Concept", href: "#concept", image: "/clubraia/slide04.jpg" },
-  { label: "F&B", href: "#fnb", image: "/clubraia/slide05.jpg" },
-  { label: "Events", href: "#events", image: "/clubraia/slide07.jpg" },
+  {
+    label: "Lineup",
+    detail: "DJs & performers",
+    japaneseLabel: "出演者",
+    href: "#lineup",
+    image: "/pure/menu/lineup.webp",
+    position: "50% 38%",
+  },
+  {
+    label: "VIP Tables",
+    detail: "Bottle service",
+    japaneseLabel: "VIP予約",
+    href: "#vip",
+    image: "/pure/menu/vip.webp",
+    position: "50% 46%",
+  },
+  {
+    label: "System",
+    detail: "Entry & dress code",
+    japaneseLabel: "入場案内",
+    href: "#system",
+    image: "/pure/menu/system.webp",
+    position: "52% 50%",
+  },
+  {
+    label: "Gallery",
+    detail: "After dark",
+    japaneseLabel: "フォトギャラリー",
+    href: "#gallery",
+    image: "/pure/menu/gallery-night-v2.webp",
+    position: "50% 38%",
+  },
+  {
+    label: "Access",
+    detail: "Hours & location",
+    japaneseLabel: "営業時間・アクセス",
+    href: "#access",
+    image: "/pure/menu/access.webp",
+    position: "50% 40%",
+  },
 ] as const;
 
 export type ClubRaiaAllPanelProps = {
@@ -42,7 +82,6 @@ export function ClubRaiaAllPanel({
   isOpen,
   onNavigate,
 }: ClubRaiaAllPanelProps) {
-  const [activePreview, setActivePreview] = useState<number | null>(null);
   const panelRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -61,39 +100,16 @@ export function ClubRaiaAllPanel({
       aria-modal={isOpen ? "true" : undefined}
       aria-hidden={!isOpen}
       inert={!isOpen}
-      onPointerLeave={() => setActivePreview(null)}
-      onTransitionEnd={(event) => {
-        if (
-          !isOpen &&
-          event.target === event.currentTarget &&
-          event.propertyName === "opacity"
-        ) {
-          setActivePreview(null);
-        }
-      }}
     >
-      <div className={styles.previewStack} aria-hidden="true">
-        {NAVIGATION_ITEMS.map((item, index) => (
-          <div
-            className={`${styles.preview} ${
-              isOpen && activePreview === index ? styles.previewIsActive : ""
-            }`}
-            key={item.image}
-          >
-            <Image
-              src={item.image}
-              alt=""
-              fill
-              sizes="(max-width: 812px) 88vw, 56vw"
-              className={styles.previewImage}
-            />
-          </div>
-        ))}
-      </div>
+      <div className={styles.atmosphere} aria-hidden="true" />
 
-      <div className={styles.vignette} aria-hidden="true" />
+      <div className={styles.shell}>
+        <div className={styles.intro}>
+          <p className={styles.kicker}>PURE OSAKA / NIGHT DIRECTORY</p>
+          <p className={styles.prompt}>Choose your night</p>
+          <span className={styles.count}>06 destinations</span>
+        </div>
 
-      <div className={styles.center}>
         <ul className={styles.list}>
           {NAVIGATION_ITEMS.map((item, index) => (
             <li
@@ -110,12 +126,29 @@ export function ClubRaiaAllPanel({
                 className={styles.link}
                 href={item.href}
                 onClick={() => onNavigate?.(item.href)}
-                onMouseEnter={() => setActivePreview(index)}
-                onMouseLeave={() => setActivePreview(null)}
-                onFocus={() => setActivePreview(index)}
-                onBlur={() => setActivePreview(null)}
               >
-                {item.label}
+                <Image
+                  src={item.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 42vw"
+                  className={styles.image}
+                  style={{ objectPosition: item.position }}
+                />
+                <span className={styles.imageWash} aria-hidden="true" />
+                <span className={styles.index} aria-hidden="true">
+                  {(index + 1).toString().padStart(2, "0")}
+                </span>
+                <span className={styles.copy}>
+                  <span className={styles.detail}>{item.detail}</span>
+                  <span className={styles.label}>{item.label}</span>
+                  <span className={styles.japaneseLabel}>
+                    {item.japaneseLabel}
+                  </span>
+                </span>
+                <span className={styles.arrow} aria-hidden="true">
+                  <span>↗</span>
+                </span>
               </a>
             </li>
           ))}
