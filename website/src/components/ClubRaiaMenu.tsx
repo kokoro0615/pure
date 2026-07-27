@@ -150,12 +150,6 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
                 key={panel}
               >
                 <span>{PANEL_LABELS[panel]}</span>
-                {panel === "all" ? (
-                  <span className={styles.menuIcon} aria-hidden="true">
-                    <span />
-                    <span />
-                  </span>
-                ) : null}
               </button>
             ),
           )}
