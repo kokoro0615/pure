@@ -1,10 +1,11 @@
 /* ============================================================
    MENU — the night directory.
 
-   Six doors, never six equal cards. One dominant frame carries
-   the floor; the other five hang off it in unequal widths so no
-   two rows ever break at the same column. The left hairline is
-   the same spine /gallery and /vip hang their frames from.
+   Six doors, never six equal cards. Two bands of three, each
+   broken at a different column so no seam is ever inherited
+   downward, and each frame cut to the photograph it holds rather
+   than to a uniform cell. The left hairline is the same spine
+   /gallery and /vip hang their frames from.
 
    Signature move: the room dims around the door you are looking
    at (opacity only, compositor). Nothing else in here moves on
@@ -172,18 +173,17 @@
 .list {
   display: grid;
   width: 100%;
-  min-height: clamp(480px, calc(100dvh - 212px), 840px);
+  min-height: clamp(460px, calc(100dvh - 212px), 826px);
   margin: 0;
   padding: var(--tile-gap) 0 0;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  /* Three unequal bands. The fr shares carry the hierarchy; the px floors
-     only stop a band collapsing under its own label, and are deliberately
-     low — set to the comfortable height instead, a 1280x720 laptop pushed
-     the third row under the fold and made Rental and Q&A a scroll. */
+  /* Two bands, not three. Three fitted the count but not the pictures:
+     it left every frame a 3:1-to-6:1 slit that threw away 57-72% of each
+     photograph, and the shortest band held the widest tile. Two bands are
+     tall enough that every frame keeps 77-94% of its subject. */
   grid-template-rows:
-    minmax(160px, 1.15fr)
-    minmax(150px, 1fr)
-    minmax(138px, 0.85fr);
+    minmax(200px, 1.12fr)
+    minmax(176px, 0.88fr);
   gap: var(--tile-gap);
   list-style: none;
 }
@@ -194,41 +194,38 @@
   padding: 0;
 }
 
-/* One break per row and it moves every time — 8, then 6, then 10.
-   No seam is ever inherited downward, which is what stops this
-   reading as a card grid. The widest frame walks the diagonal:
-   Gallery top-left, Tickets mid-right, Rental bottom-left, so the
-   eye is handed down the page instead of scanning rows. */
+/* Row 1 breaks at columns 6 and 9, row 2 at 5 and 10: the seams
+   interleave instead of stacking, which is what stops this reading
+   as a card grid. Widths are cut to the photographs — VIP is the
+   only portrait negative in the set, so it gets the only upright
+   frame, and the two widest frames sit on opposite diagonals. */
 .item:nth-child(1) {
   grid-row: 1;
-  grid-column: 1 / span 7;
+  grid-column: 1 / span 5;
 }
 
 .item:nth-child(2) {
   grid-row: 1;
-  grid-column: 8 / span 5;
+  grid-column: 6 / span 3;
 }
 
 .item:nth-child(3) {
-  grid-row: 2;
-  grid-column: 1 / span 5;
+  grid-row: 1;
+  grid-column: 9 / span 4;
 }
 
-/* Seven, not eight: the door photograph is a corridor shot with its
-   subject on the centre line, and past this width the neon reads as a
-   smudge on a wall of empty purple. */
 .item:nth-child(4) {
   grid-row: 2;
-  grid-column: 6 / span 7;
+  grid-column: 1 / span 4;
 }
 
 .item:nth-child(5) {
-  grid-row: 3;
-  grid-column: 1 / span 9;
+  grid-row: 2;
+  grid-column: 5 / span 5;
 }
 
 .item:nth-child(6) {
-  grid-row: 3;
+  grid-row: 2;
   grid-column: 10 / span 3;
 }
 
@@ -245,6 +242,7 @@
   background: var(--ink-1);
   outline: 2px solid transparent;
   outline-offset: -4px;
+  container-type: inline-size;
   isolation: isolate;
 }
 
@@ -318,7 +316,9 @@
   position: relative;
   padding-bottom: 6px;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.2vw, 54px);
+  /* Sized against the tile, not the viewport: the widest frame gets the
+     loudest word, and "VIP TABLES" in the upright frame stops wrapping. */
+  font-size: clamp(28px, 7.6cqi, 52px);
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.05em;
