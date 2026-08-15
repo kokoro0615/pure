@@ -1,14 +1,27 @@
+/*
+ * ABOUT PURE.
+ *
+ * A photograph of the floor at full strength on one side, and the venue's own
+ * words on the other. The panel keeps the site's entrance gesture — it wipes
+ * open from the right edge — but everything inside it is rebuilt: carbon from
+ * the shared ink stack instead of a private blue-black, Migra instead of
+ * letterspaced Playfair, the site's Japanese faces instead of a hardcoded
+ * Hiragino stack, and the facts as a ruled record instead of coloured chips.
+ */
+
 .panel {
   position: fixed;
   inset: 0 0 0 auto;
-  z-index: 90;
+  z-index: var(--z-panel);
   width: 0;
   height: 100%;
   overflow: hidden;
   visibility: hidden;
+  color: var(--bone);
+  background: var(--ink-0);
   pointer-events: none;
   transition:
-    width 1s cubic-bezier(0.87, 0, 0.13, 1),
+    width var(--dur-hero) var(--ease-enter),
     visibility 0s linear 1.05s;
 }
 
@@ -17,439 +30,356 @@
   visibility: visible;
   pointer-events: auto;
   transition:
-    width 1s cubic-bezier(0.87, 0, 0.13, 1) 0.3s,
+    width var(--dur-hero) var(--ease-enter) 80ms,
     visibility 0s linear 0s;
 }
 
-.about {
-  color: #f8f3e7;
-  background: oklch(14% 0.025 255deg);
-}
-
-.contact {
-  color: #f8f3e7;
-  background: #13171e;
-}
-
+/* Pinned to the right so the content does not squash while the panel opens:
+   the wipe reveals a finished composition rather than reflowing one. */
 .canvas {
   position: absolute;
   top: 0;
   right: 0;
+  display: grid;
   width: 100vw;
   height: 100%;
   overflow: hidden;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+  align-items: stretch;
 }
 
-.imageWrapper {
-  position: absolute;
-  top: calc(50% + 50px);
-  left: 0;
-  width: 50%;
-  height: calc(100% - 200px);
-  max-height: 560px;
+/* ---------- the photograph ---------- */
+
+.plate {
+  position: relative;
+  margin: 0;
   overflow: hidden;
-  transform: translateY(-50%);
+  background: var(--ink-1);
 }
 
-.about .imageWrapper::after {
+.plateImage {
+  object-fit: cover;
+  object-position: 58% 46%;
+  /* Settles rather than arrives: a 6% overscan resolving to true size once
+     the panel has finished opening. */
+  transform: scale(1.06);
+  transition: transform 1400ms var(--ease-emphasis);
+}
+
+.open .plateImage {
+  transform: scale(1);
+  transition-delay: 420ms;
+}
+
+/* The photograph meets the type on a value falloff, not a translucent panel:
+   depth here comes from the image going dark into the column beside it. */
+.plateEdge {
   position: absolute;
-  z-index: 1;
   inset: 0;
-  content: "";
   background: linear-gradient(
     90deg,
-    transparent 68%,
-    oklch(14% 0.025 255deg / 78%) 100%
+    transparent 52%,
+    color-mix(in oklch, var(--ink-0) 62%, transparent) 84%,
+    var(--ink-0) 100%
   );
   pointer-events: none;
 }
 
-.backgroundImage {
+.plateCaption {
   position: absolute;
-  inset: 0;
-  object-fit: cover;
-  object-position: 50% 50%;
-  transform: scale(2);
-  transform-origin: center;
-  transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1);
+  bottom: clamp(20px, 3vh, 34px);
+  left: clamp(20px, 2.4vw, 38px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bone-soft);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 520ms var(--ease-enter),
+    transform 640ms var(--ease-emphasis);
 }
 
-.about .backgroundImage {
-  object-position: 61% 50%;
+.plateCaption::before {
+  width: 26px;
+  height: 1px;
+  content: "";
+  background: var(--accent);
 }
 
-.open .backgroundImage {
-  transform: scale(1);
-  transition-delay: 0.5s;
+.open .plateCaption {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 760ms;
 }
+
+/* ---------- the words ---------- */
 
 .text {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  z-index: 2;
-  width: 50%;
-  padding: 0 80px;
+  display: grid;
+  align-content: center;
+  padding: var(--nav-safe) clamp(28px, 5vw, 92px) clamp(32px, 5vh, 64px)
+    clamp(28px, 4vw, 72px);
+  gap: clamp(18px, 2.2vh, 28px);
 }
 
-.about .text {
-  top: clamp(120px, 22vh, 200px);
-}
-
+/* Two masked lines, not thirty animated characters. A per-glyph reveal on a
+   short title is the tell this panel is being rebuilt to remove. */
 .title {
-  height: 60px;
-  margin: 0 0 80px;
-  overflow: hidden;
-  color: #f8f3e7;
-  font-family: var(--font-playfair), "Playfair Display", serif;
-  font-size: 56px;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.4vw, 76px);
   font-weight: 400;
-  line-height: 60px;
-  letter-spacing: 24px;
-  text-align: left;
+  line-height: 0.94;
+  letter-spacing: -0.038em;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
-.about .title {
-  width: calc(100% + 160px);
-  margin-bottom: 44px;
-  margin-left: -160px;
-  font-size: clamp(40px, 3.9vw, 56px);
-  letter-spacing: clamp(14px, 1.67vw, 24px);
+.title > span {
+  display: block;
+  overflow: hidden;
 }
 
-.contact .title {
-  color: #c39b54;
-  font-size: 50px;
+.title > span > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 900ms var(--ease-emphasis) var(--line-delay, 0ms);
 }
 
-.titleCharacter,
-.titleSpace {
-  display: inline-block;
-  transform: translateY(110%);
-  transition: transform 0.65s cubic-bezier(0.77, 0, 0.18, 1);
-  transition-delay: calc((var(--character-index) * 0.02s));
+/* The stagger is a variable rather than a second, more specific rule, so the
+   reduced-motion reset below can null it from one place. */
+.title > span:nth-child(2) {
+  --line-delay: 60ms;
+  --line-open-delay: 600ms;
 }
 
-.titleSpace {
-  width: 0.36em;
-}
-
-.open .titleCharacter,
-.open .titleSpace {
+.open .title > span > span {
   transform: translateY(0);
-  transition-duration: 1s;
-  transition-delay: calc(0.7s + (var(--character-index) * 0.03s));
+  transition-delay: var(--line-open-delay, 520ms);
 }
 
-.copy {
-  color: #f8f3e7;
-  font-family: var(--font-lora), "Lora", serif;
-  font-size: 18px;
+.statement {
+  max-width: 18em;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp-display);
+  font-size: clamp(19px, 1.7vw, 27px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.body {
+  max-width: 34em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 400;
-  line-height: 34px;
-  letter-spacing: 0.5px;
-  opacity: 0;
-  -webkit-mask-image: linear-gradient(170deg, #000 -40%, transparent 0%);
-  mask-image: linear-gradient(170deg, #000 -40%, transparent 0%);
-  transition:
-    opacity 0.75s ease,
-    -webkit-mask-image 1s cubic-bezier(0.19, 1, 0.22, 1),
-    mask-image 1s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.open .copy {
-  opacity: 1;
-  -webkit-mask-image: linear-gradient(170deg, #000 60%, transparent 120%);
-  mask-image: linear-gradient(170deg, #000 60%, transparent 120%);
-  transition-delay: 0.7s;
-}
-
-.copy p {
-  margin-top: 0;
-}
-
-.aboutCopy {
-  max-width: 520px;
-  margin-bottom: 16px;
-  font-family:
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo",
-    sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.9;
+  line-height: 2.05;
   letter-spacing: 0.045em;
 }
 
-.aboutFacts {
-  display: flex;
-  max-width: 520px;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-bottom: 18px;
-  color: oklch(82% 0.07 235deg);
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 10px;
-  line-height: 1.4;
-  letter-spacing: 0.2em;
+/* The facts, as a record. The previous version set these as a row of tinted
+   chips in a blue that appears nowhere else on the site; a ruled list reads
+   faster, holds tabular numerals, and stays inside the one-accent rule. */
+.record {
+  display: grid;
+  max-width: 34em;
+  margin: clamp(4px, 1vh, 12px) 0 0;
+  border-top: 1px solid var(--edge);
+}
+
+.recordRow {
+  display: grid;
+  padding: 11px 0;
+  align-items: baseline;
+  grid-template-columns: minmax(84px, 0.28fr) minmax(0, 1fr);
+  gap: 16px;
+  border-bottom: 1px solid var(--edge);
+}
+
+.recordRow dt {
+  /* --bone-soft, not --bone-faint: at 11px the 50% value measures 4.4:1 on
+     carbon, just under the body-text floor. */
+  color: var(--bone-soft);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.aboutFacts span + span {
-  padding-left: 0;
+.recordRow dd {
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 0.95vw, 14px);
+  line-height: 1.6;
+  letter-spacing: 0.05em;
 }
 
-.aboutFacts span + span::before {
-  display: none;
+.numeric {
+  font-family: var(--font-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.1em;
 }
 
-.aboutStatement {
-  max-width: 520px;
-  margin-bottom: 22px;
-  color: #f8f3e7;
-  font-family: var(--font-playfair), "Playfair Display", serif;
-  font-size: clamp(25px, 2.05vw, 31px);
-  line-height: 1.08;
-  letter-spacing: 0.015em;
-  text-wrap: balance;
-  text-transform: uppercase;
+.action {
+  justify-self: start;
+  margin-top: clamp(6px, 1.4vh, 16px);
 }
 
-.aboutCopyEnglish {
-  max-width: 520px;
-  margin-bottom: 22px;
-  color: rgb(248 243 231 / 67%);
-  font-size: 13px;
-  line-height: 1.7;
-  letter-spacing: 0.025em;
+/* The copy lifts as one block behind the title. */
+.statement,
+.body,
+.record,
+.action {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 620ms var(--ease-enter),
+    transform 760ms var(--ease-emphasis);
 }
 
-.copyright {
-  max-width: 450px;
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
-  line-height: 34px;
-}
+.open .statement { opacity: 1; transform: none; transition-delay: 640ms; }
+.open .body { opacity: 1; transform: none; transition-delay: 700ms; }
+.open .record { opacity: 1; transform: none; transition-delay: 760ms; }
+.open .action { opacity: 1; transform: none; transition-delay: 820ms; }
 
-.copyright a,
-.contactDetails a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-
-.contact .copy {
-  max-width: 350px;
-}
-
-.address {
-  margin-bottom: 36px;
-}
-
-.contactDetails {
-  margin-bottom: 0;
-}
-
-.copy a {
-  transition: color 250ms ease;
-}
-
-.copy a:hover,
-.copy a:focus-visible {
-  color: #c39b54;
-}
-
-.copy a:focus-visible {
-  outline: 1px solid currentColor;
-  outline-offset: 3px;
-}
-
+/* ---------- phone ----------
+   One column that scrolls, left-aligned. The old phone layout centred every
+   line, pushed the text block to a hard `top: 200px`, and stretched the
+   photograph to 100vh at 38% opacity behind it, so the panel read as a
+   caption floating on a smudge. */
 @media (max-width: 812px) {
-  .panel {
-    overflow: hidden;
-  }
-
   .canvas {
+    display: block;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
 
-  .imageWrapper {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    min-height: 100%;
-    max-height: none;
-    opacity: 0.2;
-    transform: none;
+  .plate {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 
-  .about .imageWrapper::after {
+  .plateImage {
+    object-position: 62% 44%;
+  }
+
+  .plateEdge {
     background: linear-gradient(
       180deg,
-      oklch(14% 0.025 255deg / 48%) 0%,
-      oklch(14% 0.025 255deg / 62%) 54%,
-      oklch(14% 0.025 255deg / 97%) 100%
+      color-mix(in oklch, var(--ink-0) 58%, transparent) 0%,
+      transparent 34%,
+      color-mix(in oklch, var(--ink-0) 55%, transparent) 82%,
+      var(--ink-0) 100%
     );
   }
 
-  .about .imageWrapper {
-    opacity: 1;
-  }
-
-  .about .backgroundImage {
-    object-position: 68% 50%;
-    opacity: 0.38;
+  .plateCaption {
+    bottom: 18px;
+    left: 20px;
   }
 
   .text {
-    top: 200px;
-    left: 0;
-    width: 100%;
-    min-height: calc(100% - 200px);
-    padding: 0 10% 60px;
+    padding: clamp(22px, 4vh, 34px) 20px calc(48px + env(safe-area-inset-bottom));
+    gap: 18px;
   }
 
-  .title,
-  .about .title,
-  .contact .title {
-    width: auto;
-    height: auto;
-    min-height: 45px;
-    margin: 0 0 30px;
-    padding: 0 5%;
-    overflow: visible;
-    font-size: 28px;
-    line-height: 1.6;
-    letter-spacing: 15px;
-    text-align: center;
-    white-space: normal;
+  .title {
+    font-size: clamp(34px, 10.5vw, 46px);
   }
 
-  .titleCharacter,
-  .titleSpace {
-    transform: translateY(70%);
-    opacity: 0;
-    transition:
-      transform 0.6s cubic-bezier(0.77, 0, 0.18, 1),
-      opacity 0.45s ease;
-  }
-
-  .contact .title {
+  .statement {
     max-width: none;
-    margin-right: auto;
-    margin-left: auto;
-    letter-spacing: 20px;
+    font-size: clamp(18px, 5.4vw, 22px);
   }
 
-  .about .title {
-    width: 100%;
-    margin-bottom: 30px;
-    padding: 0;
-    font-size: 25px;
-    letter-spacing: 10px;
-    white-space: nowrap;
-  }
-
-  .contact .titleCharacter:last-child {
-    display: block;
-  }
-
-  .open .titleCharacter,
-  .open .titleSpace {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .copy,
-  .contact .copy,
-  .aboutCopy,
-  .aboutCopyEnglish,
-  .aboutFacts,
-  .aboutStatement,
-  .copyright {
-    width: 100%;
+  .body {
     max-width: none;
-  }
-
-  .aboutFacts {
-    justify-content: center;
-    margin-bottom: 22px;
-    font-size: 9px;
-    text-align: center;
-  }
-
-  .aboutFacts span + span {
-    padding-left: 0;
-  }
-
-  .aboutStatement {
-    margin-bottom: 22px;
-    font-size: clamp(25px, 8vw, 32px);
-    text-align: center;
-  }
-
-  .aboutCopy {
-    font-size: 16px;
-    line-height: 1.8;
-  }
-
-  .aboutCopyEnglish {
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.95;
   }
 
-  .about .copyright {
-    padding-bottom: env(safe-area-inset-bottom);
-    line-height: 1.6;
+  .record {
+    max-width: none;
   }
 
-  .contact .copy {
-    font-size: 18px;
-    line-height: 34px;
-    text-align: center;
-  }
-
-  .address {
-    margin-bottom: 36px;
+  .recordRow {
+    grid-template-columns: minmax(72px, 0.34fr) minmax(0, 1fr);
+    gap: 12px;
   }
 }
 
-@media (min-width: 813px) and (max-height: 700px) {
-  .about .canvas {
+/* A laptop at 1440x720 is a real machine. Let the column scroll rather than
+   clipping the record off the bottom of a fixed panel. */
+@media (min-width: 813px) and (max-height: 780px) {
+  .canvas {
     overflow-y: auto;
     overscroll-behavior: contain;
   }
 
-  .about .text {
-    padding-bottom: 48px;
+  .text {
+    align-content: start;
+    padding-bottom: 56px;
+    gap: clamp(14px, 1.8vh, 24px);
+  }
+
+  .plate {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+  }
+}
+
+/* The photograph is the first thing on a phone and the panel opens over the
+   page, so it must not be the tallest thing on screen at the same time as the
+   copy. Short viewports crop it further rather than pushing the words off. */
+@media (max-width: 812px) and (max-height: 700px) {
+  .plate {
+    aspect-ratio: 16 / 9;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .panel,
   .panel.open,
-  .backgroundImage,
-  .open .backgroundImage,
-  .titleCharacter,
-  .titleSpace,
-  .open .titleCharacter,
-  .open .titleSpace,
-  .copy,
-  .open .copy,
-  .copy a {
+  .plateImage,
+  .open .plateImage,
+  .plateCaption,
+  .open .plateCaption,
+  .title > span,
+  .title > span > span,
+  .open .title > span > span,
+  .statement,
+  .body,
+  .record,
+  .action,
+  .open .statement,
+  .open .body,
+  .open .record,
+  .open .action {
     transition-duration: 0.01ms;
     transition-delay: 0s;
   }
 
-  .backgroundImage,
-  .open .backgroundImage {
+  .title > span {
+    --line-delay: 0ms;
+    --line-open-delay: 0ms;
+  }
+
+  .plateImage,
+  .open .plateImage {
     transform: scale(1);
   }
 }

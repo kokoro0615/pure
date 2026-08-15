@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-09T16:12:39Z",
+  "title": "Design System: PURE Osaka",
+  "extensions": {
+    "colorMeta": {
+      "carbon-black": {
+        "role": "neutral",
+        "displayName": "Carbon Black",
+        "canonical": "#080a10",
+        "tonalRamp": [
+          "oklch(15% 0.010 265)",
+          "oklch(25% 0.010 265)",
+          "oklch(35% 0.010 265)",
+          "oklch(48% 0.010 265)",
+          "oklch(60% 0.010 265)",
+          "oklch(72% 0.010 265)",
+          "oklch(84% 0.010 265)",
+          "oklch(95% 0.010 265)"
+        ]
+      },
+      "bone-white": {
+        "role": "neutral",
+        "displayName": "Bone White",
+        "canonical": "#f5efe6",
+        "tonalRamp": [
+          "oklch(15% 0.018 80)",
+          "oklch(25% 0.018 80)",
+          "oklch(35% 0.018 80)",
+          "oklch(48% 0.018 80)",
+          "oklch(60% 0.018 80)",
+          "oklch(72% 0.018 80)",
+          "oklch(84% 0.018 80)",
+          "oklch(95% 0.018 80)"
+        ]
+      },
+      "muted-bone": {
+        "role": "neutral",
+        "displayName": "Muted Bone",
+        "canonical": "rgb(245 239 230 / 68%)",
+        "tonalRamp": [
+          "oklch(15% 0.018 80 / 68%)",
+          "oklch(25% 0.018 80 / 68%)",
+          "oklch(35% 0.018 80 / 68%)",
+          "oklch(48% 0.018 80 / 68%)",
+          "oklch(60% 0.018 80 / 68%)",
+          "oklch(72% 0.018 80 / 68%)",
+          "oklch(84% 0.018 80 / 68%)",
+          "oklch(95% 0.018 80 / 68%)"
+        ]
+      },
+      "optical-line": {
+        "role": "neutral",
+        "displayName": "Optical Line",
+        "canonical": "rgb(245 239 230 / 20%)",
+        "tonalRamp": [
+          "oklch(15% 0.018 80 / 20%)",
+          "oklch(25% 0.018 80 / 20%)",
+          "oklch(35% 0.018 80 / 20%)",
+          "oklch(48% 0.018 80 / 20%)",
+          "oklch(60% 0.018 80 / 20%)",
+          "oklch(72% 0.018 80 / 20%)",
+          "oklch(84% 0.018 80 / 20%)",
+          "oklch(95% 0.018 80 / 20%)"
+        ]
+      },
+      "club-magenta": {
+        "role": "primary",
+        "displayName": "Club Magenta",
+        "canonical": "#d42966",
+        "tonalRamp": [
+          "oklch(15% 0.120 358)",
+          "oklch(25% 0.145 358)",
+          "oklch(35% 0.170 358)",
+          "oklch(48% 0.195 358)",
+          "oklch(60% 0.190 358)",
+          "oklch(72% 0.145 358)",
+          "oklch(84% 0.085 358)",
+          "oklch(95% 0.035 358)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero and final CTA headlines only; short uppercase phrases set as one image."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles and deliberate narrative line breaks."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Sparse Japanese explanatory copy over dark surfaces and photography."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Captions, counters, footer metadata, and compact controls."
+      }
+    },
+    "shadows": [
+      {
+        "name": "stack-weight",
+        "value": "0 32px 90px rgb(0 0 0 / 42%)",
+        "purpose": "Creates physical separation only where sticky media cards overlap."
+      },
+      {
+        "name": "secondary-cta-outline",
+        "value": "inset 0 0 0 1px rgb(245 239 230 / 42%)",
+        "purpose": "Defines the dark Plan your visit pill without lifting it from the image."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hero-image-intro",
+        "value": "2.2s expo.out; scale 1.13→1; brightness(0.5) saturate(0.75)→brightness(0.78) saturate(0.96)",
+        "purpose": "Lets the first crowd image open from a subdued darkroom state."
+      },
+      {
+        "name": "hero-word-intro",
+        "value": "1.25s expo.out; yPercent 115→0; rotate 2deg→0; stagger 0.12s; starts at 0.28s",
+        "purpose": "Reveals the two-line title as overlapping pulses."
+      },
+      {
+        "name": "hero-support-intro",
+        "value": "1s expo.out; opacity 0→1; translateY(24px)→0; starts at 0.9s",
+        "purpose": "Introduces the Japanese aside and sole scroll cue after the title."
+      },
+      {
+        "name": "scroll-cue-cycle",
+        "value": "2.1s cubic-bezier(0.32, 0.72, 0, 1) infinite; translateX(-100%)→100%",
+        "purpose": "Moves one fine optical line to indicate downward continuation."
+      },
+      {
+        "name": "manifesto-scrub",
+        "value": "ScrollTrigger start top 72%; end bottom 48%; scrub 1; opacity 0.12→1; stagger 0.08",
+        "purpose": "Turns the Japanese manifesto from latent text into a paced reading."
+      },
+      {
+        "name": "stack-card-scrub",
+        "value": "ScrollTrigger start top 88%; end top 38%; scrub 0.8; y 110px→0 and scale 0.96→1 after the first card",
+        "purpose": "Gives sticky cards controlled physical arrival without autonomous movement."
+      },
+      {
+        "name": "media-parallax-scrub",
+        "value": "ScrollTrigger start top bottom; end bottom top; scrub 1; yPercent -5→5; scale 1.08→1.02",
+        "purpose": "Adds restrained depth to selected stack and dense-grid photographs."
+      },
+      {
+        "name": "media-hover",
+        "value": "transform 1000ms and filter 800ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Opens the photographic development and reveals the expand affordance."
+      },
+      {
+        "name": "accordion-expand",
+        "value": "900ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Expands the focused desktop panel and restores image color and scale."
+      },
+      {
+        "name": "control-response",
+        "value": "500ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Reverses reel and lightbox circular controls with a restrained press."
+      },
+      {
+        "name": "cta-response",
+        "value": "550ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Scales the pill and sends its nested arrow two pixels toward the destination."
+      },
+      {
+        "name": "lightbox-enter",
+        "value": "700ms cubic-bezier(0.16, 1, 0.3, 1); opacity 0→1",
+        "purpose": "Separates image inspection from the scrolling narrative."
+      },
+      {
+        "name": "navigation-sequence",
+        "value": "600ms cubic-bezier(0.65, 0, 0.35, 1); 50ms indexed stagger after 500ms",
+        "purpose": "Moves navigation links upward before the menu close control enters."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce; skip all GSAP creation; stop the scroll-cue cycle; set affected CSS transitions and animations to 1ms with no delay",
+        "purpose": "Preserves all content and controls while removing scrubbed, repeated, and staged motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "gallery-mid",
+        "value": "900px"
+      },
+      {
+        "name": "navigation-mobile",
+        "value": "812px"
+      },
+      {
+        "name": "gallery-mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "navigation-link",
+      "description": "Fixed uppercase navigation label with a directional optical underline and explicit focus ring.",
+      "html": "<a class=\"ds-nav-link\" href=\"/gallery\">Gallery</a>",
+      "css": ".ds-nav-link { position: relative; display: inline-flex; min-height: 44px; padding: 0 1px; align-items: center; color: #f8f3e7; font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: clamp(10px, 0.78vw, 12px); font-weight: 500; line-height: 1; letter-spacing: 0.19em; text-decoration: none; text-transform: uppercase; } .ds-nav-link::after { position: absolute; right: 1px; bottom: 3px; left: 1px; height: 1px; content: \"\"; background: currentColor; transform: scaleX(0); transform-origin: right center; transition: transform 260ms cubic-bezier(0.65, 0, 0.35, 1); } .ds-nav-link:hover::after { transform: scaleX(1); transform-origin: left center; } .ds-nav-link:focus-visible { outline: 2px solid #f8f3e7; outline-offset: 4px; }"
+    },
+    {
+      "name": "Gallery Media Card",
+      "kind": "card",
+      "refersTo": "media-card",
+      "description": "Square-edged full-photo button that develops brighter and reveals a circular expand affordance.",
+      "html": "<button class=\"ds-media-card\" type=\"button\" aria-label=\"照明に包まれたダンスフロアを拡大表示\"><img class=\"ds-media-card__image\" src=\"/pure/gallery/party-crowd-007-021-dsc-0432.webp\" alt=\"照明に包まれたダンスフロア\"><span class=\"ds-media-card__shade\" aria-hidden=\"true\"></span><span class=\"ds-media-card__meta\"><span>Crowd</span><span>02</span></span><span class=\"ds-media-card__expand\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M9 4H4v5M15 20h5v-5M4 9l6-6M20 15l-6 6\"></path></svg></span></button>",
+      "css": ".ds-media-card { position: relative; display: block; width: min(100%, 540px); aspect-ratio: 4 / 5; overflow: hidden; padding: 0; border: 0; border-radius: 0; color: #f5efe6; background: #11131a; cursor: pointer; text-align: left; isolation: isolate; } .ds-media-card__image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 44%; filter: saturate(0.88) contrast(1.06) brightness(0.88); transform: scale(1.02); transition: transform 1000ms cubic-bezier(0.16, 1, 0.3, 1), filter 800ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-media-card__shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, transparent 56%, rgb(4 5 8 / 76%) 100%); } .ds-media-card__meta { position: absolute; right: 20px; bottom: 18px; left: 20px; display: flex; justify-content: space-between; gap: 20px; color: rgb(245 239 230 / 78%); font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; } .ds-media-card__expand { position: absolute; top: 18px; right: 18px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgb(245 239 230 / 44%); border-radius: 50%; color: #f5efe6; opacity: 0; transform: scale(0.8); transition: opacity 550ms cubic-bezier(0.16, 1, 0.3, 1), transform 550ms cubic-bezier(0.16, 1, 0.3, 1), background-color 550ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-media-card__expand svg { width: 17px; height: 17px; } .ds-media-card__expand path { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; } .ds-media-card:hover .ds-media-card__image, .ds-media-card:focus-visible .ds-media-card__image { filter: saturate(1.04) contrast(1.02) brightness(0.98); transform: scale(1.065); } .ds-media-card:hover .ds-media-card__expand, .ds-media-card:focus-visible .ds-media-card__expand { color: #080a10; background: #f5efe6; opacity: 1; transform: scale(1); } .ds-media-card:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; }"
+    },
+    {
+      "name": "Pulse Accordion Panel",
+      "kind": "card",
+      "refersTo": "media-card",
+      "description": "Tall photographic panel whose image color and width open together on hover or focus.",
+      "html": "<button class=\"ds-accordion\" type=\"button\" aria-label=\"紫色に発光するPURE 20のサインを拡大表示\"><img class=\"ds-accordion__image\" src=\"/pure/gallery/venue-signage-decor-001-004-kur-2900.webp\" alt=\"紫色に発光するPURE 20のサイン\"><span class=\"ds-accordion__shade\" aria-hidden=\"true\"></span><span class=\"ds-accordion__label\">Identity</span><span class=\"ds-accordion__index\" aria-hidden=\"true\">01</span></button>",
+      "css": ".ds-accordion { position: relative; display: block; width: min(100%, 360px); height: 540px; overflow: hidden; padding: 0; border: 0; border-radius: 0; color: #f5efe6; background: #11131a; cursor: pointer; text-align: left; isolation: isolate; } .ds-accordion__image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 48%; filter: saturate(0.72) brightness(0.64); transform: scale(1.04); transition: filter 900ms cubic-bezier(0.16, 1, 0.3, 1), transform 900ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-accordion__shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, transparent 48%, rgb(5 6 10 / 84%) 100%); } .ds-accordion__label { position: absolute; right: 22px; bottom: 28px; left: 22px; overflow: hidden; font-family: \"Migra\", var(--font-playfair), Georgia, serif; font-size: clamp(1.5rem, 2.5vw, 3.1rem); line-height: 0.95; letter-spacing: -0.03em; text-overflow: ellipsis; white-space: nowrap; } .ds-accordion__index { position: absolute; top: 20px; left: 20px; font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 8px; letter-spacing: 0.18em; } .ds-accordion:hover .ds-accordion__image, .ds-accordion:focus-visible .ds-accordion__image { filter: saturate(1) brightness(0.9); transform: scale(1); } .ds-accordion:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; }"
+    },
+    {
+      "name": "Reel Arrow Control",
+      "kind": "button",
+      "refersTo": "circular-control",
+      "description": "Circular optical-line control used to move the horizontal photo reel.",
+      "html": "<button class=\"ds-reel-arrow\" type=\"button\" aria-label=\"次の写真へ\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 12h16M14 6l6 6-6 6\"></path></svg></button>",
+      "css": ".ds-reel-arrow { display: grid; width: 52px; height: 52px; padding: 0; place-items: center; border: 1px solid rgb(245 239 230 / 20%); border-radius: 50%; color: #f5efe6; background: transparent; cursor: pointer; transition: color 500ms cubic-bezier(0.16, 1, 0.3, 1), background-color 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-reel-arrow svg { width: 19px; height: 19px; } .ds-reel-arrow path { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; } .ds-reel-arrow:hover { color: #080a10; background: #f5efe6; transform: scale(0.96); } .ds-reel-arrow:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; } .ds-reel-arrow:active { transform: scale(0.94); }"
+    },
+    {
+      "name": "Plan Your Visit CTA",
+      "kind": "button",
+      "refersTo": "cta-secondary",
+      "description": "Dark outlined secondary pill linking the gallery experience to access planning.",
+      "html": "<a class=\"ds-cta-secondary\" href=\"/access\"><span>Plan your visit</span><span class=\"ds-cta-secondary__icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M5 19 19 5M8 5h11v11\"></path></svg></span></a>",
+      "css": ".ds-cta-secondary { display: inline-flex; min-height: 62px; padding: 7px 7px 7px 28px; align-items: center; gap: 24px; border-radius: 999px; color: #f5efe6; background: rgb(8 10 16 / 78%); box-shadow: inset 0 0 0 1px rgb(245 239 230 / 42%); font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-decoration: none; text-transform: uppercase; transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-cta-secondary__icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; color: #f5efe6; background: #171923; transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-cta-secondary__icon svg { width: 18px; height: 18px; } .ds-cta-secondary__icon path { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; } .ds-cta-secondary:hover { transform: scale(0.98); } .ds-cta-secondary:hover .ds-cta-secondary__icon { transform: translate(2px, -2px) scale(1.04); } .ds-cta-secondary:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; } .ds-cta-secondary:active { transform: scale(0.96); }"
+    },
+    {
+      "name": "VIP and Contact CTA",
+      "kind": "button",
+      "refersTo": "cta-primary",
+      "description": "Bone-white primary pill that opens the existing VIP and contact flow.",
+      "html": "<button class=\"ds-cta-primary\" type=\"button\"><span>VIP &amp; Contact</span><span class=\"ds-cta-primary__icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M5 19 19 5M8 5h11v11\"></path></svg></span></button>",
+      "css": ".ds-cta-primary { display: inline-flex; min-height: 62px; padding: 7px 7px 7px 28px; align-items: center; gap: 24px; border: 0; border-radius: 999px; color: #080a10; background: #f5efe6; font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-cta-primary__icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; color: #f5efe6; background: #171923; transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-cta-primary__icon svg { width: 18px; height: 18px; } .ds-cta-primary__icon path { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; } .ds-cta-primary:hover { transform: scale(0.98); } .ds-cta-primary:hover .ds-cta-primary__icon { transform: translate(2px, -2px) scale(1.04); } .ds-cta-primary:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; } .ds-cta-primary:active { transform: scale(0.96); }"
+    },
+    {
+      "name": "Gallery Lightbox",
+      "kind": "custom",
+      "description": "Darkroom dialog with contained photography, close action, circular navigation, and image count.",
+      "html": "<div class=\"ds-lightbox\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Gallery image viewer\"><div class=\"ds-lightbox__stage\"><img src=\"/pure/gallery/dj-booth-037-dsc01262.webp\" alt=\"DJブースで機材を操作するDJ\"></div><button class=\"ds-lightbox__close\" type=\"button\"><span>Close</span><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"m5 5 14 14M19 5 5 19\"></path></svg></button><button class=\"ds-lightbox__arrow ds-lightbox__arrow--previous\" type=\"button\" aria-label=\"前の写真\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M20 12H4M10 6l-6 6 6 6\"></path></svg></button><button class=\"ds-lightbox__arrow ds-lightbox__arrow--next\" type=\"button\" aria-label=\"次の写真\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h16M14 6l6 6-6 6\"></path></svg></button><div class=\"ds-lightbox__caption\"><span>Sound</span><span>03 / 21</span></div></div>",
+      "css": ".ds-lightbox { position: relative; display: grid; width: min(100%, 900px); min-height: 520px; padding: 64px 76px; place-items: center; overflow: hidden; color: #f5efe6; background: rgb(4 5 8 / 96%); backdrop-filter: blur(18px); animation: ds-lightbox-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both; } .ds-lightbox__stage { position: relative; width: 82%; height: 380px; overflow: hidden; } .ds-lightbox__stage img { width: 100%; height: 100%; object-fit: contain; } .ds-lightbox__close { position: absolute; top: 20px; right: 20px; display: flex; min-height: 44px; padding: 0; align-items: center; gap: 12px; border: 0; color: #f5efe6; background: transparent; font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; } .ds-lightbox__close svg { width: 21px; height: 21px; } .ds-lightbox__arrow { position: absolute; top: 50%; display: grid; width: 52px; height: 52px; padding: 0; place-items: center; border: 1px solid rgb(245 239 230 / 38%); border-radius: 50%; color: #f5efe6; background: transparent; cursor: pointer; transform: translateY(-50%); transition: color 500ms cubic-bezier(0.16, 1, 0.3, 1), background-color 500ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-lightbox__arrow--previous { left: 18px; } .ds-lightbox__arrow--next { right: 18px; } .ds-lightbox__arrow svg { width: 20px; height: 20px; } .ds-lightbox path { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; } .ds-lightbox__arrow:hover { color: #080a10; background: #f5efe6; } .ds-lightbox__close:focus-visible, .ds-lightbox__arrow:focus-visible { outline: 2px solid #f5efe6; outline-offset: 4px; } .ds-lightbox__caption { position: absolute; right: 76px; bottom: 28px; left: 76px; display: flex; justify-content: space-between; gap: 24px; font-family: var(--font-open-sans), \"Open Sans\", sans-serif; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; } @keyframes ds-lightbox-enter { from { opacity: 0; } to { opacity: 1; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Night Pulse",
+    "overview": "Night Pulse は、夜を受動的なサムネイル一覧ではなく、記憶の中で重なる脈動として扱う。カーボンブラックの暗部、骨のような白、クラブ・マゼンタ、フルブリードの実写、映画的なクロップ、細い光学線が、写真の熱量を抑え込まず上品に編成する。\n\n体験の語りは静かな入場から始まり、人、音、光へと近づき、最後に来店またはVIP相談へ転換する。最初のビューポートでは、画面の軸を外した全高の群衆写真、二行のタイトル、その行内で生きる写真インセット、唯一のスクロール合図を重ねる。この構成は `/gallery` の物語表現であり、他ルートの固定テンプレートではない。",
+    "keyCharacteristics": [
+      "実写を主役にする暗い映画的な舞台",
+      "Migraの大きな編集的見出しとOpen Sansの精密な情報層",
+      "角の立った写真面、円形コントロール、ピル形CTAの対比",
+      "スクロールと重なりで生まれる脈動、細い線で整える操作性",
+      "鑑賞の最後だけに現れる来店とVIP相談の二つの明確な行動"
+    ],
+    "rules": [
+      {
+        "name": "The Rare Magenta Rule",
+        "body": "Club Magentaは方向を知らせる信号であり、写真と競う背景色にはしない。",
+        "section": "colors"
+      },
+      {
+        "name": "The Photograph Carries Color Rule",
+        "body": "大きな色彩は実写素材から得て、UIの彩度は抑える。",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Migraは感情と章立て、Open Sansは情報と操作に限定し、役割を交換しない。",
+        "section": "typography"
+      },
+      {
+        "name": "The Short Display Rule",
+        "body": "大見出しは広く短く組み、説明文を大見出しのサイズへ昇格させない。",
+        "section": "typography"
+      },
+      {
+        "name": "The Asymmetric Pulse Rule",
+        "body": "等幅の反復ではなく、写真の幅、縦位置、stickyの重なりを変えてリズムをつくる。ただし主要被写体と文字の可読性を犠牲にしない。",
+        "section": "layout"
+      },
+      {
+        "name": "The Shadow Has Weight Rule",
+        "body": "影はsticky stackの物理的な重なりにだけ使い、すべての写真を浮遊カードにしない。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Darkroom Layer Rule",
+        "body": "深度は黒の段差、写真の現像、薄いwash、grainでつくり、汎用的なガラスカードへ置き換えない。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Three-Silhouette Rule",
+        "body": "鋭い写真面、円形操作、ピル形の行動導線だけで形の語彙を構成する。",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do 実在するPURE Osakaの写真を最大の色面として使い、UIは写真の読みやすさを支える。",
+      "Do Migraを短い見出し、Open Sansを情報と操作に使い分ける。",
+      "Do デスクトップとモバイルの両方で、顔、ロゴ、機材が残る`object-position`を画像ごとに確認する。",
+      "Do キーボードフォーカス、lightboxのフォーカス復帰、`prefers-reduced-motion`を保持する。",
+      "Do 来店とVIP相談の二つのCTAを鑑賞体験の最後に同じ重要度の操作品質で示す。"
+    ],
+    "donts": [
+      "Don't 写真を均等な小型サムネイルの受動的アーカイブへ戻す。",
+      "Don't Club Magentaを大面積に塗り、実写の赤・青紫・マゼンタと競合させる。",
+      "Don't すべての面へ角丸、影、ガラス効果を加える。",
+      "Don't `/gallery` 固有のstack、accordion、dense gridの順序を、全ルートの必須テンプレートとして扱う。",
+      "Don't 未確認の価格、イベント、出演者、実績、または安全性を欠く写真を追加する。"
+    ]
+  }
+}

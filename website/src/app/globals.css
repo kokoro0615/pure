@@ -14,7 +14,119 @@
   font-display: swap;
 }
 
-:root { color-scheme: light; }
+/* ============================================================
+   PURE Osaka - global design tokens
+   One definition per token. Routes must consume these rather
+   than redeclaring them; every drift found in review (six
+   near-blacks, three bone whites, five accents, seven ad-hoc
+   easing curves) came from per-module redefinition.
+   Each colour is declared hex-first, then OKLCH, so the ~3% of
+   browsers without OKLCH keep the sRGB value.
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  /* --- ink stack: value-separated dark --- */
+  --ink-0: #0b0a10;
+  --ink-0: oklch(0.135 0.012 300);
+  --ink-1: #14131b;
+  --ink-1: oklch(0.178 0.014 300);
+  --ink-2: #1c1b25;
+  --ink-2: oklch(0.222 0.016 300);
+
+  /* --- foreground --- */
+  --bone: #f6f1e7;
+  --bone: oklch(0.955 0.014 85);
+  --bone-soft: rgb(246 241 231 / 64%);
+  --bone-soft: color-mix(in oklch, var(--bone) 64%, transparent);
+  --bone-faint: rgb(246 241 231 / 50%);
+  --bone-faint: color-mix(in oklch, var(--bone) 50%, transparent);
+  --edge: rgb(246 241 231 / 14%);
+  --edge: color-mix(in oklch, var(--bone) 14%, transparent);
+  --edge-strong: rgb(246 241 231 / 40%);
+  --edge-strong: color-mix(in oklch, var(--bone) 40%, transparent);
+  --tint: rgb(246 241 231 / 4%);
+  --tint: color-mix(in oklch, var(--bone) 4%, transparent);
+
+  /* --- the single accent ---
+     Two values, one hue. The brand magenta measures 4.1:1 on
+     --ink-0, so it cannot carry text; --accent is the lightened
+     sibling (5.5:1) used for type and numerals, --accent-deep is
+     the brand value kept for rules, fills and gradients.
+     Per-room colour (the gold of the VIP room, the violet of the
+     corridor) belongs to the photographs, never to the UI. */
+  --accent: #e8467f;
+  --accent: oklch(0.645 0.192 6);
+  --accent-deep: #d42966;
+  --accent-deep: oklch(0.575 0.203 8);
+  --accent-veil: rgb(232 70 127 / 18%);
+  --accent-veil: color-mix(in oklch, var(--accent) 18%, transparent);
+  --accent-glow: color-mix(in oklch, var(--accent) 40%, transparent);
+  /* Crest of the foil sweep on /vip: the accent hue lifted, not a
+     second colour. Derived so it moves with --accent. */
+  --accent-highlight: #ffd7e6;
+  --accent-highlight: oklch(from var(--accent) 0.93 calc(c * 0.45) h);
+
+  /* --- type roles --- */
+  --font-display: "Migra", var(--font-playfair), Georgia, serif;
+  --font-meta: "Univers", var(--font-open-sans), system-ui, sans-serif;
+  --font-jp-display: var(--font-shippori), "Hiragino Mincho ProN",
+    "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+  /* --font-noto-jp is loaded by next/font in layout.tsx. Without it the
+     whole stack resolved to a system face that does not exist on
+     Android or Linux, so Japanese body copy fell back to a generic. */
+  --font-jp: var(--font-noto-jp), "Hiragino Sans", "Yu Gothic", YuGothic,
+    sans-serif;
+
+  /* --- motion --- */
+  --ease-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-nav: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur-ui: 180ms;
+  --dur-panel: 240ms;
+  --dur-answer: 320ms;
+  --dur-hero: 560ms;
+
+  /* --- micro type roles ---
+     The label sizes were hardcoded per module at 9px and 10px. At 9px on a
+     phone a tracked uppercase label is decoration, not information, so the
+     two roles are tokens now and the phone breakpoint lifts them. */
+  --fs-micro: 10px;
+  --fs-label: 11px;
+
+  /* --- layout ---
+     --nav-safe is the band the fixed header owns. It used to be derived from
+     viewport *height* (10.5vh), which has nothing to do with how tall the
+     header actually is: on a 390x844 phone it resolved to 88px while the
+     two-row mobile header measured 102px, so every route's first line of
+     copy was drawn underneath the navigation. It is now measured from the
+     header's own geometry, plus the notch. */
+  --gutter: clamp(20px, 4.4vw, 76px);
+  --header-top: clamp(18px, 2vw, 28px);
+  --header-row: 48px;
+  --nav-safe: calc(
+    max(env(safe-area-inset-top, 0px), var(--header-top)) + var(--header-row) +
+      clamp(22px, 3.4vh, 40px)
+  );
+  --section-pad: clamp(104px, 13vw, 200px);
+
+  /* --- z-index scale: every layer names itself here --- */
+  --z-base: 1;
+  --z-raised: 20;
+  --z-spine: 40;
+  --z-sticky: 60;
+  --z-grain: 80;
+  --z-header: 99;
+  --z-panel: 90;
+  --z-overlay: 200;
+  --z-modal: 300;
+  /* The entry veil outranks the modal layer: it is the only thing on screen
+     while it is up, and it is gone before anything else can open. */
+  --z-gate: 400;
+}
 
 * { box-sizing: border-box; }
 
@@ -22,8 +134,8 @@ html, body { margin: 0; min-height: 100%; }
 
 body {
   overflow: hidden;
-  background: #0b0b0d;
-  color: #f8f3e7;
+  background: var(--ink-0);
+  color: var(--bone);
   font-family: var(--font-lora), "Lora", serif;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -33,172 +145,316 @@ button, input, select, textarea { font: inherit; }
 button { padding: 0; border: 0; color: inherit; background: transparent; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 
+.pure-skip-link {
+  position: fixed;
+  z-index: 300;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 22px;
+  align-items: center;
+  border-radius: 999px;
+  color: var(--ink-0);
+  background: var(--accent);
+  font-family: var(--font-meta);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.pure-skip-link:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 3px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.pure-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The hero title and its two destinations sit over live video, so the
+   frame carries its own ground rather than trusting whatever pixel is
+   behind them this second. */
+.clubraia-hero::after {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 56%;
+  content: "";
+  background: linear-gradient(
+    0deg,
+    rgb(6 5 10 / 88%) 0%,
+    rgb(6 5 10 / 58%) 34%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 .the-cross-contact {
   position: fixed;
   z-index: 200;
   inset: 0;
-  min-height: 100vh;
-  padding: 40px 0 0 28px;
-  background: #d9d9d9 url("/the-cross/static-noise.gif") repeat;
-  color: #252a2e;
-  font-family: "Univers", Arial, sans-serif;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(12px, 2vw, 40px) clamp(8px, 2vw, 28px)
+    clamp(12px, 2vw, 40px) clamp(8px, 2vw, 28px);
+  animation: the-cross-contact-enter var(--dur-panel) var(--ease-enter) both;
+  background: var(--ink-0);
+  color: var(--bone);
+  color-scheme: dark;
+  font-family: var(--font-meta);
+}
+
+@keyframes the-cross-contact-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(3%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .the-cross-contact__panel {
   position: relative;
-  min-height: calc(100vh - 40px);
-  padding: 98px 98px 98px 68px;
-  background: #fff;
+  min-height: calc(100svh - clamp(24px, 4vw, 80px));
+  padding: clamp(88px, 9vw, 120px) clamp(22px, 5vw, 92px) clamp(40px, 5vw, 84px);
+  border: 1px solid var(--edge);
+  background: var(--ink-1);
 }
 
 .the-cross-contact__close {
   position: absolute;
-  top: 34px;
-  left: 34px;
+  top: clamp(20px, 2.4vw, 34px);
+  left: clamp(16px, 2.4vw, 34px);
   display: grid;
   width: 50px;
   height: 50px;
   padding: 0;
   place-items: center;
-  border: 1px solid rgba(37, 42, 46, .2);
+  border: 1px solid var(--edge-strong);
   border-radius: 50%;
-  background: #fff;
+  background: var(--ink-0);
+  transition: border-color var(--dur-ui) var(--ease-ui);
 }
 
-.the-cross-contact__close img { width: 15px; height: 15px; }
+.the-cross-contact__close img { width: 15px; height: 15px; filter: invert(1); }
 
+@media (hover: hover) and (pointer: fine) {
+  .the-cross-contact__close:hover { border-color: var(--bone); }
+}
+
+.the-cross-contact__close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Two columns that both start at the top. The old grid pushed the form
+   down by a hard `margin-top: 275px`, which opened roughly 540px of empty
+   panel on the left at desktop and read as a layout fault. */
 .the-cross-contact__grid {
   display: grid;
-  min-height: calc(100vh - 236px);
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: 30px;
+  gap: clamp(44px, 6vw, 96px);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  align-items: start;
 }
 
-.the-cross-contact__intro { display: flex; flex-direction: column; }
+.the-cross-contact__intro { display: grid; gap: clamp(24px, 3vw, 40px); }
 
 .the-cross-contact__title {
   margin: 0;
-  color: #2b2a2b;
-  font-family: "Migra", Georgia, serif;
-  font-size: clamp(78px, 7.1vw, 102px);
+  font-family: var(--font-display);
+  font-size: clamp(56px, 7.1vw, 102px);
   font-weight: 400;
-  line-height: .995;
-  letter-spacing: -.06em;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
 }
 
-.the-cross-contact__title span { display: block; }
-.the-cross-contact__title span:nth-child(1) { margin-left: 42px; }
-.the-cross-contact__title span:nth-child(3) { margin-left: 83px; }
-
-.the-cross-contact__address {
-  width: fit-content;
-  margin: auto 0 1px 2px;
-  color: #252a2e;
-  font-size: 15px;
-  line-height: 1.48;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+.the-cross-contact__standfirst {
+  max-width: 24em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 1vw, 14.5px);
+  line-height: 2;
+  letter-spacing: 0.04em;
 }
 
-.the-cross-contact__form {
-  align-self: center;
-  width: 100%;
-  margin-top: 275px;
+.the-cross-contact__direct {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--edge);
 }
 
-.the-cross-contact__form label {
-  display: block;
-  height: 61px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgba(37, 42, 46, .4);
+.the-cross-contact__direct > div {
+  display: grid;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--edge);
+  gap: 6px;
 }
 
-.the-cross-contact__form label > span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.the-cross-contact__form input,
-.the-cross-contact__form select,
-.the-cross-contact__form textarea {
-  display: block;
-  width: 100%;
-  height: 59px;
-  padding: 16px 12px 16px 0;
-  border: 0;
-  outline: 0;
-  color: #252a2e;
-  background: transparent;
-  font-size: 15px;
-  line-height: 20px;
+.the-cross-contact__direct dt {
+  color: var(--bone-faint);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.the-cross-contact__form select {
-  appearance: auto;
-  height: 59px;
-  margin-top: 0;
-  cursor: pointer;
+.the-cross-contact__direct dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.the-cross-contact__form label:focus-within { border-color: #e27469; }
-.the-cross-contact__form label:hover { border-color: #dfbd69; }
+.the-cross-contact__direct a {
+  text-decoration: underline;
+  text-decoration-color: var(--edge-strong);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--dur-ui) var(--ease-ui);
+}
 
-.the-cross-contact__message { height: 120px !important; margin-top: 1px; }
-.the-cross-contact__message textarea { height: 119px; resize: vertical; }
+@media (hover: hover) and (pointer: fine) {
+  .the-cross-contact__direct a:hover { text-decoration-color: var(--accent); }
+}
 
-.the-cross-contact__send {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 40px 0 13px auto;
-  padding: 0;
+.the-cross-contact__form { display: grid; gap: 22px; }
+
+/* Visible labels above the control. The four fields previously carried
+   their label only as a placeholder, so the question disappeared the
+   moment the visitor started answering it. */
+.the-cross-contact__field { display: grid; gap: 8px; }
+
+.the-cross-contact__field label {
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.the-cross-contact__field input,
+.the-cross-contact__field select,
+.the-cross-contact__field textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 12px 10px 0;
   border: 0;
-  color: #252a2e;
+  border-bottom: 1px solid var(--edge-strong);
+  outline: 0;
+  color: var(--bone);
   background: transparent;
-  font-family: "Migra", Georgia, serif;
-  font-size: 20px;
-  line-height: 24px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  transition: border-color var(--dur-ui) var(--ease-ui);
 }
 
-.the-cross-contact__send img { width: 24px; height: 24px; }
-.the-cross-contact__success { margin: 0 0 9px; color: #e27469; font-size: 13px; }
-.the-cross-contact__note { max-width: 610px; margin: 0; font-size: 15px; line-height: 1.55; }
+.the-cross-contact__field select { cursor: pointer; }
+.the-cross-contact__field option { color: var(--bone); background: var(--ink-1); }
+.the-cross-contact__message { min-height: 118px; resize: vertical; }
 
-@media (max-width: 700px) {
-  .the-cross-contact { min-height: 100vh; padding: 60px 8px 0; }
-  .the-cross-contact__panel { min-height: 784px; padding: 120px 22px 60px; }
-  .the-cross-contact__close { top: 44px; left: 16px; width: 44px; height: 44px; }
-  .the-cross-contact__grid { display: block; min-height: 0; }
-  .the-cross-contact__title { font-size: 64px; line-height: .94; letter-spacing: -.065em; }
-  .the-cross-contact__title span:nth-child(1) { margin-left: 30px; }
-  .the-cross-contact__title span:nth-child(3) { margin-left: 52px; }
-  .the-cross-contact__address { margin: 25px 0 38px; font-size: 15px; line-height: 1.35; }
-  .the-cross-contact__form { margin-top: 0; }
-  .the-cross-contact__form label { height: 61px; margin-bottom: 15px; }
-  .the-cross-contact__message { height: 120px !important; }
-  .the-cross-contact__send { margin-top: 22px; margin-bottom: 0; }
-  .the-cross-contact__note, .the-cross-contact__success { margin-top: 20px; }
+@media (hover: hover) and (pointer: fine) {
+  .the-cross-contact__field input:hover,
+  .the-cross-contact__field select:hover,
+  .the-cross-contact__field textarea:hover { border-color: var(--bone-soft); }
 }
 
+/* `outline: 0` shipped with no replacement, so the only signal was a border
+   tint identical to hover. Focus now has its own, distinct indicator. */
+.the-cross-contact__field input:focus-visible,
+.the-cross-contact__field select:focus-visible,
+.the-cross-contact__field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-color: var(--accent);
+}
+
+.the-cross-contact__hint {
+  margin: 0;
+  min-height: 1lh;
+  color: var(--bone-faint);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+/* The submit control is the same plate as every other action in the
+   building, so it is `.pure-cta` in the markup. Only the reach is local:
+   on a form the primary action wants the full column, not an inline
+   width, so that the thumb lands on it without aiming. */
+.the-cross-contact__form .pure-cta {
+  width: 100%;
+  max-width: 320px;
+  justify-self: start;
+}
+
+.the-cross-contact__status {
+  margin: 0;
+  min-height: 1lh;
+  color: var(--bone-soft);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  /* No frame inside a frame: on a phone the panel is the page, so the outer
+     inset, the hairline and the second background value all come off. */
+  .the-cross-contact { padding: 0; }
+
+  .the-cross-contact__panel {
+    min-height: 100svh;
+    padding: 92px 20px calc(48px + env(safe-area-inset-bottom));
+    border: 0;
+    background: var(--ink-0);
+  }
+  .the-cross-contact__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .the-cross-contact__form .pure-cta { max-width: none; }
+}
+
+/* Authored still state, not `animation: none`: every element lands where
+   the motion would have left it, so nothing is missing or half-placed. */
 /*
- * The source logo is a 1024px square, but its visible mark only occupies
- * x:203–819 and y:169–864. Keep that source asset intact and crop its baked-in
- * transparent padding here, so placement and sizing follow the visible mark.
+ * The 1024px source has baked-in transparent padding. Its solid mark occupies
+ * x:203–819 and y:169–864; this crop keeps a small source-pixel guard around
+ * that mark so browser resampling cannot shave off an antialiased edge.
+ *
+ * The image is translated by percentages of its own 1024px square. Do not use
+ * top/left percentages here: those resolve against the non-square crop box and
+ * shift the image too far upward.
  */
 .pure-corner-logo {
   --pure-logo-width: clamp(58px, 5.2vw, 76px);
+  /* The fixed header is pointer-events: none so it stops swallowing taps
+     across the top of every route; its two interactive children opt back in. */
+  pointer-events: auto;
   position: absolute;
-  top: max(env(safe-area-inset-top), clamp(18px, 2vw, 28px));
+  top: max(env(safe-area-inset-top), var(--header-top));
   left: max(env(safe-area-inset-left), clamp(20px, 3.5vw, 52px));
   display: block;
   width: var(--pure-logo-width);
-  aspect-ratio: 617 / 696;
+  aspect-ratio: 623 / 699;
   overflow: hidden;
   filter: drop-shadow(0 5px 12px rgb(0 0 0 / 38%));
   transition: filter 180ms ease, transform 180ms ease;
@@ -206,12 +462,13 @@ a { color: inherit; text-decoration: none; }
 
 .pure-corner-logo img {
   position: absolute;
-  top: -27.4%;
-  left: -32.9%;
+  top: 0;
+  left: 0;
   display: block;
-  width: 166%;
+  width: 164.36597%;
   max-width: none;
   height: auto;
+  transform: translate(-19.43359375%, -16.30859375%);
 }
 
 .pure-corner-logo:hover {
@@ -226,8 +483,9 @@ a { color: inherit; text-decoration: none; }
 
 .clubraia-hero {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   isolation: isolate;
   background: #000;
@@ -246,92 +504,327 @@ a { color: inherit; text-decoration: none; }
 .clubraia-bg-slide { opacity: 0; transition: opacity 1.2s ease; }
 .clubraia-bg-slide.is-active { opacity: 1; }
 .clubraia-bg-image { object-fit: cover; }
+/* Edge falloff only. The floor the title and the two destinations stand on
+   is `.clubraia-hero::after`; measured against the brightest frame of the
+   three clips, that one layer already holds bone type at 7.7:1, so this
+   element stays a vignette instead of becoming a second scrim. */
 .clubraia-vignette {
   z-index: 2;
   pointer-events: none;
   background: radial-gradient(ellipse at center, transparent 15%, rgb(0 0 0 / 28%) 55%, rgb(0 0 0 / 80%) 100%);
 }
 
-.clubraia-loading {
-  position: absolute;
-  z-index: 20;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: rgb(5 5 7 / 73%);
-  opacity: 1;
-  transition: opacity 900ms ease, visibility 900ms ease;
-}
-
-.clubraia-loading.is-hidden { visibility: hidden; opacity: 0; pointer-events: none; }
-.clubraia-loading.is-active ~ .hero-slider-content,
-.clubraia-loading.is-active ~ .clubraia-page-dots,
-.clubraia-loading.is-active ~ .clubraia-slider-navigation,
-.clubraia-loading.is-active ~ .clubraia-slider-number { opacity: 0; pointer-events: none; }
-.clubraia-loading::before {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: linear-gradient(180deg, rgb(0 0 0 / 40%), rgb(0 0 0 / 68%));
-}
-
-.clubraia-loading-enter {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  justify-items: center;
-  color: #fff;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.pure-loading-logo {
-  position: absolute;
-  top: calc(50% - 122px);
-  left: 50%;
-  z-index: 1;
-  color: #c39b54;
-  font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(58px, 8vw, 116px);
-  font-weight: 700;
-  letter-spacing: 18px;
-  transform: translateX(-50%);
-  text-shadow: 0 0 42px rgb(195 155 84 / 42%);
-}
-
-.clubraia-loading-enter h1,
-.clubraia-loading-enter h3 { margin: 0; font-family: var(--font-open-sans), sans-serif; font-weight: 400; }
-.clubraia-loading-enter h1 { font-size: clamp(24px, 3.9vw, 56px); letter-spacing: clamp(8px, 1.66vw, 24px); line-height: 1.1; }
-.clubraia-loading-enter h3 { margin-top: 48px; font-size: clamp(11px, 1.4vw, 20px); letter-spacing: clamp(6px, 1.66vw, 24px); }
-.clubraia-loading-button {
-  margin-top: 36px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgb(255 255 255 / 75%);
-  color: #fff;
-  font: 400 12px/1 var(--font-open-sans), sans-serif;
-  letter-spacing: 7px;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
+/* The two destinations stay above the pager on every viewport. */
 .hero-slider-content {
   position: absolute;
   z-index: 4;
-  top: 50%;
-  left: 50%;
-  width: min(88vw, 900px);
-  transform: translate(-50%, -50%);
+  right: 0;
+  bottom: clamp(96px, 17vh, 168px);
+  left: 0;
+  display: grid;
+  justify-items: center;
+  padding: 0 max(20px, env(safe-area-inset-left));
   text-align: center;
 }
-.clubraia-slide-title { display: none; color: #fff; text-decoration: none; }
-.clubraia-slide-title.active { display: block; }
-.clubraia-slide-title h2 { margin: 0; font-size: clamp(36px, 4.5vw, 70px); font-weight: 400; letter-spacing: clamp(8px, 1.15vw, 18px); line-height: 1.05; text-transform: uppercase; }
-.clubraia-slide-title h6 { margin: 58px 0 0; font-family: var(--font-open-sans), sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 7px; text-transform: uppercase; }
 
-.clubraia-page-dots { position: absolute; z-index: 5; right: 5vw; bottom: 7vh; display: grid; gap: 10px; }
-.clubraia-page-dot { width: 34px; padding: 0; border: 0; color: rgb(255 255 255 / 50%); background: transparent; font-family: var(--font-open-sans), sans-serif; font-size: 10px; letter-spacing: 2px; }
-.clubraia-page-dot::after { display: block; width: 100%; height: 1px; margin-top: 5px; content: ""; background: currentColor; }
-.clubraia-page-dot.is-selected { color: #fff; }
+/* ============================================================
+   .pure-cta - the one call to action in the building
+   ============================================================
+   Every route used to draw its own copy of the same object: a
+   999px pill, an 11px tracked label, and a circled diagonal
+   arrow parked against the right edge - stretched to full width
+   on phones with `space-between`, so the label sat at one edge
+   and the arrow at the other with a hand's width of nothing
+   between them. Five modules, one shape, and that shape is the
+   single most reproduced button on the generated web. Nothing
+   in it came from PURE.
+
+   This one does. The venue's own object is a lit sign plate:
+   hard-edged, bone, and it *comes on*. So the plate is square
+   (the design system's `rounded.square`, the same edge the photo
+   faces and menu tiles use), and on hover the carbon floods in
+   from the left with a magenta filament along the bottom edge -
+   the same ignition the entry veil plays, at button scale.
+
+   The mark is a rule with an arrowhead, not an arrow in a
+   circle: the hero's own prev/next controls have always been a
+   112px hairline plus an arrow, so this is the site's existing
+   gesture rather than a borrowed one. It extends on hover
+   instead of spinning.
+   ============================================================ */
+.pure-cta {
+  position: relative;
+  display: inline-flex;
+  min-height: 58px;
+  padding: 0 clamp(24px, 2.1vw, 32px);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  gap: clamp(15px, 1.5vw, 21px);
+  border-radius: 2px;
+  color: var(--ink-0);
+  background: var(--bone);
+  font-family: var(--font-meta);
+  font-size: clamp(11.5px, 0.92vw, 13px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* Contact plus ambient: the plate sits ON the photograph, never
+     floats above it. Offset and blur, never a flat halo. */
+  box-shadow:
+    0 2px 4px rgb(4 3 8 / 26%),
+    0 18px 40px rgb(4 3 8 / 30%);
+  touch-action: manipulation;
+  transition:
+    transform var(--dur-ui) var(--ease-ui),
+    color 260ms var(--ease-emphasis),
+    box-shadow var(--dur-ui) var(--ease-ui);
+}
+
+/* The plate lighting up. A scaled pseudo-element, so the hot path
+   stays transform-only; `z-index: -1` keeps it above the plate's
+   own background and below the label. */
+.pure-cta::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: var(--ink-0);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 460ms var(--ease-emphasis);
+}
+
+/* The filament. Accent as a 1px rule, never as a text field. */
+.pure-cta::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 520ms var(--ease-emphasis) 60ms;
+}
+
+.pure-cta__mark {
+  display: block;
+  width: 28px;
+  height: 10px;
+  flex: none;
+  overflow: visible;
+  transition: transform var(--dur-panel) var(--ease-emphasis);
+}
+
+.pure-cta__mark [data-rule] {
+  transform-origin: left center;
+  transform-box: fill-box;
+  transition: transform var(--dur-panel) var(--ease-emphasis);
+}
+
+/* Quiet alternative: no plate, no shadow. The label stands on the
+   same 1px rule the header navigation draws under itself. */
+.pure-cta.is-ghost {
+  min-height: 44px;
+  padding: 0 2px;
+  gap: 12px;
+  border-radius: 0;
+  color: var(--bone);
+  background: none;
+  box-shadow: none;
+}
+
+.pure-cta.is-ghost::before { content: none; }
+
+.pure-cta.is-ghost::after {
+  bottom: 8px;
+  background: currentColor;
+  opacity: 0.4;
+  transform: scaleX(1);
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pure-cta:hover {
+    color: var(--bone);
+    transform: translateY(-2px);
+    box-shadow:
+      0 3px 6px rgb(4 3 8 / 28%),
+      0 24px 52px rgb(4 3 8 / 34%);
+  }
+
+  .pure-cta:hover::before,
+  .pure-cta:hover::after { transform: scaleX(1); }
+
+  .pure-cta:hover .pure-cta__mark { transform: translateX(4px); }
+  .pure-cta:hover .pure-cta__mark [data-rule] { transform: scaleX(1.32); }
+
+  .pure-cta.is-ghost:hover {
+    color: var(--bone);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .pure-cta.is-ghost:hover::after { opacity: 1; }
+}
+
+.pure-cta:active { transform: scale(0.985); }
+.pure-cta.is-ghost:active { transform: scale(0.99); }
+
+.pure-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.pure-cta.is-ghost:focus-visible { outline-offset: 6px; }
+
+/* Two destinations, two weights. The night is the offer, so it keeps the
+ * plate; the practical question is a ruled link. One dominant object, one
+ * quiet alternative. */
+.pure-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Wide enough that the quiet link's hairline never reads as part of the
+     plate: measured at 834px, where the old floor left 24px. */
+  gap: clamp(26px, 3.4vw, 46px);
+  flex-wrap: wrap;
+}
+
+/* The hero's bottom rail.
+ *
+ * On a desktop this is only a position: the pager sits bottom-right and the
+ * two accounts live in the header, so `.pure-hero-social` is switched off
+ * here and the rail collapses to the pager it wraps.
+ *
+ * On a phone the header is one row and has no space for the accounts — which
+ * is how they came to be missing from the home screen entirely. They belong
+ * here instead: the rail becomes a ruled bar across the foot of the hero,
+ * with where-you-are on the left and where-to-follow on the right. */
+.pure-hero-rail {
+  position: absolute;
+  z-index: 5;
+  right: 5vw;
+  bottom: 7vh;
+  display: grid;
+  justify-items: end;
+  gap: 14px;
+}
+
+.pure-hero-social { display: none; }
+
+/* The two accounts as marks on the rail.
+ *
+ * A circle, because that is what `social-control` has always been in this
+ * system and because the round mark reads against the square CTA plate
+ * rather than competing with it. What is new is the state: the ring floods
+ * bone from its own centre and the glyph inverts to carbon — the same "the
+ * sign comes on" move `.pure-cta` plays, at the scale of a lamp. */
+.pure-hero-social a {
+  position: relative;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  place-items: center;
+  isolation: isolate;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  color: var(--bone);
+  touch-action: manipulation;
+  transition:
+    color 240ms var(--ease-emphasis),
+    border-color var(--dur-ui) var(--ease-ui);
+}
+
+.pure-hero-social a::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  border-radius: 50%;
+  background: var(--bone);
+  transform: scale(0);
+  transition: transform 320ms var(--ease-emphasis);
+}
+
+.pure-hero-social svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pure-hero-social a:hover {
+    color: var(--ink-0);
+    border-color: var(--bone);
+  }
+
+  .pure-hero-social a:hover::before { transform: scale(1); }
+}
+
+/* Touch has no hover, so the press is where the mark answers. */
+.pure-hero-social a:active {
+  color: var(--ink-0);
+  border-color: var(--bone);
+}
+
+.pure-hero-social a:active::before { transform: scale(1); }
+
+.pure-hero-social a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.clubraia-page-dots {
+  display: grid;
+  gap: 10px;
+}
+
+.clubraia-page-dot {
+  display: grid;
+  width: 44px;
+  min-height: 32px;
+  padding: 0;
+  align-content: center;
+  border: 0;
+  color: var(--bone-soft);
+  background: transparent;
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.2em;
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+
+/* Three ticks on a scale, one of them lit. Drawing every rule in the text
+   colour gave the row three equal underlines and left the state to colour
+   alone; this way the signal is the presence of light, not the hue. */
+.clubraia-page-dot::after {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 5px;
+  content: "";
+  background: var(--edge);
+  transition: background-color var(--dur-ui) var(--ease-ui);
+}
+
+.clubraia-page-dot.is-selected { color: var(--bone); }
+
+/* Accent as a signal, not a surface: a 34x1px rule under the night you are
+   looking at, the same "you are here" gesture the header nav draws. */
+.clubraia-page-dot.is-selected::after { background: var(--accent); }
+
+.clubraia-page-dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 
 .clubraia-slider-navigation { position: absolute; z-index: 5; inset: 0; pointer-events: none; }
 .clubraia-slider-button {
@@ -345,7 +838,7 @@ a { color: inherit; text-decoration: none; }
   background: transparent;
   pointer-events: auto;
   transform: translateY(-50%);
-  transition: width 300ms var(--raia-ease, ease), transform 300ms var(--raia-ease, ease);
+  transition: transform var(--dur-panel) var(--ease-ui);
 }
 .clubraia-slider-button img { position: relative; z-index: 1; width: auto; height: 23px; }
 .clubraia-slider-button::after {
@@ -354,32 +847,137 @@ a { color: inherit; text-decoration: none; }
   width: 112px;
   height: 1px;
   content: "";
-  background: rgb(255 255 255 / 50%);
-  transition: background-color 300ms ease;
+  background: var(--edge-strong);
+  transition:
+    background-color var(--dur-panel) var(--ease-ui),
+    transform var(--dur-panel) var(--ease-ui);
 }
 .clubraia-slider-button-prev { justify-content: flex-start; }
-.clubraia-slider-button-prev::after { left: 22px; }
+.clubraia-slider-button-prev::after { left: 22px; transform-origin: left center; }
 .clubraia-slider-button-next { justify-content: flex-end; }
-.clubraia-slider-button-next::after { right: 24px; }
-.clubraia-slider-button:hover { width: 170px; }
+.clubraia-slider-button-next::after { right: 24px; transform-origin: right center; }
+.clubraia-slider-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clubraia-slider-button:hover::after { transform: scaleX(1.3); }
+}
 .clubraia-slider-button:hover::after { background: #fff; }
 .clubraia-slider-button-prev { left: 4vw; }
 .clubraia-slider-button-next { right: 4vw; }
-.clubraia-slider-number { position: absolute; z-index: 5; bottom: 6vh; left: 5vw; font-family: var(--font-open-sans), sans-serif; font-size: 11px; letter-spacing: 3px; }
+
+/* A 9px tracked label is decoration at arm's length, and a tablet is held
+   at arm's length too — the lift is not a phone-only concern. */
+@media (max-width: 1024px) {
+  :root {
+    --fs-micro: 10.5px;
+    --fs-label: 11.5px;
+  }
+}
 
 @media (max-width: 812px) {
-  .pure-loading-logo { top: calc(50% - 105px); font-size: 62px; letter-spacing: 10px; }
-  .clubraia-loading-enter h3 { margin-top: 28px; }
-  .hero-slider-content { width: 88vw; }
-  .clubraia-slide-title h2 { font-size: 32px; letter-spacing: 10px; line-height: 1.5; }
-  .clubraia-slide-title h6 { margin-top: 30px; }
-  .clubraia-slider-button { top: auto; bottom: 55px; width: 80px; height: 45px; transform: none; }
-  .clubraia-slider-button-prev { left: 4vw; }
-  .clubraia-slider-button-next { right: 4vw; }
-  .clubraia-slider-button img { height: 18px; }
-  .clubraia-slider-button::after { width: 55px; }
-  .clubraia-slider-button-prev::after { left: 18px; }
-  .clubraia-slider-button-next::after { right: 20px; }
-  .clubraia-page-dots { display: none; }
-  .clubraia-slider-number { bottom: 28px; left: 50%; transform: translateX(-50%); }
+  :root {
+    /* The phone header is one 44px row, not two stacked ones. */
+    --header-row: 44px;
+  }
+
+  /* The plate stretches to the column, but the label and its mark stay one
+     unit in the middle of it. */
+  .pure-cta {
+    width: 100%;
+    max-width: 420px;
+    min-height: 56px;
+    font-size: 12px;
+  }
+
+  .pure-cta.is-ghost { width: auto; min-height: 44px; }
+
+  /* Optically centred on the 44px control row rather than hung from the
+     same top edge: the mark is taller than the labels beside it. */
+  .pure-corner-logo {
+    --pure-logo-width: 50px;
+    top: max(env(safe-area-inset-top), 10px);
+    left: max(env(safe-area-inset-left), 16px);
+  }
+
+  .hero-slider-content { bottom: calc(112px + env(safe-area-inset-bottom)); }
+  .pure-hero-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  /* The arrows go. Two edge-pinned controls plus a numbered pager was three
+     affordances for one piece of state, and none of them was the gesture a
+     thumb actually reaches for. Hero.tsx handles the swipe; the pager stays
+     because it is the only one of the three that also reports position. */
+  .clubraia-slider-navigation { display: none; }
+
+  .pure-hero-rail {
+    right: max(env(safe-area-inset-right), 20px);
+    bottom: max(env(safe-area-inset-bottom), 18px);
+    left: max(env(safe-area-inset-left), 20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--edge);
+  }
+
+  .clubraia-page-dots { display: flex; gap: 8px; }
+  .clubraia-page-dot { width: 34px; min-height: 44px; }
+
+  .pure-hero-social {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/*
+ * Reduced motion, last in the file on purpose.
+ *
+ * This block used to sit near the top, above `.pure-cta`, `.pure-hero-social`,
+ * `.clubraia-page-dot` and `.pure-corner-logo`. Every one of those declares a
+ * `transition` shorthand at the same specificity further down, so the cascade
+ * handed the win to the later rule and the whole block was dead for anything
+ * declared after it. Overrides have to come after what they override.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .the-cross-contact {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+    opacity: 1;
+    transform: none;
+  }
+
+  .clubraia-page-dot,
+  .clubraia-page-dot::after,
+  .clubraia-slider-button,
+  .clubraia-slider-button::after,
+  .pure-cta,
+  .pure-cta::before,
+  .pure-cta::after,
+  .pure-cta__mark,
+  .pure-cta__mark [data-rule],
+  .pure-hero-social a,
+  .pure-hero-social a::before,
+  .pure-corner-logo,
+  .the-cross-contact__close,
+  .the-cross-contact__field input,
+  .the-cross-contact__field select,
+  .the-cross-contact__field textarea,
+  .the-cross-contact__direct a,
+  .pure-skip-link {
+    transition-duration: 1ms;
+  }
+
+  /* The hero cross-fade is how a slide change is perceived at all, so it
+     stays: shortened to a cut rather than removed. */
+  .clubraia-bg-slide {
+    transition-duration: 1ms;
+  }
 }

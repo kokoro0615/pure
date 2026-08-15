@@ -1,0 +1,14 @@
+# Working reference media and inspection artifacts are not runtime assets.
+website/image/
+website/docs/
+website/*.png
+website/ushuaia-*.txt
+website/ushuaia-*.json
+
+# Local tooling and generated output.
+website/.next/
+website/node_modules/
+website/out/
+website/dist/
+website/build/
+website/tsconfig.tsbuildinfo

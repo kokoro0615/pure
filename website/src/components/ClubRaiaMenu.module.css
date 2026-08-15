@@ -3,11 +3,10 @@
   top: 0;
   z-index: 99;
   width: 100%;
-  height: 30px;
-  padding-top: 30px;
-  color: #f8f3e7;
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  pointer-events: auto;
+  height: var(--nav-safe);
+  color: var(--bone);
+  font-family: var(--font-meta);
+  pointer-events: none;
 }
 
 .headerOverlay {
@@ -16,56 +15,171 @@
   left: 0;
   width: 100%;
   height: 200px;
-  background: linear-gradient(0deg, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 30%) 100%);
+  background: linear-gradient(
+    0deg,
+    rgb(6 5 10 / 0%) 0%,
+    rgb(6 5 10 / 34%) 42%,
+    rgb(6 5 10 / 78%) 100%
+  );
   pointer-events: none;
 }
 
 .controls {
   position: absolute;
-  top: 30px;
-  right: 10%;
+  top: max(env(safe-area-inset-top), var(--header-top));
+  right: max(env(safe-area-inset-right), clamp(20px, 3.5vw, 52px));
   display: flex;
-  width: 40%;
-  height: 60px;
+  min-height: var(--header-row);
   align-items: center;
-  justify-content: flex-end;
+  gap: clamp(16px, 2vw, 30px);
   pointer-events: auto;
+}
+
+.primaryNavigation {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 1.8vw, 28px);
 }
 
 .mainLink,
 .closeControl {
   flex: none;
-  margin-left: 50px;
-  color: #f8f3e7;
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19.8px;
-  letter-spacing: 3px;
+  color: var(--bone);
+  font-family: var(--font-meta);
+  font-size: clamp(12px, 0.98vw, 14.5px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
 }
 
 .closeControl > span:first-child {
-  width: 50px;
   text-align: left;
+  white-space: nowrap;
 }
 
 .mainLink {
+  /* inline-flex, not the anchor's default inline: HOME is a link and the
+     other three are buttons, and an inline box takes neither the 44px
+     target height nor a sane containing block for the rule underneath it. */
+  position: relative;
+  display: inline-flex;
   min-height: 44px;
+  padding: 0 1px;
+  align-items: center;
   transform: translateY(0);
   opacity: 1;
   transition:
-    transform 600ms cubic-bezier(0.65, 0, 0.35, 1) calc(500ms + var(--link-index) * 50ms),
-    opacity 600ms cubic-bezier(0.65, 0, 0.35, 1) calc(500ms + var(--link-index) * 50ms);
+    transform 460ms var(--ease-nav) calc(320ms + var(--link-index) * 40ms),
+    opacity 460ms var(--ease-nav) calc(320ms + var(--link-index) * 40ms);
+}
+
+.mainLink::after {
+  position: absolute;
+  right: 1px;
+  bottom: 3px;
+  left: 1px;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 260ms var(--ease-nav);
+}
+
+.mainLink:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* You are here. A held rule rather than a colour change, so the row keeps
+   one voice and the state survives on a photograph. */
+.mainLink[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+  opacity: 0.45;
 }
 
 .mainLink:focus-visible,
+.socialLink:focus-visible,
 .closeControl:focus-visible {
-  outline: 2px solid #f8f3e7;
+  outline: 2px solid var(--bone);
   outline-offset: 4px;
 }
 
 .mainLinkInactive {
+  transform: translateY(-30px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.socialLinks {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  padding-left: clamp(16px, 1.6vw, 24px);
+  border-left: 1px solid var(--edge-strong);
+}
+
+.socialLabel {
+  margin-right: 7px;
+  color: var(--bone-soft);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* The close control lands where this row sits, so the whole "Follow"
+   group has to clear out of the way — label and rule included. */
+.socialLinks {
+  transition: border-color 300ms var(--ease-nav) 40ms;
+}
+
+.socialLabel {
+  transition: opacity 300ms var(--ease-nav) 40ms;
+}
+
+.socialLinksInactive {
+  border-left-color: transparent;
+}
+
+.socialLinksInactive .socialLabel {
+  opacity: 0;
+}
+
+.socialLink {
+  position: relative;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--edge-strong);
+  border-radius: 50%;
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 600ms var(--ease-nav) calc(320ms + var(--link-index) * 40ms),
+    opacity 600ms var(--ease-nav) calc(320ms + var(--link-index) * 40ms);
+}
+
+.socialLink svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+.socialLink:hover {
+  color: #101319;
+  border-color: var(--bone);
+  background: var(--bone);
+}
+
+.socialLinkInactive {
   transform: translateY(-30px);
   opacity: 0;
   pointer-events: none;
@@ -76,23 +190,21 @@
   top: 50%;
   right: 0;
   display: flex;
-  width: 174.1px;
-  height: 21.8px;
+  min-height: 44px;
   align-items: center;
-  margin-left: 50px;
   transform: translateY(calc(-50% + 30px));
   opacity: 0;
   pointer-events: none;
   transition:
-    transform 600ms cubic-bezier(0.65, 0, 0.35, 1),
-    opacity 600ms cubic-bezier(0.65, 0, 0.35, 1);
+    transform 600ms var(--ease-nav),
+    opacity 600ms var(--ease-nav);
 }
 
 .closeControlActive {
   transform: translateY(-50%);
   opacity: 1;
   pointer-events: auto;
-  transition-delay: 1s;
+  transition-delay: 340ms;
 }
 
 .closeLine {
@@ -107,15 +219,17 @@
 
 .closeLine > span {
   display: block;
-  width: 0;
+  width: 100%;
   height: 100%;
-  background: #fff;
-  transition: width 800ms cubic-bezier(0.65, 0, 0.35, 1);
+  background: var(--bone);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-hero) var(--ease-nav);
 }
 
 .closeControlActive .closeLine > span {
-  width: 100%;
-  transition-delay: 1.1s;
+  transform: scaleX(1);
+  transition-delay: 420ms;
 }
 
 .closeIcon {
@@ -125,12 +239,12 @@
   width: 17px;
   height: 16px;
   transform: scale(0);
-  transition: transform 800ms cubic-bezier(0.65, 0, 0.35, 1);
+  transition: transform 520ms var(--ease-nav);
 }
 
 .closeControlActive .closeIcon {
   transform: scale(1);
-  transition-delay: 1.2s;
+  transition-delay: 500ms;
 }
 
 .contentOverlay {
@@ -140,7 +254,7 @@
   background: rgb(0 0 0 / 50%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 800ms cubic-bezier(0.65, 0, 1, 1);
+  transition: opacity 420ms var(--ease-nav);
 }
 
 .contentOverlayOpen {
@@ -148,35 +262,42 @@
 }
 
 @media (max-width: 812px) {
+  /* One row, not two.
+     The phone header used to stack the label row over a second row of
+     44px social buttons, so the fixed chrome owned 102px at the top of
+     every route while --nav-safe reserved 88px - which is exactly why the
+     first line of copy on /vip, /tickets and /qa was drawn under the
+     navigation. Following the venue is not a navigation task; those two
+     links live in the MENU panel on a phone, where there is room for them
+     to be labelled. */
   .controls {
-    top: max(env(safe-area-inset-top), 30px);
-    right: max(env(safe-area-inset-right), 12px);
-    width: min(65vw, 270px);
-    gap: clamp(8px, 2.2vw, 18px);
+    top: max(env(safe-area-inset-top), 14px);
+    right: max(env(safe-area-inset-right), 14px);
+    display: flex;
+    align-items: center;
+    gap: clamp(11px, 3vw, 18px);
+  }
+
+  .primaryNavigation {
+    gap: clamp(11px, 3vw, 18px);
   }
 
   .mainLink,
   .closeControl {
-    font-size: clamp(9px, 2.65vw, 11.5px);
+    font-size: clamp(11px, 3vw, 12.5px);
   }
 
   .mainLink {
-    margin-left: 0;
-    letter-spacing: clamp(1px, 0.35vw, 1.6px);
+    min-height: 44px;
+    letter-spacing: 0.13em;
   }
 
-  .closeControl {
-    width: 88.1px;
-  }
+  .socialLinks { display: none; }
 
   .closeLine {
     width: 15px;
     margin-right: 0;
     margin-left: 0;
-  }
-
-  .closeControl > span:first-child {
-    width: auto;
   }
 
   .closeIcon {
@@ -185,8 +306,15 @@
   }
 }
 
+/* Below this the four labels stop fitting beside the mark. ABOUT is the
+   one that is also a titled entry inside MENU, so it is the one that goes. */
+@media (max-width: 344px) {
+  .mainLinkDesk { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mainLink,
+  .socialLink,
   .closeControl,
   .closeLine > span,
   .closeIcon,

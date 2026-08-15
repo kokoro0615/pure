@@ -1,0 +1,392 @@
+/*
+ * The entry veil: a lit ring, a mark that ignites inside it, and a door that
+ * opens through both.
+ *
+ * The ring is the composition. What it is not is an operating system's
+ * progress spinner: it carries the venue's name on its own arc, it closes in
+ * on the mark as the page resolves, and on exit it is *cut in half* by the two
+ * carbon leaves that part to reveal the site. The brand mark survives that cut
+ * whole and flies to the corner logo it becomes, so the arrival reads as one
+ * continuous move from the street into the room rather than as a screen that
+ * fades and another that appears.
+ *
+ * Everything on the hot path is `transform` and `opacity`, plus one
+ * `stroke-dashoffset` on a single 1.1-unit stroke — the only honest way to
+ * draw determinate progress. Nothing here animates a filter, a blur, or a
+ * shadow.
+ */
+
+.veil {
+  /* Sized off the mark so ring, bloom, wordmark and mark stay locked in
+     proportion at every viewport instead of drifting apart at breakpoints. */
+  --mark-w: clamp(118px, 12.4vw, 152px);
+  --mark-h: calc(var(--mark-w) * 699 / 623);
+  --ring-d: calc(var(--mark-h) * 2.08);
+  /* r = 94 in a 200-unit viewBox. */
+  --ring-r: calc(var(--ring-d) * 0.47);
+
+  /* Progress, 0 to 1. Written every frame from rAF; never through React. */
+  --p: 0;
+
+  position: fixed;
+  z-index: var(--z-gate);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+}
+
+.veil[data-phase="exit"] { pointer-events: none; }
+
+/* --- the two leaves ------------------------------------------------------
+   The ground is split into halves that are solid while the veil is up and
+   travel apart on exit. Each clips its own copy of the ring, so the closed
+   door shows one continuous circle and the opening door tears it in two —
+   with two transforms and no repaint. */
+.leaf {
+  position: absolute;
+  right: 0;
+  left: 0;
+  /* A shared pixel of overlap so no seam gap survives rounding. */
+  height: calc(50% + 1px);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 74% 130% at 50% 100%,
+      color-mix(in oklch, var(--ink-2) 58%, transparent) 0%,
+      transparent 72%
+    ),
+    var(--ink-0);
+  transform: translate3d(0, 0, 0);
+  transition: transform 940ms var(--ease-emphasis);
+  will-change: transform;
+}
+
+.leafTop {
+  /* Above its sibling. Without this the lower leaf paints over the seam. */
+  z-index: 1;
+  top: 0;
+}
+
+.leafBottom {
+  bottom: 0;
+  background:
+    radial-gradient(
+      ellipse 74% 130% at 50% 0%,
+      color-mix(in oklch, var(--ink-2) 58%, transparent) 0%,
+      transparent 72%
+    ),
+    var(--ink-0);
+}
+
+/* The seam, as two registration marks at the outer edges. It says the ground
+   is two leaves before they move, and it stops short of the ring so it never
+   draws a line across the composition. */
+.leafTop::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--accent) 62%, transparent) 0%,
+    var(--edge) 3%,
+    transparent 7%,
+    transparent 93%,
+    var(--edge) 97%,
+    color-mix(in oklch, var(--accent) 62%, transparent) 100%
+  );
+}
+
+.veil[data-phase="exit"] .leafTop {
+  transform: translate3d(0, -100%, 0);
+}
+
+.veil[data-phase="exit"] .leafBottom {
+  transform: translate3d(0, 100%, 0);
+  transition-delay: 40ms;
+}
+
+/* Each leaf holds a full-viewport box whose centre coincides with the
+   viewport's, so both copies of the ring sit at exactly the same place and
+   the leaf's own clip decides which half is shown. */
+.ringLayer {
+  position: absolute;
+  left: 0;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  place-items: center;
+  pointer-events: none;
+}
+
+.leafTop .ringLayer { top: 0; }
+.leafBottom .ringLayer { bottom: 0; }
+
+/* --- the ring ------------------------------------------------------------ */
+
+.ring {
+  width: var(--ring-d);
+  height: var(--ring-d);
+  overflow: visible;
+  /* The circle closes in on the mark as the page resolves. */
+  transform: scale(calc(0.945 + var(--p) * 0.055));
+}
+
+.veil[data-phase="lit"] .ring,
+.veil[data-phase="exit"] .ring {
+  transform: scale(1);
+  transition: transform 620ms var(--ease-emphasis);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 0.9;
+}
+
+.ringArc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  /* 2 * PI * r, r = 94. */
+  stroke-dasharray: 590.62;
+  stroke-dashoffset: calc(590.62 * (1 - var(--p)));
+}
+
+/* The venue's name on the ring's own arc, inside the lower half. It is what
+   makes the circle a seal rather than a spinner, and it is why the ring is
+   the size it is. */
+.ringWord {
+  fill: var(--bone);
+  font-family: var(--font-meta);
+  font-size: 7.8px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: rotate(-5deg);
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+  animation: pure-gate-seal 1150ms var(--ease-emphasis) 220ms both;
+}
+
+@keyframes pure-gate-seal {
+  to {
+    opacity: 0.82;
+    transform: rotate(0deg);
+  }
+}
+
+/* The lit head of the arc. Rotated by progress rather than positioned by
+   trigonometry, so it costs one transform and always sits on the tip. */
+.head {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--accent-highlight);
+  box-shadow: 0 0 14px 3px var(--accent-glow);
+  opacity: calc(var(--p) * 3);
+  transform: rotate(calc(var(--p) * 1turn))
+    translateY(calc(var(--ring-r) * -1));
+}
+
+.veil[data-phase="lit"] .head,
+.veil[data-phase="exit"] .head {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-exit);
+}
+
+/* --- the stage -----------------------------------------------------------
+   The mark and its light ride above both leaves, so the door opens around
+   them and the mark is never cut. */
+.stage {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Ignition. The mark does not "turn on" with a filter (paint-heavy, and it
+   would repaint the whole box every frame): a gradient disc behind it scales
+   and brightens with progress instead, which is compositor-only and reads as
+   a sign coming on rather than an element appearing. */
+.bloom {
+  position: absolute;
+  width: calc(var(--mark-w) * 3);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--accent-veil) 0%,
+    color-mix(in oklch, var(--accent) 7%, transparent) 38%,
+    transparent 70%
+  );
+  opacity: calc(0.25 + var(--p) * 0.75);
+  transform: scale(calc(0.7 + var(--p) * 0.3));
+  pointer-events: none;
+}
+
+.veil[data-phase="lit"] .bloom {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 420ms var(--ease-enter),
+    transform 700ms var(--ease-emphasis);
+}
+
+/* The room light goes down as the door opens; the mark carries its own from
+   here. */
+.veil[data-phase="exit"] .bloom {
+  opacity: 0;
+  transform: scale(1.08);
+  transition:
+    opacity 420ms var(--ease-exit),
+    transform 700ms var(--ease-emphasis);
+}
+
+/* --- the mark ------------------------------------------------------------ */
+
+.mark {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: var(--mark-w);
+  height: var(--mark-h);
+  opacity: calc(0.42 + var(--p) * 0.5);
+  transform: scale(calc(0.955 + var(--p) * 0.035));
+  will-change: transform, opacity;
+}
+
+.veil[data-phase="lit"] .mark {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 300ms var(--ease-enter),
+    transform 520ms var(--ease-emphasis);
+}
+
+/* On exit the transform is normally written inline: a translate+scale measured
+   against the live corner logo, so the mark lands on its permanent home rather
+   than dissolving in place. The value below is the fallback for routes that
+   carry no corner logo, where there is nothing to fly to. */
+.veil[data-phase="exit"] .mark {
+  opacity: 0;
+  transform: scale(0.965);
+  transition:
+    transform 800ms var(--ease-emphasis),
+    opacity 280ms var(--ease-exit) 560ms;
+}
+
+.mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- skip ----------------------------------------------------------------
+   Keyboard and assistive-tech users get a real control; pointer and key
+   presses anywhere do the same thing for everyone else. Hidden until focused
+   so it never competes with the mark. */
+.skip {
+  position: absolute;
+  z-index: 3;
+  bottom: clamp(28px, 6vh, 56px);
+  left: 50%;
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 26px;
+  align-items: center;
+  border: 1px solid var(--edge-strong);
+  border-radius: 2px;
+  color: var(--bone);
+  font-family: var(--font-meta);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.skip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/*
+ * Authored still state, not `animation: none`. The ring is drawn closed, the
+ * name is settled on it, the mark is lit — the sequence still resolves. Only
+ * the travel is removed: a full-viewport wipe is exactly the motion this
+ * setting exists to stop, so the leaves fade where they stand.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .bloom,
+  .ring,
+  .veil[data-phase="lit"] .ring,
+  .veil[data-phase="exit"] .ring {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ringArc { stroke-dashoffset: 0; }
+  .head { display: none; }
+
+  .ringWord {
+    animation: none;
+    opacity: 0.82;
+    transform: none;
+  }
+
+  .veil[data-phase="exit"] .bloom {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .veil[data-phase="exit"] .mark {
+    transition: opacity 240ms var(--ease-exit);
+    opacity: 0;
+    transform: none;
+  }
+
+  .leaf {
+    transition: opacity 320ms var(--ease-exit);
+  }
+
+  .veil[data-phase="exit"] .leaf {
+    opacity: 0;
+    transform: none;
+  }
+}

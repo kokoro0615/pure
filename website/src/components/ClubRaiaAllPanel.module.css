@@ -1,4 +1,28 @@
+/* ============================================================
+   MENU — the night directory.
+
+   Six doors, never six equal cards. One dominant frame carries
+   the floor; the other five hang off it in unequal widths so no
+   two rows ever break at the same column. The left hairline is
+   the same spine /gallery and /vip hang their frames from.
+
+   Signature move: the room dims around the door you are looking
+   at (opacity only, compositor). Nothing else in here moves on
+   its own.
+   ============================================================ */
+
 .panel {
+  --bone-mid: rgb(246 241 231 / 52%);
+  --bone-mid: color-mix(in oklch, var(--bone) 52%, transparent);
+  /* Anything set over a photograph starts here, not at --bone-mid:
+     52% measures under 4.5:1 on the brighter frames. */
+  --bone-strong: rgb(246 241 231 / 78%);
+  --bone-strong: color-mix(in oklch, var(--bone) 78%, transparent);
+
+  /* --- layout --- */
+  --pad-top: clamp(104px, 13vh, 150px);
+  --tile-gap: clamp(8px, 0.85vw, 14px);
+
   position: fixed;
   inset: 0;
   z-index: 90;
@@ -10,7 +34,9 @@
   overscroll-behavior: contain;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  background: #080808;
+  color: var(--bone);
+  background: var(--ink-0);
+  font-family: var(--font-meta);
   opacity: 0;
   pointer-events: none;
   isolation: isolate;
@@ -23,24 +49,58 @@
 .isOpen {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.7s ease 0.3s;
+  transition: opacity 420ms var(--ease-ui) 60ms;
 }
 
 .isClosed {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease 0.3s;
+  transition: opacity 300ms var(--ease-exit) 120ms;
 }
 
+/* A room, not a flat black plate: two low-frequency lights, one
+   warm from the door side, one cold from the floor side. */
 .atmosphere {
   position: absolute;
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(circle at 10% 0%, rgb(149 18 51 / 16%), transparent 28%),
-    radial-gradient(circle at 90% 100%, rgb(16 61 117 / 13%), transparent 30%),
-    #080808;
+    radial-gradient(
+      ellipse 60% 42% at 8% 0%,
+      color-mix(in oklch, var(--accent) 13%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 54% 46% at 94% 100%,
+      oklch(0.42 0.11 258 / 16%),
+      transparent 66%
+    ),
+    var(--ink-0);
   pointer-events: none;
+}
+
+/* The header is fixed above this panel; once the list scrolls under it,
+   CLOSE would sit on bare photograph. Same fix as /gallery's navScrim. */
+.topScrim {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: clamp(96px, 13vh, 168px);
+  background: linear-gradient(
+    180deg,
+    rgb(6 7 11 / 88%) 0%,
+    rgb(6 7 11 / 48%) 46%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-panel) var(--ease-ui);
+}
+
+.isOpen .topScrim {
+  opacity: 1;
 }
 
 .shell {
@@ -49,295 +109,470 @@
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: clamp(112px, 14vh, 156px) clamp(20px, 4vw, 72px) 34px;
+  padding: var(--pad-top) var(--gutter) clamp(26px, 4vh, 40px);
 }
+
+/* ---------- the spine: same alignment axis as /gallery, /vip ---------- */
+
+.spine {
+  position: absolute;
+  top: calc(var(--pad-top) - 34px);
+  bottom: clamp(26px, 4vh, 40px);
+  left: calc(var(--gutter) / 2);
+  width: 1px;
+  background: var(--edge);
+  pointer-events: none;
+}
+
+.spine::after {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: clamp(38px, 7vh, 76px);
+  content: "";
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--accent) 86%, transparent),
+    color-mix(in oklch, var(--accent) 0%, transparent)
+  );
+}
+
+/* ============================== INTRO ============================== */
 
 .intro {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: end;
-  gap: 8px 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgb(255 255 255 / 18%);
-  color: #f7f0e5;
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
+  gap: 10px 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--edge);
 }
 
-.kicker,
-.prompt,
-.count {
+.prompt {
   margin: 0;
-}
-
-.kicker {
-  color: #ce2d53;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.24em;
 }
 
 .prompt {
   grid-column: 1;
-  font-family: var(--font-playfair), "Playfair Display", serif;
-  font-size: clamp(22px, 2.1vw, 34px);
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.6vw, 44px);
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.95;
   letter-spacing: -0.035em;
-}
-
-.count {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: end;
-  color: rgb(255 255 255 / 45%);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .mobileUtilities {
   display: none;
 }
 
+/* =============================== GRID =============================== */
+
 .list {
   display: grid;
   width: 100%;
-  min-height: clamp(500px, calc(100dvh - 230px), 720px);
+  min-height: clamp(480px, calc(100dvh - 212px), 840px);
   margin: 0;
-  padding: 18px 0 0;
+  padding: var(--tile-gap) 0 0;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(230px, 1fr));
-  gap: 12px;
+  /* Three unequal bands. The fr shares carry the hierarchy; the px floors
+     only stop a band collapsing under its own label, and are deliberately
+     low — set to the comfortable height instead, a 1280x720 laptop pushed
+     the third row under the fold and made Rental and Q&A a scroll. */
+  grid-template-rows:
+    minmax(160px, 1.15fr)
+    minmax(150px, 1fr)
+    minmax(138px, 0.85fr);
+  gap: var(--tile-gap);
   list-style: none;
 }
 
 .item {
   min-width: 0;
-  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 
+/* One break per row and it moves every time — 8, then 6, then 10.
+   No seam is ever inherited downward, which is what stops this
+   reading as a card grid. The widest frame walks the diagonal:
+   Gallery top-left, Tickets mid-right, Rental bottom-left, so the
+   eye is handed down the page instead of scanning rows. */
 .item:nth-child(1) {
-  grid-column: span 5;
+  grid-row: 1;
+  grid-column: 1 / span 7;
 }
 
 .item:nth-child(2) {
-  grid-column: span 3;
+  grid-row: 1;
+  grid-column: 8 / span 5;
 }
 
 .item:nth-child(3) {
-  grid-column: span 4;
+  grid-row: 2;
+  grid-column: 1 / span 5;
 }
 
+/* Seven, not eight: the door photograph is a corridor shot with its
+   subject on the centre line, and past this width the neon reads as a
+   smudge on a wall of empty purple. */
 .item:nth-child(4) {
-  grid-column: span 3;
+  grid-row: 2;
+  grid-column: 6 / span 7;
 }
 
 .item:nth-child(5) {
-  grid-column: span 5;
+  grid-row: 3;
+  grid-column: 1 / span 9;
 }
 
 .item:nth-child(6) {
-  grid-column: span 4;
+  grid-row: 3;
+  grid-column: 10 / span 3;
 }
 
-.isOpen .item {
-  animation: item-enter 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: var(--item-enter-delay);
-}
+/* =============================== TILE =============================== */
 
-.isClosed .item {
-  animation: item-exit 0.38s cubic-bezier(0.7, 0, 0.84, 0) both;
-  animation-delay: var(--item-exit-delay);
-}
-
-.link {
+.tile {
   position: relative;
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 230px;
   overflow: hidden;
-  color: #fff;
+  color: var(--bone);
   text-decoration: none;
-  background: #171717;
+  background: var(--ink-1);
   outline: 2px solid transparent;
-  outline-offset: -3px;
+  outline-offset: -4px;
   isolation: isolate;
 }
 
+.tile::after {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border: 1px solid var(--edge);
+  content: "";
+  pointer-events: none;
+  transition: border-color var(--dur-panel) var(--ease-ui);
+}
+
+/* Base grade is baked in and never animated — filter is paint-heavy.
+   Everything that moves on interaction is transform or opacity. */
 .image {
   z-index: -3;
   object-fit: cover;
-  filter: saturate(0.78) contrast(1.08) brightness(0.72);
-  transform: scale(1.015);
-  transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.7s ease;
+  filter: saturate(0.84) contrast(1.06) brightness(0.78);
+  transform: scale(1.02);
+  transition: transform 900ms var(--ease-enter);
 }
 
-.imageWash {
+/* Exposure: lifted on hover by fading this out, not by animating filter. */
+.tint {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: rgb(11 13 18 / 34%);
+  transition: opacity var(--dur-panel) var(--ease-ui);
+}
+
+/* Legibility scrim for the copy block — constant, never animated. */
+.scrim {
   position: absolute;
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(180deg, rgb(0 0 0 / 22%), transparent 34%),
-    linear-gradient(0deg, rgb(0 0 0 / 92%) 0%, rgb(0 0 0 / 8%) 72%),
-    linear-gradient(105deg, rgb(116 7 32 / 20%), transparent 58%);
-  transition: background-color 0.5s ease;
+    linear-gradient(
+      0deg,
+      rgb(6 7 11 / 94%) 0%,
+      rgb(6 7 11 / 82%) 26%,
+      rgb(6 7 11 / 4%) 70%
+    ),
+    linear-gradient(180deg, rgb(6 7 11 / 52%), transparent 32%);
+  pointer-events: none;
 }
 
-.link::after {
+/* Signature move: the room dims around the tile under the cursor. */
+.dim {
   position: absolute;
   inset: 0;
-  z-index: 4;
-  border: 1px solid rgb(255 255 255 / 14%);
-  content: "";
+  z-index: -1;
+  background: var(--ink-0);
+  opacity: 0;
   pointer-events: none;
-  transition: border-color 0.35s ease;
-}
-
-.index {
-  position: absolute;
-  top: 18px;
-  left: 19px;
-  color: rgb(255 255 255 / 64%);
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  transition: opacity var(--dur-panel) var(--ease-ui);
 }
 
 .copy {
   position: absolute;
-  right: 68px;
+  right: 66px;
   bottom: 20px;
-  left: 20px;
+  left: 19px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.detail {
-  margin-bottom: 8px;
-  color: rgb(255 255 255 / 58%);
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.19em;
+.label {
+  position: relative;
+  padding-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 54px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
 }
 
-.label {
-  font-family: var(--font-playfair), "Playfair Display", serif;
-  font-size: clamp(28px, 3.1vw, 51px);
-  font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.055em;
-  text-transform: uppercase;
+/* The 1px rule drawn from the left — the same gesture /vip uses
+   on its price rows. */
+.labelRule {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--bone);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-emphasis);
 }
 
 .japaneseLabel {
-  margin-top: 10px;
-  color: rgb(255 255 255 / 64%);
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  margin-top: 12px;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12px, 0.9vw, 13.5px);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
 }
 
 .arrow {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
+  right: 17px;
+  bottom: 17px;
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   place-items: center;
-  border: 1px solid rgb(255 255 255 / 36%);
+  border: 1px solid var(--edge-strong);
   border-radius: 50%;
-  font-family: var(--font-open-sans), "Open Sans", sans-serif;
-  font-size: 15px;
   transition:
-    color 0.35s ease,
-    background-color 0.35s ease,
-    border-color 0.35s ease,
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    color var(--dur-panel) var(--ease-ui),
+    background-color var(--dur-panel) var(--ease-ui),
+    border-color var(--dur-panel) var(--ease-ui),
+    transform 420ms var(--ease-emphasis);
 }
 
-.arrow > span {
-  transform: translate(-1px, 1px);
+.arrow svg {
+  display: block;
+  width: 15px;
+  height: 15px;
 }
 
-.link:focus-visible {
-  outline-color: #f7f0e5;
+/* --------------------------- pending state --------------------------- */
+
+.isPending {
+  cursor: default;
 }
 
-.link:hover .image,
-.link:focus-visible .image {
-  filter: saturate(1.08) contrast(1.04) brightness(0.88);
-  transform: scale(1.075);
+.isPending .tint {
+  background: rgb(11 13 18 / 56%);
 }
 
-.link:hover::after,
-.link:focus-visible::after {
-  border-color: rgb(255 255 255 / 58%);
+.isPending .label {
+  color: var(--bone-soft);
 }
 
-.link:hover .arrow,
-.link:focus-visible .arrow {
-  border-color: #f7f0e5;
-  color: #080808;
-  background: #f7f0e5;
+.status {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 5px 11px;
+  border: 1px solid var(--edge-strong);
+  color: var(--bone);
+  background: rgb(6 7 11 / 76%);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.status::before {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  content: "";
+  background: var(--accent);
+}
+
+/* ---------------------------- interaction ---------------------------- */
+
+.tile:focus-visible {
+  outline-color: var(--bone);
+}
+
+.list:focus-within .item:not(:focus-within) .dim {
+  opacity: 0.46;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .list:hover .item:not(:hover) .dim {
+    opacity: 0.46;
+  }
+}
+
+.tile:hover .image,
+.tile:focus-visible .image {
+  transform: scale(1.065);
+}
+
+.tile:hover .tint,
+.tile:focus-visible .tint {
+  opacity: 0;
+}
+
+.tile:hover::after,
+.tile:focus-visible::after {
+  border-color: var(--edge-strong);
+}
+
+.tile:hover .labelRule,
+.tile:focus-visible .labelRule {
+  transform: scaleX(1);
+}
+
+.tile:hover .arrow,
+.tile:focus-visible .arrow {
+  border-color: var(--bone);
+  color: var(--ink-0);
+  background: var(--bone);
   transform: rotate(45deg);
 }
 
-@keyframes item-enter {
+/* A tile with no destination never pretends to respond. */
+.isPending:hover .image,
+.isPending:hover .tint,
+.isPending:hover::after {
+  transform: scale(1.02);
+  opacity: 1;
+  border-color: var(--edge);
+}
+
+/* ============================= ENTRANCE ============================= */
+
+/* transform + opacity only; fill-mode backwards so the resting state
+   is the stylesheet's, which keeps the hover transitions alive. */
+@keyframes tile-enter {
   from {
     opacity: 0;
-    transform: translateY(72px);
-    clip-path: inset(100% 0 0);
+    transform: translate3d(0, 46px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
-    clip-path: inset(0 0 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes item-exit {
+@keyframes media-settle {
+  from {
+    transform: scale(1.13);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes tile-exit {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
     opacity: 0;
-    transform: translateY(100px);
+    transform: translate3d(0, 58px, 0);
   }
 }
+
+.isOpen .item {
+  animation: tile-enter 720ms var(--ease-enter) var(--item-enter-delay) backwards;
+}
+
+.isOpen .image {
+  animation: media-settle 1200ms var(--ease-emphasis) var(--item-enter-delay)
+    backwards;
+}
+
+.isClosed .item {
+  animation: tile-exit 300ms var(--ease-exit) var(--item-exit-delay) both;
+}
+
+/* ============================ RESPONSIVE ============================ */
 
 @media (max-width: 1100px) {
+  /* Two columns, but the rhythm is kept: the two frames a visitor is
+     most likely to want (the floor, the door) run full width, and the
+     pairs sit between them. */
   .list {
+    min-height: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(220px, 1fr));
+    grid-template-rows: repeat(4, minmax(196px, 1fr));
   }
 
-  .item:nth-child(n) {
-    grid-column: span 1;
+  .item:nth-child(1) {
+    grid-row: 1;
+    grid-column: 1 / span 2;
+  }
+
+  .item:nth-child(2) {
+    grid-row: 2;
+    grid-column: 1 / span 1;
+  }
+
+  .item:nth-child(3) {
+    grid-row: 2;
+    grid-column: 2 / span 1;
+  }
+
+  .item:nth-child(4) {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+  }
+
+  .item:nth-child(5) {
+    grid-row: 4;
+    grid-column: 1 / span 1;
+  }
+
+  .item:nth-child(6) {
+    grid-row: 4;
+    grid-column: 2 / span 1;
+  }
+
+  .spine {
+    display: none;
   }
 
   .label {
-    font-size: clamp(32px, 5vw, 50px);
+    font-size: clamp(30px, 4.6vw, 48px);
   }
 }
 
 @media (max-width: 700px) {
-  .shell {
-    padding: 106px 12px 18px;
+  .panel {
+    /* Was 100px, which put the prompt's cap-height inside the header band
+       and clipped its ascenders behind the mark. Measured off the header
+       instead, like every other route. */
+    --pad-top: calc(var(--nav-safe) + 14px);
   }
 
   .intro {
@@ -345,11 +580,7 @@
   }
 
   .prompt {
-    font-size: 24px;
-  }
-
-  .count {
-    display: none;
+    font-size: 25px;
   }
 
   .mobileUtilities {
@@ -359,80 +590,117 @@
     gap: 8px;
   }
 
-  .mobileUtilities button {
+  .mobileUtilities button,
+  .mobileUtilities a {
+    display: inline-flex;
     min-height: 44px;
-    border: 1px solid rgb(255 255 255 / 22%);
-    color: rgb(255 255 255 / 82%);
-    font-family: var(--font-open-sans), "Open Sans", sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.17em;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--edge-strong);
+    color: var(--bone-soft);
+    font-family: var(--font-meta);
+    font-size: 12px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     touch-action: manipulation;
     transition:
-      color 180ms ease,
-      border-color 180ms ease,
-      background-color 180ms ease;
+      color var(--dur-ui) var(--ease-ui),
+      border-color var(--dur-ui) var(--ease-ui),
+      background-color var(--dur-ui) var(--ease-ui);
   }
 
   .mobileUtilities button:hover,
   .mobileUtilities button:active,
+  .mobileUtilities a:hover,
+  .mobileUtilities a:active,
+  .mobileUtilities a:focus-visible,
   .mobileUtilities button:focus-visible {
-    border-color: rgb(255 255 255 / 72%);
-    color: #fff;
-    background: rgb(255 255 255 / 7%);
+    border-color: var(--bone);
+    color: var(--bone);
+    background: rgb(246 241 231 / 8%);
   }
 
   .mobileUtilities button:focus-visible {
-    outline: 2px solid #f7f0e5;
+    outline: 2px solid var(--bone);
     outline-offset: 2px;
   }
 
+  /* Stack, but keep the rhythm: the lead frame stays the tallest
+     and the rest alternate so no two neighbours share a ratio. */
   .list {
-    display: block;
+    display: flex;
+    flex-direction: column;
     min-height: 0;
     padding-top: 10px;
+    gap: 8px;
   }
 
   .item {
-    height: clamp(188px, 25vh, 230px);
-    margin-bottom: 8px;
+    aspect-ratio: 16 / 10;
   }
 
-  .link {
-    min-height: 100%;
+  .item:nth-child(1) {
+    aspect-ratio: 5 / 4;
+  }
+
+  .item:nth-child(3),
+  .item:nth-child(6) {
+    aspect-ratio: 16 / 9;
+  }
+
+  .item:nth-child(4) {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Rental keeps its letterbox on the phone too: it is the one frame
+     whose subject is the width of the room. */
+  .item:nth-child(5) {
+    aspect-ratio: 2 / 1;
   }
 
   .copy {
+    right: 62px;
     bottom: 18px;
   }
 
   .label {
-    font-size: clamp(34px, 12vw, 52px);
+    font-size: clamp(32px, 11.5vw, 50px);
   }
 
-  .detail {
-    margin-bottom: 6px;
+  .japaneseLabel {
+    margin-top: 9px;
   }
 }
 
+/* ========================== REDUCED MOTION ========================== */
+
 @media (prefers-reduced-motion: reduce) {
   .panel,
-  .isOpen,
-  .isClosed,
   .image,
-  .arrow {
-    transition-duration: 0.01ms;
+  .tint,
+  .dim,
+  .arrow,
+  .labelRule,
+  .tile::after,
+  .mobileUtilities button {
+    transition-duration: 1ms;
     transition-delay: 0ms;
   }
 
-  .mobileUtilities button {
-    transition-duration: 0.01ms;
-  }
-
+  /* The authored fallback is a cross-fade of the whole plate rather
+     than five things travelling — the reveal still reads as a reveal. */
   .isOpen .item,
+  .isOpen .image,
   .isClosed .item {
     animation: none;
-    opacity: 1;
-    transform: none;
+  }
+
+  .isOpen {
+    transition: opacity 260ms linear;
+  }
+
+  .tile:hover .image,
+  .tile:focus-visible .image {
+    transform: scale(1.02);
   }
 }

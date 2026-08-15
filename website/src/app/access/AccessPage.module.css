@@ -1,0 +1,465 @@
+.page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 640px;
+  overflow: hidden;
+  color: var(--bone);
+  background:
+    radial-gradient(circle at 78% 12%, oklch(29% 0.09 348deg / 30%), transparent 30%),
+    var(--ink-0);
+  isolation: isolate;
+}
+
+.skipLink {
+  position: absolute;
+  z-index: 30;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 22px;
+  align-items: center;
+  color: var(--ink-0);
+  background: var(--accent);
+  font-family: var(--font-meta);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 3px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.grain {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  opacity: 0.09;
+  background: url("/the-cross/static-noise.gif") repeat;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.glow {
+  position: absolute;
+  top: -30vw;
+  right: -22vw;
+  width: 68vw;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in oklch, var(--accent) 24%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 160px color-mix(in oklch, var(--accent) 13%, transparent);
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  z-index: 2;
+  top: var(--nav-safe);
+  right: clamp(18px, 2.2vw, 34px);
+  bottom: 34px;
+  left: clamp(18px, 2.2vw, 34px);
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--edge);
+  grid-template-columns: minmax(0, 1.45fr) minmax(390px, 0.72fr);
+  background: var(--ink-1);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 36%);
+}
+
+.mapPanel {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--ink-1);
+}
+
+/* The Maps *embed* endpoint takes no colour parameters: styling needs the
+   JS API and a billed key. Inverting the frame and rotating the hue back
+   is the only way to put a road map on a black page without one. Applied
+   once and never animated, so it stays off the hot path.
+   `hue-rotate` returns blues to blue and greens to green after the
+   inversion; the slight desaturation stops Google's pin colours from
+   fluorescing against the ink. */
+.map {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: invert(0.93) hue-rotate(180deg) saturate(0.78) brightness(0.94)
+    contrast(1.04);
+}
+
+.mapWash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 72%, rgb(8 8 10 / 34%) 100%);
+  pointer-events: none;
+}
+
+.mapGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image:
+    linear-gradient(var(--bone) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bone) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+.information {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  padding: clamp(28px, 4vw, 64px) clamp(26px, 4vw, 60px) clamp(24px, 3vw, 44px);
+  flex-direction: column;
+  border-left: 1px solid var(--edge);
+  background:
+    linear-gradient(150deg, rgb(255 255 255 / 2%), transparent 40%),
+    var(--ink-1);
+}
+
+.eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--edge);
+  color: var(--bone-soft);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrow span:first-child {
+  color: var(--accent);
+}
+
+.titleBlock {
+  margin-top: clamp(24px, 4vh, 48px);
+}
+
+.titleBlock > p {
+  margin: 0 0 10px;
+  color: var(--bone-soft);
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-style: italic;
+}
+
+.titleBlock h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+}
+
+.titleBlock h1 > span {
+  display: block;
+  font-size: clamp(58px, 6.2vw, 104px);
+  line-height: 0.78;
+}
+
+.titleBlock h1 > small {
+  display: block;
+  margin-top: 17px;
+  color: var(--accent);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.36em;
+}
+
+.lead {
+  margin: clamp(24px, 4vh, 42px) 0 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: 0.045em;
+}
+
+.details {
+  display: grid;
+  margin: auto 0 0;
+  border-top: 1px solid var(--edge);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail {
+  min-width: 0;
+  padding: 14px 14px 14px 0;
+  border-bottom: 1px solid var(--edge);
+}
+
+.detail:nth-child(even) {
+  padding-left: 14px;
+  border-left: 1px solid var(--edge);
+}
+
+.detail:last-child {
+  padding-left: 0;
+  border-left: 0;
+  grid-column: 1 / -1;
+}
+
+.addressDetail {
+  grid-column: 1 / -1;
+}
+
+.detail dt {
+  margin-bottom: 7px;
+  color: var(--bone-soft);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.detail dd {
+  overflow-wrap: anywhere;
+  margin: 0;
+  font-family: var(--font-jp);
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.035em;
+}
+
+.numerals {
+  font-family: var(--font-meta);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.numerals span {
+  color: var(--accent);
+}
+
+.detail a {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--accent) 60%, transparent);
+  text-underline-offset: 4px;
+}
+
+.actions {
+  display: flex;
+  margin-top: clamp(20px, 2.4vh, 30px);
+  align-items: center;
+  gap: clamp(18px, 1.6vw, 30px);
+  flex-wrap: wrap;
+}
+
+.information,
+.routeSignal,
+.routeSignal {
+  animation-delay: 160ms;
+}
+
+@keyframes access-enter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1050px) {
+  .stage {
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  }
+
+  .information {
+    padding-right: 34px;
+    padding-left: 34px;
+  }
+
+}
+
+/* Short viewports (landscape phones, laptops) cannot fit the 640px floor.
+   Without this the page keeps `overflow: hidden` at a height the content
+   overflows, and the telephone number and both CTAs become permanently
+   unreachable. Let the frame scroll instead of clipping.
+   Raised from 760px to 860px: the action row is a full-height plate now and
+   wraps to two lines on a narrow information column, so a 1180x800 laptop
+   was clipping "Call the venue" off the bottom of a fixed frame. */
+@media (max-height: 860px) and (min-width: 769px) {
+  .page {
+    /* Stay a fixed-height scroller: `body` is `overflow: hidden`, so a
+       page that grows past the viewport would be clipped, not scrolled. */
+    height: 100dvh;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .stage {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    min-height: 560px;
+    /* Below the header band, not at y=8 behind it. */
+    margin: var(--nav-safe) clamp(18px, 2.2vw, 34px) 34px;
+  }
+
+  .titleBlock {
+    margin-top: 22px;
+  }
+
+  .titleBlock h1 > span {
+    font-size: clamp(58px, 5.5vw, 84px);
+  }
+
+  .lead {
+    margin-top: 22px;
+    line-height: 1.65;
+  }
+
+  .detail {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .actions {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* The card used to start at y=0 under a fixed header, so the map's own
+     Google chrome sat behind the navigation, and its `min-height:
+     calc(100dvh - 86px)` left roughly 90px of empty page below the last
+     control. It now begins below the header band and ends where its
+     content ends. */
+  .stage {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    min-height: 0;
+    margin: var(--nav-safe) 12px calc(20px + env(safe-area-inset-bottom));
+    flex-direction: column;
+  }
+
+  /* Tall enough to read as a place rather than as a strip of road names. */
+  .mapPanel {
+    height: clamp(220px, 34dvh, 300px);
+    flex: none;
+  }
+
+  .information {
+    min-height: 0;
+    padding: 22px 20px 26px;
+    border-top: 1px solid var(--edge);
+    border-left: 0;
+  }
+
+  .titleBlock {
+    margin-top: 16px;
+  }
+
+  .titleBlock h1 > span {
+    font-size: clamp(54px, 17vw, 70px);
+  }
+
+  .titleBlock h1 > small {
+    margin-top: 12px;
+  }
+
+  .lead {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.85;
+  }
+
+  .details {
+    margin-top: 20px;
+  }
+
+  .detail {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+
+  .detail dd {
+    font-size: 12.5px;
+  }
+
+  /* Stacked, full width, and both at the same weight class as every other
+     action in the building. */
+  .actions {
+    margin-top: 22px;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .glow {
+    top: -46vw;
+    right: -34vw;
+    width: 92vw;
+  }
+}
+
+@media (max-width: 340px) {
+  .eyebrow span:last-child {
+    display: none;
+  }
+
+  .detail {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+
+  .detail:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .information,
+  .routeSignal {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}

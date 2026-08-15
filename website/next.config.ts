@@ -9,6 +9,50 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: projectRoot,
   },
+  async redirects() {
+    return [
+      {
+        source: "/index.html",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/index.php",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/price",
+        destination: "/vip",
+        permanent: true,
+      },
+      {
+        source: "/regular/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/category/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/sitemap.html",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap-:slug.html",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

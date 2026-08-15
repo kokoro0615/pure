@@ -1,0 +1,965 @@
+/* ============================================================
+   PURE Osaka - Q & A
+   Concept: "The wall of placards."
+   PURE's passage is papered wall to wall with gift placards
+   from other rooms. Each answer is one notice posted on that
+   dark wall, and only the notice you opened is lit.
+   ============================================================ */
+
+.page {
+  /* The panel carries text, so it gets a little more room than a control. */
+
+  --spine: clamp(20px, 4.4vw, 76px);
+  --indent: calc(var(--gutter) + clamp(0px, 2vw, 40px));
+  /* One shared track pair keeps the question and its answer on one spine. */
+  --row-index: clamp(26px, 2.4vw, 34px);
+  --row-gap: clamp(16px, 2vw, 28px);
+
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  color: var(--bone);
+  background: var(--ink-0);
+  font-family: var(--font-meta);
+  scrollbar-width: none;
+  isolation: isolate;
+}
+
+/* Hook only. GSAP reads `.${reveal}` to collect the quiet entrance groups;
+   it must exist in this stylesheet or CSS Modules resolves `styles.reveal`
+   to `undefined`, ships `class="head undefined"`, and the entrance silently
+   never runs. Carries no visual state: the settled look is the CSS default,
+   so a scripting-off or reduced-motion visit reads everything. */
+.reveal {
+  will-change: opacity, transform;
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+:global(html.clubraia-menu-is-open) .page {
+  overflow: hidden;
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 80;
+  top: calc(var(--nav-safe) + 6px);
+  left: var(--indent);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 22px;
+  align-items: center;
+  color: var(--ink-0);
+  background: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 3px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.grain {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  opacity: 0.05;
+  background: url("/the-cross/static-noise.gif") repeat;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.navScrim {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: clamp(120px, 16vh, 190px);
+  background: linear-gradient(
+    180deg,
+    rgb(6 5 10 / 84%) 0%,
+    rgb(6 5 10 / 48%) 46%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- the spine: shared alignment axis across PURE routes ---------- */
+
+.spine {
+  position: fixed;
+  z-index: 40;
+  top: calc(var(--nav-safe) + 10px);
+  bottom: clamp(28px, 5vh, 56px);
+  left: calc(var(--spine) / 2);
+  width: 1px;
+  background: var(--edge);
+  pointer-events: none;
+}
+
+.spineTrail {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent-deep) 26%,
+    var(--accent) 82%,
+    var(--accent)
+  );
+  opacity: 0.7;
+  transform: scaleY(0.015);
+  transform-origin: top center;
+}
+
+.spineSpark {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff2f6;
+  box-shadow:
+    0 0 8px 1px var(--accent),
+    0 0 22px 4px var(--accent-veil);
+}
+
+/* ---------- cover: the wall ----------
+   Composition: the posted notice. Unlike /vip (a centred plate) and
+   /tickets (a low door plate), this cover hangs its type at reading height
+   near the top, the way a notice is actually posted, and leaves the lower
+   wall to the photograph.
+
+   These declarations used to live in an unconditional block appended after
+   the handset media query. Because a media query adds no specificity, that
+   block also won on a handset, where it met `grid-template-rows: auto auto
+   1fr` and tore the type in half. Keeping the composition here lets the
+   handset query below actually own the handset. */
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--nav-safe) + clamp(8px, 2vh, 24px)) var(--gutter)
+    clamp(86px, 13vh, 132px) var(--indent);
+  align-content: start;
+  gap: clamp(22px, 3.4vh, 40px);
+  isolation: isolate;
+}
+
+.heroMedia {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ink-1);
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: 50% 48%;
+  filter: saturate(0.9) contrast(1.04) brightness(0.72);
+  transform: scale(1.02);
+}
+
+.heroWash {
+  position: absolute;
+  inset: 0;
+  background:
+    /* The magenta title line measured 3.01:1 over the lit wall at the 46%
+       stop, right on the large-text floor. These stops carry it to 3.6:1
+       while the lifted image keeps the placards readable. */
+    linear-gradient(
+      100deg,
+      rgb(8 7 13 / 90%) 0%,
+      rgb(8 7 13 / 70%) 46%,
+      rgb(8 7 13 / 28%) 80%
+    ),
+    linear-gradient(180deg, rgb(8 7 13 / 56%) 0%, transparent 32%),
+    linear-gradient(
+      0deg,
+      rgb(8 7 13 / 92%) 0%,
+      rgb(8 7 13 / 66%) 22%,
+      transparent 54%
+    );
+}
+
+.heroEyebrow,
+.eyebrow {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  gap: 14px;
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.heroEyebrow span + span::before,
+.eyebrow span + span::before {
+  display: inline-block;
+  width: clamp(22px, 3vw, 46px);
+  height: 1px;
+  margin-right: 14px;
+  content: "";
+  background: var(--edge-strong);
+  vertical-align: middle;
+}
+
+.heroTitle {
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.7rem, 9.2vw, 8.4rem);
+  font-weight: 400;
+  line-height: 0.84;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.heroLine {
+  display: block;
+  overflow: hidden;
+  padding: 0.06em 0 0.14em;
+  margin-bottom: -0.12em;
+}
+
+.heroLine:last-child {
+  margin-left: clamp(0px, 4vw, 96px);
+  color: var(--accent);
+}
+
+.heroWord {
+  display: block;
+}
+
+.heroFoot {
+  display: grid;
+  justify-items: start;
+  gap: clamp(14px, 2vh, 22px);
+}
+
+.heroLead {
+  max-width: 30em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp-display);
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 2.05;
+  letter-spacing: 0.06em;
+}
+
+/* The cover used to print an "07 questions" tally here. It duplicated the
+   numbered list one screen below and read as decoration, so the slot now
+   carries the one thing the portrait frame was missing instead: a terminus.
+
+   Handset only. On tablet and up the type block and the placard wall
+   already share the frame, so the bottom edge needs no help. */
+.heroCue {
+  position: relative;
+  z-index: 1;
+  display: none;
+  min-height: 44px;
+  align-items: center;
+  align-self: end;
+  justify-self: start;
+  gap: 14px;
+  color: var(--bone-faint);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+
+/* Same hairline that ties the two halves of every eyebrow on this page. */
+.heroCue::before {
+  width: clamp(28px, 9vw, 46px);
+  height: 1px;
+  content: "";
+  background: var(--edge-strong);
+}
+
+.heroCue:hover,
+.heroCue:focus-visible {
+  color: var(--bone);
+}
+
+.heroCue:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.heroCueArrow {
+  width: 12px;
+  height: 13px;
+  animation: heroCueNudge 3.4s var(--ease-ui) infinite;
+}
+
+.heroCueArrow path {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Transform only, and quiet: one nudge every 3.4s, at rest for three of them. */
+@keyframes heroCueNudge {
+  0%,
+  64%,
+  100% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(4px);
+  }
+}
+
+/* ---------- the wall ---------- */
+
+.wall {
+  display: grid;
+  padding: var(--section-pad) var(--gutter) var(--section-pad) var(--indent);
+  gap: clamp(48px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.wallHead {
+  display: grid;
+  gap: clamp(18px, 2vw, 28px);
+  align-content: start;
+}
+
+.wallHead h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 4.8vw, 4rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.038em;
+}
+
+.wallLead {
+  max-width: 26em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp-display);
+  font-size: clamp(12.5px, 1vw, 15px);
+  line-height: 2.05;
+  letter-spacing: 0.055em;
+}
+
+/* Chromium can break Japanese on phrase boundaries instead of mid-word.
+   Progressive: everywhere else the authored line breaks already carry it. */
+@supports (word-break: auto-phrase) {
+  .heroLead,
+  .wallLead,
+  .rowQuestion,
+  .answerBody p,
+  .askLead {
+    word-break: auto-phrase;
+  }
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One hairline per row, never a top and a bottom on each. */
+.row {
+  border-top: 1px solid var(--edge);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--edge);
+}
+
+.rowHeading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* The index column is a fixed track rather than `auto`, so the answer below
+   can adopt the same track and start on exactly the question's left edge. */
+.rowTrigger {
+  display: grid;
+  width: 100%;
+  min-height: 72px;
+  padding: clamp(22px, 2.4vw, 30px) 0;
+  column-gap: var(--row-gap);
+  grid-template-columns: var(--row-index) minmax(0, 1fr) auto auto;
+  align-items: center;
+  text-align: left;
+  touch-action: manipulation;
+}
+
+.rowIndex {
+  color: var(--bone-faint);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  transition: color var(--dur-panel) var(--ease-ui);
+}
+
+.rowQuestion {
+  color: var(--bone-soft);
+  font-family: var(--font-jp-display);
+  font-size: clamp(15px, 1.5vw, 21px);
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+  transition: color var(--dur-panel) var(--ease-ui);
+}
+
+.rowLabel {
+  color: var(--bone-faint);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* A plus built from two rules, in the page's own hairline language. */
+.rowSign {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  color: var(--bone-faint);
+  transition: color var(--dur-panel) var(--ease-ui);
+}
+
+.rowSign span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+}
+
+.rowSign span:last-child {
+  transform: rotate(90deg);
+  transition: transform var(--dur-panel) var(--ease-ui);
+}
+
+.isOpen .rowSign {
+  color: var(--accent);
+}
+
+.isOpen .rowSign span:last-child {
+  transform: rotate(90deg) scaleX(0);
+}
+
+.isOpen .rowIndex {
+  color: var(--accent);
+}
+
+.isOpen .rowQuestion {
+  color: var(--bone);
+}
+
+.rowTrigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rowTrigger:hover .rowQuestion {
+    color: var(--bone);
+  }
+
+  .rowTrigger:hover .rowSign {
+    color: var(--bone);
+  }
+}
+
+/* The panel opens on grid rows, so no height is ever measured or animated. */
+.answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-answer) var(--ease-enter);
+}
+
+.isOpen .answer {
+  grid-template-rows: 1fr;
+}
+
+.answerInner {
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+  column-gap: var(--row-gap);
+  grid-template-columns: var(--row-index) minmax(0, 1fr);
+  /* Keeps a closed answer out of the tab order and the a11y tree. */
+  visibility: hidden;
+  transition: visibility 0s linear var(--dur-answer);
+}
+
+.isOpen .answerInner {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* The light draws down the answer as it opens. */
+.answerRule {
+  display: block;
+  width: 1px;
+  justify-self: start;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--dur-answer) var(--ease-enter);
+}
+
+.isOpen .answerRule {
+  transform: scaleY(1);
+}
+
+.answerBody {
+  display: grid;
+  padding-bottom: clamp(30px, 3.4vw, 44px);
+  gap: clamp(14px, 1.6vw, 20px);
+  justify-items: start;
+}
+
+.answerBody p {
+  max-width: 30em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 1vw, 14.5px);
+  line-height: 2.05;
+  letter-spacing: 0.045em;
+}
+
+.answerLink {
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: 4px;
+  padding-right: 2px;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--edge-strong);
+  color: var(--bone);
+  font-family: var(--font-jp);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui);
+}
+
+.answerLink:hover {
+  border-color: var(--accent);
+}
+
+.answerLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- not on the wall ---------- */
+
+.ask {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--nav-safe) + clamp(20px, 6vh, 72px)) var(--gutter)
+    clamp(112px, 16vh, 168px) var(--indent);
+  gap: clamp(44px, 5vw, 88px);
+  align-content: center;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--ink-1);
+}
+
+.askMedia {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--ink-2);
+}
+
+.askImage {
+  object-fit: cover;
+  object-position: 52% 42%;
+  filter: saturate(0.92) contrast(1.04) brightness(0.82);
+}
+
+.askWash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgb(8 7 13 / 62%) 0%,
+    rgb(8 7 13 / 10%) 46%,
+    transparent 72%
+  );
+}
+
+.askBody {
+  display: grid;
+  gap: clamp(28px, 3.4vw, 44px);
+  align-content: center;
+}
+
+.askHead {
+  display: grid;
+  gap: clamp(18px, 2vw, 26px);
+}
+
+.askHead h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.038em;
+}
+
+.askLead {
+  max-width: 26em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 1vw, 14.5px);
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+.askActions {
+  display: flex;
+  align-items: center;
+  /* Wide enough that the quiet link's hairline never reads as part of the
+     plate beside it. */
+  gap: clamp(22px, 2.6vw, 40px);
+  flex-wrap: wrap;
+}
+
+.askLinks a:focus-visible,
+.footer a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.icon {
+  width: 17px;
+  height: 17px;
+}
+
+.icon path {
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.askLinks {
+  display: flex;
+  gap: clamp(18px, 2.4vw, 36px);
+  flex-wrap: wrap;
+}
+
+.askLinks a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-bottom: 1px solid var(--edge-strong);
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui);
+}
+
+.askLinks a:hover {
+  border-color: var(--accent);
+  color: var(--bone);
+}
+
+.footer {
+  position: absolute;
+  right: var(--gutter);
+  bottom: max(env(safe-area-inset-bottom), clamp(26px, 4vh, 44px));
+  left: var(--indent);
+  display: flex;
+  padding-top: 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid var(--edge);
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.footer a {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* ---------- desktop composition ---------- */
+
+@media (min-width: 901px) {
+  .wall {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  .wallHead {
+    position: sticky;
+    top: calc(var(--nav-safe) + clamp(16px, 4vh, 48px));
+  }
+
+  .ask {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: center;
+  }
+
+  /* The body leads; the photograph closes the page on the right. */
+  .askBody {
+    order: -1;
+  }
+
+  .askMedia {
+    aspect-ratio: 4 / 5;
+    max-height: 62vh;
+    justify-self: end;
+    width: 100%;
+  }
+}
+
+/* ---------- tablet ---------- */
+
+@media (max-width: 900px) {
+  .page {
+  }
+
+  .askMedia {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* ---------- handset ---------- */
+
+@media (max-width: 760px) {
+  .page {
+    --row-gap: 14px;
+  }
+
+  /* Portrait recomposition. Eyebrow, display and lead stay welded together
+     as one posted notice; only the trailing 1fr row absorbs the slack, so
+     the cue can hold the bottom edge without tearing the notice in half.
+     The old `auto auto 1fr` put the lead itself in the elastic row and
+     opened 440px of nothing between the title and the text. */
+  .hero {
+    grid-template-rows: auto auto auto 1fr;
+    padding-bottom: max(env(safe-area-inset-bottom), clamp(24px, 4vh, 40px));
+    gap: clamp(18px, 2.6vh, 28px);
+  }
+
+  /* The portrait measure is narrow enough to give the display a bigger share
+     of it. 17vw holds the longest line ("YOU COME") at roughly 82% of the
+     measure from 320px up, step included. */
+  .heroTitle {
+    max-width: none;
+    /* The vh term only bites in landscape, where 17vw would set an 84px
+       display inside a 360px-tall frame and push the notice off the cover. */
+    font-size: clamp(3.25rem, min(17vw, 13vh), 5.25rem);
+  }
+
+  /* Tied to the type size so the stair reads as authored. At a flat 8px it
+     read as a failed alignment rather than a step. */
+  .heroLine:last-child {
+    margin-left: 0.42em;
+  }
+
+  /* The eyebrow is two labels on one rule; on the narrowest handsets it has
+     to be allowed to break between them instead of inside them. */
+  .heroEyebrow {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .heroEyebrow span {
+    white-space: nowrap;
+  }
+
+  .heroFoot {
+    gap: clamp(12px, 1.6vh, 18px);
+  }
+
+  /* 1.05vw resolves to ~4px on a handset, so the lead was pinned to its 13px
+     floor on every device regardless of how much room it had. */
+  .heroLead {
+    max-width: 24em;
+    font-size: clamp(13.5px, 3.6vw, 15px);
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
+
+  /* Portrait crop. A 3:2 photograph in a 0.46 frame keeps only ~31% of its
+     width; centred, that slice landed between the placard wall and the neon
+     sign and bisected both. 38% puts the wall - the governing concept - in
+     the middle of the frame and keeps the curtain's warm light on the edge. */
+  .heroImage {
+    object-position: 38% 50%;
+    /* Opening the wash let the neon's magenta spill flood the wall and
+       compete with the one accent the page is allowed. Desaturating the
+       photograph keeps the placards legible while the title keeps the
+       colour. */
+    filter: saturate(0.72) contrast(1.06) brightness(0.8);
+  }
+
+  /* The desktop wash runs across the frame: a dark left column for the type,
+     the photograph exposed on the right. In portrait that axis is only 390px
+     long, so the same gradient darkened the entire lower wall to L~0.003 -
+     a black rectangle over 55% of the cover. Portrait needs the vertical
+     axis instead: dark under the notice, open across the wall, a soft
+     anchor under the cue. */
+  .heroWash {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(8 7 13 / 90%) 0%,
+        rgb(8 7 13 / 80%) 30%,
+        rgb(8 7 13 / 50%) 44%,
+        rgb(8 7 13 / 30%) 62%,
+        rgb(8 7 13 / 36%) 82%,
+        rgb(8 7 13 / 74%) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgb(8 7 13 / 42%) 0%,
+        rgb(8 7 13 / 10%) 56%,
+        transparent 100%
+      );
+  }
+
+  .heroCue {
+    display: inline-flex;
+  }
+
+  .rowTrigger {
+    grid-template-columns: var(--row-index) minmax(0, 1fr) auto;
+  }
+
+  /* The English label is a desktop affordance; the question carries the
+     row on a handset. */
+  .rowLabel {
+    display: none;
+  }
+
+  .askActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .footer {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: var(--fs-micro);
+  }
+}
+
+/* ---------- handset, turned sideways ----------
+   A landscape handset is a wide frame again, so the wash goes back on the
+   horizontal axis. Measured: the portrait stack leaves the lead sitting on
+   the lit part of the wall at 4.0:1, under the AA floor. */
+
+@media (max-width: 760px) and (orientation: landscape) {
+  .heroImage {
+    object-position: 50% 46%;
+    filter: saturate(0.82) contrast(1.05) brightness(0.74);
+  }
+
+  .heroWash {
+    background:
+      linear-gradient(
+        100deg,
+        rgb(8 7 13 / 92%) 0%,
+        rgb(8 7 13 / 78%) 46%,
+        rgb(8 7 13 / 34%) 84%
+      ),
+      linear-gradient(180deg, rgb(8 7 13 / 60%) 0%, transparent 34%),
+      linear-gradient(
+        0deg,
+        rgb(8 7 13 / 86%) 0%,
+        rgb(8 7 13 / 54%) 26%,
+        transparent 60%
+      );
+  }
+}
+
+/* ---------- reduced motion: a designed settled state ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .spineSpark {
+    display: none;
+  }
+
+  /* Designed settled state: the cue keeps its arrow, it just stops nudging. */
+  .heroCueArrow {
+    animation: none;
+  }
+
+  .spineTrail {
+    opacity: 0.4;
+    transform: scaleY(1);
+  }
+
+  /* The panel still opens, just without the travel: the rule and the sign
+     resolve instantly instead of being switched off. */
+  .answer,
+  .answerRule,
+  .rowSign span:last-child,
+  .answerLink,
+  .askLinks a,
+  .rowIndex,
+  .rowQuestion,
+  .rowSign,
+  .footer a,
+  .skipLink {
+    transition-duration: 1ms;
+  }
+
+  .answerInner {
+    transition-duration: 0s;
+    transition-delay: 0s;
+  }
+}

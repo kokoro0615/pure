@@ -1,0 +1,1038 @@
+/* ============================================================
+   PURE Osaka - Gallery
+   Concept: "Contact sheet at 3AM". One roll of film from one
+   night, developed in order. A hairline spine runs down the
+   page; every photograph is a frame hung off that spine.
+   ============================================================ */
+
+.page {
+  --spine: clamp(20px, 4.4vw, 76px);
+
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  color: var(--bone);
+  background: var(--ink-0);
+  font-family: var(--font-meta);
+  scrollbar-width: none;
+  isolation: isolate;
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 80;
+  top: calc(var(--nav-safe) + 6px);
+  left: var(--gutter);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 22px;
+  align-items: center;
+  color: var(--ink-0);
+  background: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 3px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+:global(html.gallery-modal-is-open) .page {
+  overflow: hidden;
+}
+
+/* Film grain: fixed, pointer-events none, never on a scrolling layer. */
+.grain {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  opacity: 0.05;
+  background: url("/the-cross/static-noise.gif") repeat;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+/* Scrim under the site navigation so it never sits on bare photo. */
+.navScrim {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: clamp(120px, 16vh, 190px);
+  background: linear-gradient(
+    180deg,
+    rgb(6 7 11 / 82%) 0%,
+    rgb(6 7 11 / 46%) 46%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- the spine: film-roll edge + scroll position ---------- */
+
+.spine {
+  position: fixed;
+  z-index: 40;
+  top: calc(var(--nav-safe) + 12px);
+  bottom: clamp(28px, 5vh, 56px);
+  left: calc(var(--spine) / 2);
+  width: 1px;
+  background: var(--edge);
+  pointer-events: none;
+}
+
+.spineTick {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent) 22%,
+    var(--accent) 78%,
+    transparent
+  );
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+/* ============================ HERO ============================ */
+
+.hero {
+  position: relative;
+  display: grid;
+  height: 100%;
+  min-height: 640px;
+  overflow: hidden;
+  padding: var(--nav-safe) var(--gutter) clamp(30px, 6vh, 62px)
+    calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  align-content: end;
+  background: var(--ink-0);
+  isolation: isolate;
+}
+
+.heroMedia {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: var(--media-position);
+  filter: brightness(0.82) saturate(1.02) contrast(1.04);
+  transform-origin: 54% 42%;
+}
+
+.heroWash {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(
+      12deg,
+      rgb(5 6 10 / 92%) 0%,
+      rgb(5 6 10 / 56%) 38%,
+      rgb(5 6 10 / 6%) 74%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(5 6 10 / 46%) 0%,
+      transparent 26%,
+      rgb(5 6 10 / 62%) 62%,
+      rgb(5 6 10 / 88%) 100%
+    );
+}
+
+.heroTitle {
+  margin: 0 0 clamp(22px, 3.4vh, 40px);
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 10.2vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* The reveal mask must never clip the glyphs: grow the clip box with
+   padding, then pull the layout back with an equal negative margin. */
+.heroLine {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.16em;
+  margin-block: -0.16em;
+}
+
+.heroLine + .heroLine {
+  padding-left: clamp(24px, 8vw, 168px);
+}
+
+.heroWord {
+  display: block;
+  will-change: transform;
+}
+
+.heroMeta {
+  display: flex;
+  gap: clamp(14px, 2vw, 30px);
+  color: var(--bone-soft);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ========================== MANIFESTO ========================== */
+
+.manifesto {
+  display: grid;
+  min-height: 100%;
+  padding: clamp(88px, 12vh, 140px) var(--gutter) clamp(88px, 12vh, 140px)
+    calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.74fr);
+  background:
+    radial-gradient(120% 76% at 82% 18%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 62%),
+    var(--ink-0);
+}
+
+.manifestoBody {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+}
+
+.manifestoPhrase {
+  display: block;
+  max-width: 17em;
+  opacity: 0.24;
+  text-wrap: balance;
+  will-change: opacity, transform;
+}
+
+.manifestoPhrase + .manifestoPhrase {
+  margin-top: 0.28em;
+}
+
+.manifestoPhrase:nth-child(4),
+.manifestoPhrase:nth-child(5) {
+  padding-left: clamp(14px, 2.6vw, 48px);
+}
+
+.manifestoFrame {
+  position: relative;
+  align-self: center;
+  margin-top: clamp(0px, 5vw, 72px);
+}
+
+/* ============================ FRAME ============================ */
+/* Shared photographic frame. Aspect ratio comes from the source
+   photo, so nothing is letterboxed. */
+
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio, 1.5);
+  overflow: hidden;
+  background: var(--ink-1);
+  box-shadow: inset 0 0 0 1px var(--edge);
+  text-align: left;
+  isolation: isolate;
+}
+
+.frameFill {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.frameImage {
+  z-index: -2;
+  object-fit: cover;
+  object-position: var(--media-position);
+  filter: brightness(0.9) saturate(1.02) contrast(1.03);
+  transition:
+    transform 900ms var(--ease-enter),
+    filter 600ms var(--ease-ui);
+}
+
+.frameShade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 54%, rgb(4 5 8 / 74%) 100%);
+  opacity: 0.82;
+  transition: opacity var(--dur-panel) var(--ease-ui);
+}
+
+.frameCaption {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--bone-soft);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: translateY(4px);
+  opacity: 0;
+  transition:
+    opacity var(--dur-panel) var(--ease-ui),
+    transform var(--dur-panel) var(--ease-ui);
+}
+
+.frameRule {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 640ms var(--ease-enter);
+}
+
+.frame:hover .frameImage,
+.frame:focus-visible .frameImage {
+  filter: brightness(1) saturate(1.08) contrast(1.02);
+  transform: scale(1.045);
+}
+
+.frame:hover .frameCaption,
+.frame:focus-visible .frameCaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.frame:hover .frameRule,
+.frame:focus-visible .frameRule {
+  transform: scaleX(1);
+}
+
+.frame:hover .frameShade,
+.frame:focus-visible .frameShade {
+  opacity: 1;
+}
+
+.frame:focus-visible,
+.stripButton:focus-visible,
+.lightboxClose:focus-visible,
+.lightboxArrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- section headings ---------- */
+
+.head {
+  display: grid;
+  padding-bottom: clamp(44px, 6vw, 96px);
+  gap: clamp(20px, 2.4vw, 34px);
+}
+
+.head h2 {
+  max-width: 15ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.6vw, 5.4rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.head p {
+  max-width: 24em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 2;
+}
+
+/* ============================ STACK ============================ */
+
+.stack {
+  display: grid;
+  padding: var(--section-pad) var(--gutter) var(--section-pad)
+    calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  gap: clamp(40px, 6vw, 110px);
+  grid-template-columns: minmax(240px, 0.66fr) minmax(0, 1.34fr);
+  background: var(--ink-1);
+}
+
+.stackHead {
+  position: sticky;
+  top: calc(var(--nav-safe) + clamp(20px, 5vh, 60px));
+  align-self: start;
+  padding-bottom: 0;
+}
+
+.stackDeck {
+  position: relative;
+}
+
+.stackFrame {
+  position: sticky;
+  top: calc(var(--nav-safe) + clamp(12px, 3vh, 32px));
+  margin-bottom: clamp(120px, 22vh, 260px);
+  transform-origin: 50% 14%;
+  will-change: transform, opacity;
+}
+
+.stackFrame:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================== MOSAIC =========================== */
+
+.mosaic {
+  padding: var(--section-pad) var(--gutter) var(--section-pad)
+    calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  background: var(--ink-0);
+}
+
+.mosaicHead {
+  justify-items: end;
+  text-align: right;
+}
+
+.mosaicHead h2 {
+  max-width: 13ch;
+}
+
+.mosaicColumns {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 30px);
+  grid-template-columns: 1.16fr 0.84fr 1fr;
+  align-items: start;
+}
+
+.mosaicColumn {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 30px);
+}
+
+.mosaicColumn:nth-child(2) {
+  margin-top: clamp(40px, 9vw, 150px);
+}
+
+.mosaicColumn:nth-child(3) {
+  margin-top: clamp(14px, 3.4vw, 58px);
+}
+
+.mosaicReveal {
+  will-change: transform, opacity;
+}
+
+/* ========================== FILM STRIP ========================= */
+
+.strip {
+  position: relative;
+  display: grid;
+  height: 100%;
+  min-height: 620px;
+  padding: calc(var(--nav-safe) + clamp(20px, 3.4vh, 44px)) 0
+    clamp(44px, 7vh, 84px);
+  overflow: hidden;
+  gap: clamp(28px, 4vh, 54px);
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--ink-1);
+}
+
+.stripHead {
+  display: flex;
+  padding: 0 var(--gutter) 0 calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.stripHead h2 {
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.2vw, 3.9rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+}
+
+.stripControls {
+  display: flex;
+  gap: 10px;
+}
+
+.stripButton {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid var(--edge-strong);
+  border-radius: 50%;
+  color: var(--bone);
+  transition:
+    color var(--dur-panel) var(--ease-ui),
+    background-color var(--dur-panel) var(--ease-ui),
+    border-color var(--dur-panel) var(--ease-ui);
+}
+
+.stripButton:hover {
+  color: var(--ink-0);
+  background: var(--bone);
+  border-color: var(--bone);
+}
+
+.stripButton svg {
+  width: 19px;
+  height: 19px;
+}
+
+.stripViewport {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stripTrack {
+  display: flex;
+  height: 100%;
+  padding: 0 var(--gutter) 0 calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  gap: clamp(12px, 1.5vw, 26px);
+  align-items: stretch;
+  will-change: transform;
+}
+
+.stripFrame {
+  height: 100%;
+  flex: 0 0 auto;
+  aspect-ratio: var(--ratio, 1.5);
+  width: auto;
+}
+
+.stripFrame:nth-child(even) {
+  height: 86%;
+  align-self: flex-end;
+}
+
+/* Fallback track: native scroll-snap when the pin is not used. */
+.stripScroll {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--gutter);
+  scrollbar-width: none;
+}
+
+.stripScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.stripScroll .stripFrame {
+  scroll-snap-align: start;
+}
+
+/* ============================= CTA ============================= */
+
+.cta {
+  position: relative;
+  display: grid;
+  min-height: 100%;
+  overflow: hidden;
+  padding: var(--nav-safe) var(--gutter) clamp(96px, 13vh, 140px)
+    calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  align-content: center;
+  isolation: isolate;
+}
+
+.ctaImage {
+  z-index: -3;
+  object-fit: cover;
+  object-position: var(--media-position);
+  filter: brightness(0.74) saturate(1.02);
+}
+
+.ctaWash {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    linear-gradient(96deg, rgb(4 5 8 / 92%) 0%, rgb(4 5 8 / 60%) 52%, rgb(4 5 8 / 24%) 100%),
+    linear-gradient(180deg, rgb(4 5 8 / 46%) 0%, transparent 42%, rgb(4 5 8 / 82%) 100%);
+}
+
+.ctaContent {
+  max-width: min(780px, 62vw);
+}
+
+.ctaContent h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7.2vw, 6.6rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+.ctaContent p {
+  max-width: 24em;
+  margin: clamp(22px, 3vw, 36px) 0 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 2;
+}
+
+.ctaActions {
+  display: flex;
+  margin-top: clamp(32px, 4.4vw, 52px);
+  align-items: center;
+  /* Wide enough that the quiet link's hairline never reads as part of the
+     plate beside it. */
+  gap: clamp(22px, 2.6vw, 40px);
+  flex-wrap: wrap;
+}
+
+.footer {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(26px, 4vh, 44px);
+  left: calc(var(--gutter) + clamp(0px, 2vw, 34px));
+  display: flex;
+  padding-top: 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--edge);
+  color: var(--bone-soft);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.footer a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  transition: color var(--dur-panel) var(--ease-ui);
+}
+
+.footer a:hover {
+  color: var(--bone);
+}
+
+/* =========================== LIGHTBOX ========================== */
+
+.lightbox {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  padding: clamp(64px, 8vw, 104px) clamp(56px, 8vw, 120px);
+  place-items: center;
+  color: var(--bone);
+  font-family: var(--font-meta);
+  animation: lightbox-enter 420ms var(--ease-enter) both;
+}
+
+.lightboxBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(4 5 8 / 96%);
+}
+
+.lightboxStage {
+  position: relative;
+  width: min(88vw, 1400px);
+  height: min(78vh, 900px);
+  animation: lightbox-rise 520ms var(--ease-enter) both;
+}
+
+.lightboxImage {
+  object-fit: contain;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: clamp(20px, 3vw, 40px);
+  right: clamp(20px, 3vw, 40px);
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.lightboxClose svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lightboxArrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid var(--edge-strong);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition:
+    color var(--dur-panel) var(--ease-ui),
+    background-color var(--dur-panel) var(--ease-ui);
+}
+
+.lightboxArrow:hover {
+  color: var(--ink-0);
+  background: var(--bone);
+}
+
+.lightboxArrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lightboxPrevious {
+  left: clamp(14px, 2.4vw, 40px);
+}
+
+.lightboxNext {
+  right: clamp(14px, 2.4vw, 40px);
+}
+
+.lightboxCaption {
+  position: absolute;
+  right: clamp(20px, 8vw, 120px);
+  bottom: clamp(22px, 3vh, 34px);
+  left: clamp(20px, 8vw, 120px);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--bone-soft);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.icon path {
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes lightbox-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lightbox-rise {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ========================== RESPONSIVE ========================= */
+
+@media (max-width: 1080px) {
+  .manifesto,
+  .stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .manifestoFrame {
+    max-width: 460px;
+    margin-bottom: 0;
+  }
+
+  .stackHead {
+    position: relative;
+    top: auto;
+  }
+
+  .mosaicColumns {
+    grid-template-columns: 1.08fr 0.92fr;
+  }
+
+  .mosaicColumn:nth-child(3) {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .page {
+    --spine: 16px;
+  }
+
+  .spine,
+  .spineLabel {
+    display: none;
+  }
+
+  .grain {
+    opacity: 0.035;
+  }
+
+  .heroImage,
+  .frameImage,
+  .ctaImage {
+    object-position: var(--media-mobile-position);
+  }
+
+  .hero {
+    padding-left: var(--gutter);
+  }
+
+  .heroTitle {
+    font-size: clamp(2.9rem, 15vw, 5rem);
+  }
+
+  .heroLine + .heroLine {
+    padding-left: 12vw;
+  }
+
+  .heroMeta {
+    gap: 14px;
+    font-size: var(--fs-label);
+    letter-spacing: 0.16em;
+  }
+
+  .manifesto,
+  .stack,
+  .mosaic {
+    padding-left: var(--gutter);
+  }
+
+  .manifestoBody {
+    font-size: clamp(1.7rem, 8.4vw, 2.6rem);
+    line-height: 1.24;
+  }
+
+  .manifestoPhrase {
+    max-width: none;
+  }
+
+  .manifestoFrame {
+    max-width: none;
+  }
+
+  .head h2,
+  .stripHead h2 {
+    font-size: clamp(2.4rem, 11.4vw, 3.4rem);
+  }
+
+  .mosaicHead {
+    justify-items: start;
+    text-align: left;
+  }
+
+  /* Single-column rhythm: alternate inset and full-bleed frames. */
+  .mosaicColumns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    /* `contain-intrinsic-size` alone does nothing: it only takes effect
+       with `content-visibility` (or `contain: size`), which this file did
+       not set, so the 21-frame mosaic got no render skip on the device
+       that needs it most. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 3600px;
+  }
+
+  .mosaicColumn {
+    display: contents;
+  }
+
+  .mosaicColumn:nth-child(2),
+  .mosaicColumn:nth-child(3) {
+    margin-top: 0;
+  }
+
+  /* The inset rhythm is a width, not a margin. `.frame` is `width: 100%`
+     of its grid area, so a margin was added on top of a full-width item and
+     pushed every third frame 19px past the right edge of the phone. */
+  .mosaicReveal:nth-child(3n) {
+    justify-self: start;
+    width: 86%;
+  }
+
+  .mosaicReveal:nth-child(3n + 2) {
+    justify-self: end;
+    width: 90%;
+  }
+
+  .stackFrame {
+    position: relative;
+    top: auto;
+    margin-bottom: 12px;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .strip {
+    height: auto;
+    min-height: 0;
+    padding-top: var(--section-pad);
+    padding-bottom: var(--section-pad);
+    gap: clamp(30px, 5vh, 48px);
+    grid-template-rows: auto auto;
+  }
+
+  .stripHead {
+    display: block;
+    padding-left: var(--gutter);
+  }
+
+  .stripControls {
+    margin-top: 26px;
+  }
+
+  .stripTrack {
+    height: auto;
+    padding-left: var(--gutter);
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .stripFrame,
+  .stripFrame:nth-child(even) {
+    height: min(52vh, 460px);
+    min-height: 320px;
+    align-self: flex-start;
+  }
+
+  .cta {
+    padding-left: var(--gutter);
+    padding-bottom: 128px;
+  }
+
+  .ctaContent {
+    max-width: none;
+  }
+
+  .ctaActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .footer {
+    right: var(--gutter);
+    left: var(--gutter);
+    font-size: var(--fs-label);
+    letter-spacing: 0.16em;
+  }
+
+  .footer span:first-child {
+    display: none;
+  }
+
+  .lightbox {
+    padding: 72px 12px 88px;
+  }
+
+  .lightboxStage {
+    width: 100%;
+    height: 68vh;
+  }
+
+  .lightboxArrow {
+    top: auto;
+    bottom: 20px;
+    width: 46px;
+    height: 46px;
+    transform: none;
+  }
+
+  .lightboxPrevious { left: 16px; }
+  .lightboxNext { right: 16px; }
+
+  .lightboxCaption {
+    right: 76px;
+    bottom: 34px;
+    left: 76px;
+    justify-content: center;
+  }
+
+  .lightboxCaption span:first-child {
+    display: none;
+  }
+}
+
+/* Touch devices: no hover reveal, captions stay visible. */
+@media (hover: none) {
+  .frameCaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .frameShade {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    scroll-behavior: auto;
+  }
+
+  .manifestoPhrase {
+    opacity: 1;
+  }
+
+  .frameImage,
+  .frameCaption,
+  .frameRule,
+  .frameShade,
+  .stripButton,
+  .lightboxArrow {
+    transition-duration: 1ms;
+  }
+
+  .lightbox,
+  .lightboxStage {
+    animation-duration: 1ms;
+  }
+
+  .spineTick {
+    transform: scaleY(1);
+    opacity: 0.35;
+  }
+
+  .frameCaption {
+    opacity: 1;
+    transform: none;
+  }
+}

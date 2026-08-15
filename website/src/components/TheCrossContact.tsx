@@ -1,27 +1,131 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import type { FormEvent, KeyboardEvent as ReactKeyboardEvent } from "react";
+
+import { CtaMark } from "@/components/CtaMark";
+
+const VENUE_EMAIL = "pureosaka2005@gmail.com";
+const VENUE_TEL = "06-6214-6600";
+const VENUE_TEL_HREF = "tel:+81662146600";
+
+const ENQUIRY_TOPICS = [
+  "VIP table reservation",
+  "Venue rental / private event",
+  "Event / DJ booking",
+  "Media / partnership",
+  "General enquiry",
+] as const;
 
 type TheCrossContactProps = {
   onClose: () => void;
+  /** Preselects the enquiry topic when the panel is opened from a page that
+      already knows what the visitor came for (e.g. the VIP set menu). */
+  defaultTopic?: string;
 };
 
-export function TheCrossContact({ onClose }: TheCrossContactProps) {
-  const [sent, setSent] = useState(false);
+export function TheCrossContact({ onClose, defaultTopic = "" }: TheCrossContactProps) {
+  const panelRef = useRef<HTMLElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+  const returnFocusRef = useRef<Element | null>(null);
+  const [status, setStatus] = useState<"idle" | "handoff">("idle");
+  const fieldId = useId();
+
+  /* The overlay covers the whole viewport, so it has to behave like the
+     dialog it looks like: focus enters on open, Escape closes, Tab is
+     trapped inside, and focus returns to whatever opened it. None of that
+     existed before, which left keyboard users with no way out. */
+  useEffect(() => {
+    returnFocusRef.current = document.activeElement;
+    const raf = window.requestAnimationFrame(() => closeRef.current?.focus());
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      const target = returnFocusRef.current;
+      if (target instanceof HTMLElement) {
+        target.focus();
+      }
+    };
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Escape") {
+        event.stopPropagation();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panelRef.current) {
+        return;
+      }
+
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+        return;
+      }
+
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    },
+    [onClose],
+  );
 
   function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "");
+    const email = String(formData.get("email") ?? "");
+    const topic = String(formData.get("enquiryType") ?? "");
+    const message = String(formData.get("message") ?? "");
+    const subject = `PURE CONTACT: ${topic}`;
+    const body = [
+      `Full name: ${name}`,
+      `Reply email: ${email}`,
+      `Topic: ${topic}`,
+      "",
+      "Message:",
+      message,
+    ].join("\n");
+
+    /* This hands off to the visitor's mail client. If none is registered
+       nothing visibly happens, so say so and keep the address and phone
+       number on screen rather than failing silently. */
+    setStatus("handoff");
+    window.location.href =
+      `mailto:${VENUE_EMAIL}?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
   }
 
   return (
-    <main className="the-cross-contact">
-      <section className="the-cross-contact__panel" aria-labelledby="contact-heading">
+    <div
+      className="the-cross-contact"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-heading"
+      onKeyDown={handleKeyDown}
+    >
+      <section className="the-cross-contact__panel" ref={panelRef}>
         <button
+          ref={closeRef}
           className="the-cross-contact__close"
           type="button"
-          aria-label="Return to home"
+          aria-label="Close contact"
           onClick={onClose}
         >
           <Image src="/the-cross/close.svg" alt="" width={15} height={15} priority />
@@ -29,48 +133,112 @@ export function TheCrossContact({ onClose }: TheCrossContactProps) {
 
         <div className="the-cross-contact__grid">
           <div className="the-cross-contact__intro">
-            <h1 id="contact-heading" className="the-cross-contact__title">
-              <span>CONTACT</span>
-            </h1>
-            <a className="the-cross-contact__address" href="https://maps.google.com/?q=2-3-12+Shinsaibashisuji+Chuo-ku+Osaka+542-0085" target="_blank" rel="noreferrer">
-              2-3-12, Shinsaibashisuji<br />
-              Chuo-ku, Osaka 542-0085
-            </a>
+            <h2 id="contact-heading" className="the-cross-contact__title">
+              CONTACT
+            </h2>
+
+            <p className="the-cross-contact__standfirst" lang="ja">
+              VIPテーブル、貸切、出演、取材のご相談。
+              <br />
+              お急ぎの場合はお電話ください。
+            </p>
+
+            <dl className="the-cross-contact__direct">
+              <div>
+                <dt>Telephone</dt>
+                <dd>
+                  <a href={VENUE_TEL_HREF}>{VENUE_TEL}</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Email</dt>
+                <dd>
+                  <a href={`mailto:${VENUE_EMAIL}`}>{VENUE_EMAIL}</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Address</dt>
+                <dd>
+                  <a
+                    href="https://maps.google.com/?q=2-3-12+Shinsaibashisuji+Chuo-ku+Osaka+542-0085"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    2-3-12, Shinsaibashisuji
+                    <br />
+                    Chuo-ku, Osaka 542-0085
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </div>
 
           <form className="the-cross-contact__form" onSubmit={submitForm}>
-            <label>
-              <span>FULL NAME</span>
-              <input name="name" aria-label="Full name" autoComplete="name" placeholder="YOUR NAME" required />
-            </label>
-            <label>
-              <span>EMAIL ADDRESS</span>
-              <input name="email" aria-label="Email address" type="email" autoComplete="email" placeholder="YOUR EMAIL ADDRESS" required />
-            </label>
-            <label>
-              <span>ENQUIRY</span>
-              <select name="enquiryType" aria-label="Enquiry topic" defaultValue="" required>
-                <option value="" disabled>SELECT A TOPIC</option>
-                <option>VIP TABLE RESERVATION</option>
-                <option>VENUE RENTAL / PRIVATE EVENT</option>
-                <option>EVENT / DJ BOOKING</option>
-                <option>MEDIA / PARTNERSHIP</option>
-                <option>GENERAL ENQUIRY</option>
+            <div className="the-cross-contact__field">
+              <label htmlFor={`${fieldId}-name`}>Full name</label>
+              <input
+                id={`${fieldId}-name`}
+                name="name"
+                autoComplete="name"
+                required
+              />
+            </div>
+
+            <div className="the-cross-contact__field">
+              <label htmlFor={`${fieldId}-email`}>Email address</label>
+              <input
+                id={`${fieldId}-email`}
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+              />
+            </div>
+
+            <div className="the-cross-contact__field">
+              <label htmlFor={`${fieldId}-topic`}>Enquiry</label>
+              <select
+                id={`${fieldId}-topic`}
+                name="enquiryType"
+                defaultValue={defaultTopic}
+                required
+              >
+                <option value="" disabled>
+                  Select a topic
+                </option>
+                {ENQUIRY_TOPICS.map((topic) => (
+                  <option key={topic}>{topic}</option>
+                ))}
               </select>
-            </label>
-            <label className="the-cross-contact__message">
-              <span>DETAILS</span>
-              <textarea name="message" aria-label="Enquiry details" placeholder="DATE, GROUP SIZE, AND YOUR REQUEST" required />
-            </label>
-            <button className="the-cross-contact__send" type="submit">
-              <span>SEND</span>
-              <Image src="/the-cross/arrow.svg" alt="" width={24} height={24} />
+            </div>
+
+            <div className="the-cross-contact__field">
+              <label htmlFor={`${fieldId}-message`}>Details</label>
+              <textarea
+                id={`${fieldId}-message`}
+                name="message"
+                className="the-cross-contact__message"
+                aria-describedby={`${fieldId}-hint`}
+                required
+              />
+              <p className="the-cross-contact__hint" id={`${fieldId}-hint`}>
+                For VIP tables and private events, include your date and group size.
+              </p>
+            </div>
+
+            <button className="pure-cta" type="submit">
+              <span>Send enquiry</span>
+              <CtaMark />
             </button>
-            {sent && <p className="the-cross-contact__success" role="status">Thank you — your message has been sent.</p>}
-            <p className="the-cross-contact__note">For VIP tables and private events, please include your preferred date and group size.</p>
+
+            <p className="the-cross-contact__status" role="status">
+              {status === "handoff"
+                ? `Opening your mail app. If nothing happens, write to ${VENUE_EMAIL} or call ${VENUE_TEL}.`
+                : ""}
+            </p>
           </form>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

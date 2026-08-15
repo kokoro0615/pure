@@ -1,140 +1,112 @@
 "use client";
 
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import Link from "next/link";
+
+import { CtaMark } from "@/components/CtaMark";
 
 import styles from "./ClubRaiaInfoPanel.module.css";
 
-export type ClubRaiaInfoPanelKind = "about" | "contact";
+export type ClubRaiaInfoPanelKind = "about";
 
 export type ClubRaiaInfoPanelProps = {
   panel: ClubRaiaInfoPanelKind;
   isOpen: boolean;
 };
 
-type PanelContent = {
-  title: string;
-  image: string;
-  imageAlt: string;
-  body: ReactNode;
-};
+/**
+ * ABOUT PURE.
+ *
+ * What was here before was the generated-web house style, top to bottom: a
+ * Playfair title letterspaced to 24px and centred, a chip row of facts in a
+ * blue that exists nowhere else on the site, a two-word parallel slogan
+ * ("Osaka roots. / Global rhythm."), the Japanese paragraph, then the same
+ * paragraph again in English, then a copyright line in the middle of the
+ * composition. The photograph behind all of it was dimmed to 38% and used as
+ * wallpaper. Every one of those is a default, not a decision.
+ *
+ * This is the venue instead: a real photograph of the floor at full strength,
+ * a Migra headline naming the actual place (one basement in Shinsaibashi),
+ * the client's own Japanese copy in the site's Japanese faces, and the
+ * verified facts as a ruled record rather than as decoration. Nothing is
+ * asserted here that the site does not already publish elsewhere.
+ */
 
-const PANEL_CONTENT: Record<ClubRaiaInfoPanelKind, PanelContent> = {
-  about: {
-    title: "ABOUT PURE",
-    image: "/pure/about/hero-crowd.webp",
-    imageAlt:
-      "Blue-lit crowd filling the dance floor beneath the PURE Osaka sign",
-    body: (
-      <>
-        <div className={styles.aboutFacts} aria-label="PURE Osaka highlights">
-          <span>20+ years in Osaka</span>
-          <span>HIPHOP · LATIN · REGGAETON</span>
-        </div>
-        <p className={styles.aboutStatement}>
-          Osaka roots.
-          <br />
-          Global rhythm.
-        </p>
-        <p className={styles.aboutCopy} lang="ja">
-          {
-            "大阪・心斎橋で20年以上。PURE OSAKAは、HIPHOPを軸に、LATIN／REGGAETONまで、音楽と人が国境を越えて交わる夜を育ててきました。ローカルに根ざし、世界へひらかれたフロア。その熱量は、今夜も更新され続けています。"
-          }
-        </p>
-        <p className={styles.aboutCopyEnglish}>
-          {
-            "For over two decades, PURE OSAKA has kept Shinsaibashi moving—rooted in HIPHOP and charged by LATIN and REGGAETON. Local history. International energy. One floor."
-          }
-        </p>
-        <p className={styles.copyright}>
-          © PURE OSAKA. ALL RIGHTS RESERVED.
-        </p>
-      </>
-    ),
-  },
-  contact: {
-    title: "CONTACT",
-    image: "/clubraia/contact.jpg",
-    imageAlt: "",
-    body: (
-      <>
-        <p className={styles.address}>
-          ELYSEE SCBD Jakarta, 5th Floor, RT.7/RW.1, Senayan, Kec. Kby. Baru,
-          Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12190
-        </p>
-        <p className={styles.contactDetails}>
-          Email:{" "}
-          <a href="mailto:info@clubraia.com">info@clubraia.com</a>
-          <br />
-          Phone: (021) 50123199
-          <br />
-          WhatsApp:{" "}
-          <a href="https://wa.me/628118691223">+62 811-8691-223</a>
-          <br />
-          <a
-            href="https://goo.gl/maps/nsRxcQkbHRbKsaG29"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on Google Maps
-          </a>
-        </p>
-      </>
-    ),
-  },
-};
+/** Only what /access, /tickets and the venue's own pages already state. */
+const RECORD = [
+  { label: "Since", value: "20年以上、大阪・心斎橋", lang: "ja" },
+  { label: "Floor", value: "ダイヤモンドビル B1F", lang: "ja" },
+  { label: "Sound", value: "HIPHOP · LATIN · REGGAETON" },
+  { label: "Doors", value: "22:00 — 05:00", numeric: true },
+] as const;
 
-function AnimatedTitle({ title }: { title: string }) {
-  return (
-    <h1 className={styles.title} aria-label={title}>
-      {Array.from(title).map((character, index) => (
-        <span
-          aria-hidden="true"
-          className={
-            character === " " ? styles.titleSpace : styles.titleCharacter
-          }
-          key={`${character}-${index}`}
-          style={{ "--character-index": index } as CSSProperties}
-        >
-          {character === " " ? "\u00a0" : character}
-        </span>
-      ))}
-    </h1>
-  );
-}
-
-export function ClubRaiaInfoPanel({
-  panel,
-  isOpen,
-}: ClubRaiaInfoPanelProps) {
-  const content = PANEL_CONTENT[panel];
-
+export function ClubRaiaInfoPanel({ isOpen }: ClubRaiaInfoPanelProps) {
   return (
     <section
-      className={`${styles.panel} ${styles[panel]} ${isOpen ? styles.open : ""}`}
-      id={`clubraia-${panel}-panel`}
+      className={`${styles.panel} ${isOpen ? styles.open : ""}`}
+      id="clubraia-about-panel"
       role="dialog"
       aria-modal={isOpen ? "true" : undefined}
       aria-hidden={!isOpen}
       inert={!isOpen}
-      aria-label={`${content.title} information`}
-      data-panel={panel}
+      aria-labelledby="clubraia-about-title"
+      data-panel="about"
       data-open={isOpen ? "true" : "false"}
     >
       <div className={styles.canvas}>
-        <div className={styles.imageWrapper}>
+        <figure className={styles.plate}>
           <Image
-            className={styles.backgroundImage}
-            src={content.image}
-            alt={content.imageAlt}
+            className={styles.plateImage}
+            src="/pure/about/hero-crowd.webp"
+            alt="Blue-lit crowd filling the dance floor beneath the PURE Osaka sign"
             fill
-            sizes="(max-width: 812px) 100vw, 50vw"
+            sizes="(max-width: 812px) 100vw, 46vw"
           />
-        </div>
+          <span className={styles.plateEdge} aria-hidden="true" />
+          <figcaption className={styles.plateCaption}>
+            Shinsaibashi, B1F
+          </figcaption>
+        </figure>
 
         <div className={styles.text}>
-          <AnimatedTitle title={content.title} />
-          <div className={styles.copy}>{content.body}</div>
+          <h2 className={styles.title} id="clubraia-about-title">
+            <span>
+              <span>One basement</span>
+            </span>
+            <span>
+              <span>in Shinsaibashi</span>
+            </span>
+          </h2>
+
+          <p className={styles.statement} lang="ja">
+            20年以上、この一枚のフロアで。
+          </p>
+
+          <p className={styles.body} lang="ja">
+            大阪・心斎橋で20年以上。PURE
+            OSAKAは、HIPHOPを軸に、LATIN／REGGAETONまで、音楽と人が国境を越えて交わる夜を育ててきました。ローカルに根ざし、世界へひらかれたフロア。その熱量は、今夜も更新され続けています。
+          </p>
+
+          <dl className={styles.record}>
+            {RECORD.map((row) => (
+              <div className={styles.recordRow} key={row.label}>
+                <dt>{row.label}</dt>
+                <dd
+                  className={
+                    "numeric" in row && row.numeric ? styles.numeric : undefined
+                  }
+                  lang={"lang" in row ? row.lang : undefined}
+                >
+                  {row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <Link className={`pure-cta is-ghost ${styles.action}`} href="/access">
+            <span>Find the venue</span>
+            <CtaMark />
+          </Link>
         </div>
       </div>
     </section>

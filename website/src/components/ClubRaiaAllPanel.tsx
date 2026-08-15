@@ -1,71 +1,88 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   useEffect,
   useRef,
   type CSSProperties,
 } from "react";
 
+import { ArrowUpRight } from "@/components/ArrowUpRight";
+import { SOCIAL_LINKS } from "@/components/social";
+
 import styles from "./ClubRaiaAllPanel.module.css";
 
 type NavigationItem = {
   label: string;
-  detail: string;
   japaneseLabel: string;
-  href: string;
+  /** Live route, or null while the page is still being written. */
+  href: string | null;
   image: string;
-  position?: string;
+  /** Object-position tuned per photograph, per frame ratio. */
+  position: string;
+  /** Responsive widths for this tile's grid area. */
+  sizes: string;
+  /** Badge for a room that opens but has nothing to show yet. */
+  status?: string;
 };
 
+/**
+ * Order is hierarchy, and the stylesheet reads it positionally: the grid
+ * areas are assigned by :nth-child, so changing this array reorders the
+ * composition. Rental sits between Tickets and Q&A because it is the
+ * second thing a visitor books after a table, and it carries a badge
+ * rather than a null href: the room opens, the terms are not written yet.
+ */
 const NAVIGATION_ITEMS: readonly NavigationItem[] = [
   {
-    label: "Events",
-    detail: "Upcoming nights",
-    japaneseLabel: "今後のイベント",
-    href: "#events",
-    image: "/pure/menu/events.webp",
+    label: "Gallery",
+    japaneseLabel: "フォトギャラリー",
+    href: "/gallery",
+    image: "/pure/menu/gallery-floor.webp",
     position: "50% 42%",
-  },
-  {
-    label: "Lineup",
-    detail: "DJs & performers",
-    japaneseLabel: "出演者",
-    href: "#lineup",
-    image: "/pure/menu/lineup.webp",
-    position: "50% 38%",
+    sizes: "(max-width: 1100px) 100vw, 58vw",
   },
   {
     label: "VIP Tables",
-    detail: "Bottle service",
-    japaneseLabel: "VIP予約",
-    href: "#vip",
+    japaneseLabel: "VIPセットメニュー",
+    href: "/vip",
     image: "/pure/menu/vip.webp",
-    position: "50% 46%",
-  },
-  {
-    label: "System",
-    detail: "Entry & dress code",
-    japaneseLabel: "入場案内",
-    href: "#system",
-    image: "/pure/menu/system.webp",
-    position: "52% 50%",
-  },
-  {
-    label: "Gallery",
-    detail: "After dark",
-    japaneseLabel: "フォトギャラリー",
-    href: "#gallery",
-    image: "/pure/menu/gallery-night-v2.webp",
-    position: "50% 38%",
+    position: "50% 42%",
+    sizes: "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 42vw",
   },
   {
     label: "Access",
-    detail: "Hours & location",
     japaneseLabel: "営業時間・アクセス",
-    href: "#access",
+    href: "/access",
     image: "/pure/menu/access.webp",
+    position: "50% 44%",
+    sizes: "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 42vw",
+  },
+  {
+    label: "Tickets",
+    japaneseLabel: "入場・チケット",
+    href: "/tickets",
+    image: "/pure/menu/tickets-entrance.webp",
+    position: "50% 42%",
+    sizes: "(max-width: 1100px) 100vw, 58vw",
+  },
+  {
+    label: "Rental",
+    japaneseLabel: "会場レンタル・貸切",
+    href: "/rental",
+    image: "/pure/menu/rental.webp",
     position: "50% 40%",
+    sizes: "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 74vw",
+    status: "Coming soon",
+  },
+  {
+    label: "Q&A",
+    japaneseLabel: "よくあるご質問",
+    href: "/qa",
+    image: "/pure/menu/qa-placards.webp",
+    position: "50% 46%",
+    sizes: "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 26vw",
   },
 ] as const;
 
@@ -76,9 +93,41 @@ export type ClubRaiaAllPanelProps = {
   onOpenContact: () => void;
 };
 
+type TileProps = {
+  item: NavigationItem;
+};
+
+/** Everything inside a tile except the element that makes it clickable. */
+function TileFace({ item }: TileProps) {
+  return (
+    <>
+      <Image
+        src={item.image}
+        alt=""
+        fill
+        sizes={item.sizes}
+        className={styles.image}
+        style={{ objectPosition: item.position }}
+      />
+      <span className={styles.tint} aria-hidden="true" />
+      <span className={styles.scrim} aria-hidden="true" />
+      <span className={styles.dim} aria-hidden="true" />
+      <span className={styles.copy}>
+        <span className={styles.label}>
+          {item.label}
+          <span className={styles.labelRule} aria-hidden="true" />
+        </span>
+        <span className={styles.japaneseLabel} lang="ja">
+          {item.japaneseLabel}
+        </span>
+      </span>
+    </>
+  );
+}
+
 /**
- * Full-screen Club Raia page index. Its close affordance intentionally lives in
- * the parent header, matching the source site's single shared close control.
+ * Full-screen PURE page index. Its close affordance intentionally lives in
+ * the parent header, matching the site's single shared close control.
  */
 export function ClubRaiaAllPanel({
   isOpen,
@@ -106,14 +155,17 @@ export function ClubRaiaAllPanel({
       inert={!isOpen}
     >
       <div className={styles.atmosphere} aria-hidden="true" />
+      <div className={styles.topScrim} aria-hidden="true" />
 
       <div className={styles.shell}>
+        <span className={styles.spine} aria-hidden="true" />
+
         <div className={styles.intro}>
-          <p className={styles.kicker}>PURE OSAKA / NIGHT DIRECTORY</p>
           <p className={styles.prompt}>Choose your night</p>
-          <span className={styles.count}>06 destinations</span>
         </div>
 
+        {/* The phone header carries one row now, so the two overlays and the
+            two accounts are named here instead of squeezed into it. */}
         <nav className={styles.mobileUtilities} aria-label="PURE information">
           <button type="button" onClick={onOpenAbout}>
             About PURE
@@ -121,6 +173,12 @@ export function ClubRaiaAllPanel({
           <button type="button" onClick={onOpenContact}>
             Contact
           </button>
+          <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noreferrer">
+            YouTube
+          </a>
+          <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer">
+            Instagram
+          </a>
         </nav>
 
         <ul className={styles.list}>
@@ -129,40 +187,32 @@ export function ClubRaiaAllPanel({
               className={styles.item}
               style={
                 {
-                  "--item-enter-delay": `${0.6 + index * 0.08}s`,
+                  "--item-enter-delay": `${0.28 + index * 0.055}s`,
                   "--item-exit-delay": `${(NAVIGATION_ITEMS.length - 1 - index) * 0.03}s`,
                 } as CSSProperties
               }
               key={item.label}
             >
-              <a
-                className={styles.link}
-                href={item.href}
-                onClick={() => onNavigate?.(item.href)}
-              >
-                <Image
-                  src={item.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 42vw"
-                  className={styles.image}
-                  style={{ objectPosition: item.position }}
-                />
-                <span className={styles.imageWash} aria-hidden="true" />
-                <span className={styles.index} aria-hidden="true">
-                  {(index + 1).toString().padStart(2, "0")}
-                </span>
-                <span className={styles.copy}>
-                  <span className={styles.detail}>{item.detail}</span>
-                  <span className={styles.label}>{item.label}</span>
-                  <span className={styles.japaneseLabel}>
-                    {item.japaneseLabel}
+              {item.href === null ? (
+                <div className={`${styles.tile} ${styles.isPending}`}>
+                  <TileFace item={item} />
+                  <span className={styles.status}>Opening soon</span>
+                </div>
+              ) : (
+                <Link
+                  className={styles.tile}
+                  href={item.href}
+                  onClick={() => onNavigate?.(item.href as string)}
+                >
+                  <TileFace item={item} />
+                  {item.status ? (
+                    <span className={styles.status}>{item.status}</span>
+                  ) : null}
+                  <span className={styles.arrow} aria-hidden="true">
+                    <ArrowUpRight />
                   </span>
-                </span>
-                <span className={styles.arrow} aria-hidden="true">
-                  <span>↗</span>
-                </span>
-              </a>
+                </Link>
+              )}
             </li>
           ))}
         </ul>

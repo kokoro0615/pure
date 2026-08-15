@@ -1,5 +1,8 @@
 # Working reference media; production assets are kept in public/pure/.
 image/
+# Full-length hero masters. The site serves the 16s loops in
+# public/pure/videos/optimized/; these are kept for re-cutting only.
+media-masters/
 
 # Local tooling and build output.
 .next/

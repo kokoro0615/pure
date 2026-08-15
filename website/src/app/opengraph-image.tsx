@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "PURE Osaka — Premium nightlife in Shinsaibashi, Osaka";
+  "PURE Osaka - Premium nightlife in Shinsaibashi, Osaka";
 export const size = {
   width: 1200,
   height: 630,

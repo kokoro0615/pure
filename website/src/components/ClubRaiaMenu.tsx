@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   useCallback,
   useEffect,
@@ -12,25 +13,43 @@ import {
 
 import { ClubRaiaAllPanel } from "@/components/ClubRaiaAllPanel";
 import { ClubRaiaInfoPanel } from "@/components/ClubRaiaInfoPanel";
+import {
+  InstagramIcon,
+  SOCIAL_LINKS,
+  YoutubeIcon,
+} from "@/components/social";
 import type { ClubRaiaPanel } from "@/types/clubraia-menu";
 
 import styles from "./ClubRaiaMenu.module.css";
 
+/* HOME leads the row: it is the only entry that is a place rather than an
+   overlay, and a visitor two rooms deep had no labelled way back to the
+   front door except the corner mark. The three that follow open over the
+   page, so they stay buttons. */
 const PANEL_LABELS = {
   all: "MENU",
-  about: "about",
+  about: "ABOUT",
   contact: "CONTACT",
 } as const;
 
+/** Index 0 belongs to HOME; the panels stagger in behind it. */
+const PANEL_INDEX_OFFSET = 1;
+
 type ClubRaiaMenuProps = {
+  isContactOpen: boolean;
   onContact: () => void;
 };
 
-export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
+export function ClubRaiaMenu({
+  isContactOpen,
+  onContact,
+}: ClubRaiaMenuProps) {
+  const pathname = usePathname();
   const [activePanel, setActivePanel] = useState<ClubRaiaPanel>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
-  const isOpen = activePanel !== null;
+  const isPanelOpen = activePanel !== null;
+  const isOpen = isPanelOpen || isContactOpen;
 
   const closePanel = useCallback(() => {
     setActivePanel(null);
@@ -68,7 +87,7 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
   }, [activePanel]);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isPanelOpen) {
       return;
     }
 
@@ -80,7 +99,7 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [closePanel, isOpen]);
+  }, [closePanel, isPanelOpen]);
 
   return (
     <>
@@ -99,7 +118,6 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
         }}
       />
       <ClubRaiaInfoPanel panel="about" isOpen={activePanel === "about"} />
-      <ClubRaiaInfoPanel panel="contact" isOpen={activePanel === "contact"} />
 
       <header className={styles.header} aria-label="PURE navigation">
         <div className={styles.headerOverlay} aria-hidden="true" />
@@ -121,43 +139,98 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
         </Link>
 
         <div className={styles.controls}>
-          {(Object.keys(PANEL_LABELS) as Exclude<ClubRaiaPanel, null>[]).map(
-            (panel, index) => (
-              <button
-                className={`${styles.mainLink} ${styles[`${panel}Link`]} ${
-                  isOpen ? styles.mainLinkInactive : ""
-                }`}
-                style={{ "--link-index": index } as CSSProperties}
-                type="button"
-                onClick={(event) => {
-                  if (panel === "contact") {
-                    onContact();
-                    return;
-                  }
+          <nav className={styles.primaryNavigation} aria-label="Primary navigation">
+            <Link
+              className={`${styles.mainLink} ${
+                isOpen ? styles.mainLinkInactive : ""
+              }`}
+              style={{ "--link-index": 0 } as CSSProperties}
+              href="/"
+              aria-current={pathname === "/" ? "page" : undefined}
+              tabIndex={isOpen ? -1 : 0}
+            >
+              <span>HOME</span>
+            </Link>
 
-                  openPanel(panel, event.currentTarget);
-                }}
-                aria-expanded={
-                  panel === "contact" ? undefined : activePanel === panel
-                }
-                aria-controls={
-                  panel === "contact"
-                    ? undefined
-                    : `clubraia-${panel}-panel`
-                }
-                aria-haspopup="dialog"
-                tabIndex={isOpen ? -1 : 0}
-                key={panel}
-              >
-                <span>{PANEL_LABELS[panel]}</span>
-              </button>
-            ),
-          )}
+            {(Object.keys(PANEL_LABELS) as Exclude<ClubRaiaPanel, null>[]).map(
+              (panel, index) => (
+                <button
+                  className={`${styles.mainLink} ${
+                    panel === "about" ? styles.mainLinkDesk : ""
+                  } ${isOpen ? styles.mainLinkInactive : ""}`}
+                  style={
+                    {
+                      "--link-index": index + PANEL_INDEX_OFFSET,
+                    } as CSSProperties
+                  }
+                  type="button"
+                  onClick={(event) => {
+                    if (panel === "contact") {
+                      onContact();
+                      return;
+                    }
+
+                    openPanel(panel, event.currentTarget);
+                  }}
+                  aria-expanded={
+                    panel === "contact" ? undefined : activePanel === panel
+                  }
+                  aria-controls={
+                    panel === "contact"
+                      ? undefined
+                      : `clubraia-${panel}-panel`
+                  }
+                  aria-haspopup="dialog"
+                  tabIndex={isOpen ? -1 : 0}
+                  key={panel}
+                >
+                  <span>{PANEL_LABELS[panel]}</span>
+                </button>
+              ),
+            )}
+          </nav>
+
+          <nav
+            className={`${styles.socialLinks} ${
+              isOpen ? styles.socialLinksInactive : ""
+            }`}
+            aria-label="Follow PURE Osaka"
+          >
+            <span className={styles.socialLabel} aria-hidden="true">
+              Follow
+            </span>
+            <a
+              className={`${styles.socialLink} ${
+                isOpen ? styles.socialLinkInactive : ""
+              }`}
+              style={{ "--link-index": 4 } as CSSProperties}
+              href={SOCIAL_LINKS.youtube}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="PURE Osaka on YouTube"
+              tabIndex={isOpen ? -1 : 0}
+            >
+              <YoutubeIcon />
+            </a>
+            <a
+              className={`${styles.socialLink} ${
+                isOpen ? styles.socialLinkInactive : ""
+              }`}
+              style={{ "--link-index": 5 } as CSSProperties}
+              href={SOCIAL_LINKS.instagram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="PURE Osaka on Instagram"
+              tabIndex={isOpen ? -1 : 0}
+            >
+              <InstagramIcon />
+            </a>
+          </nav>
 
           <button
             ref={closeRef}
             className={`${styles.closeControl} ${
-              isOpen ? styles.closeControlActive : ""
+              isPanelOpen ? styles.closeControlActive : ""
             }`}
             type="button"
             onClick={closePanel}
@@ -167,7 +240,7 @@ export function ClubRaiaMenu({ onContact }: ClubRaiaMenuProps) {
             aria-controls={
               activePanel ? `clubraia-${activePanel}-panel` : undefined
             }
-            tabIndex={isOpen ? 0 : -1}
+            tabIndex={isPanelOpen ? 0 : -1}
           >
             <span>Close</span>
             <span className={styles.closeLine} aria-hidden="true">

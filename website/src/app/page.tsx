@@ -12,8 +12,14 @@ export default function Home() {
 
   return (
     <>
-      <ClubRaiaMenu onContact={openContact} />
+      <ClubRaiaMenu
+        isContactOpen={isContactOpen}
+        onContact={openContact}
+      />
       <main>
+        <a className="pure-skip-link" href="#hero-actions">
+          Skip to the main links
+        </a>
         <Hero />
       </main>
       {isContactOpen ? <TheCrossContact onClose={closeContact} /> : null}
