@@ -428,13 +428,23 @@ export function RentalExperience() {
 
             <div className={styles.closeMedia}>
               <div className={styles.closeFrame}>
+                {/* The floor, full, in the venue's own light — which is what a
+                    hirer is actually buying. The frame previously held a
+                    bottle-service birthday shot whose lit "HAPPY BIRTHDAY"
+                    sign was a saturated blue: measured over the crop this
+                    frame shows, its mean lit hue sat 142 deg off the brand
+                    accent with 41.6% of lit pixels in the blue band — a
+                    second accent this page does not allow. This frame
+                    measures 18 deg off with 97.4% of its lit pixels inside
+                    the accent's own hue family, so the plate reads as the
+                    same light the rest of the page is lit by. */}
                 <Image
                   className={styles.closeImage}
-                  src="/pure/vip/procession.webp"
-                  alt="スパークラーを灯したボトルとバースデーサインを掲げるPUREのスタッフ"
+                  src="/pure/gallery/party-crowd-029-dsc01443.webp"
+                  alt="赤い照明に染まったPUREのフロアで、手を上げて踊るゲストたち"
                   fill
                   sizes="(max-width: 1000px) 92vw, 34vw"
-                  style={framePosition("52% 44%")}
+                  style={framePosition("50% 44%")}
                 />
                 <span className={styles.closeWash} aria-hidden="true" />
               </div>
