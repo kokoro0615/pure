@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 
-import { RentalComingSoon } from "@/components/RentalComingSoon";
+import { RentalExperience } from "@/components/RentalExperience";
 
 export const metadata: Metadata = {
   title: "Rental | PURE Osaka",
   description:
-    "PURE Osakaの会場レンタル・貸切のご案内は準備中です。大阪・心斎橋のクラブでのイベントや貸切のご相談はお問い合わせフォームまたはお電話で承ります。",
+    "PURE Osakaの会場レンタル・貸切は20万円から。大阪・心斎橋のクラブのフロア、DJブース、音響照明、バーをまるごと貸し切れます。空き状況とお見積りはCONTACTからご相談ください。",
   alternates: {
     canonical: "/rental",
   },
   openGraph: {
     title: "Rental | PURE Osaka",
     description:
-      "会場レンタル・貸切のご案内は準備中です。イベントや貸切のご相談は PURE Osaka までお問い合わせください。",
+      "心斎橋のフロアを、ひと晩この部屋ごと。会場レンタル・貸切は20万円から。詳細はCONTACTへ。",
     url: "/rental",
   },
 };
 
 export default function RentalPage() {
-  return <RentalComingSoon />;
+  return <RentalExperience />;
 }

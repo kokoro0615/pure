@@ -43,9 +43,17 @@ export function TheCrossContact({ onClose, defaultTopic = "" }: TheCrossContactP
     return () => {
       window.cancelAnimationFrame(raf);
       const target = returnFocusRef.current;
-      if (target instanceof HTMLElement) {
-        target.focus();
+
+      if (!(target instanceof HTMLElement)) {
+        return;
       }
+
+      /* Deferred by a frame. Focusing synchronously here is clobbered by
+         the browser's own focus reset for the panel's removed node, which
+         lands on <body>: keyboard users closing the panel were dropped at
+         the top of the document instead of back on the control they came
+         from. */
+      window.requestAnimationFrame(() => target.focus());
     };
   }, []);
 

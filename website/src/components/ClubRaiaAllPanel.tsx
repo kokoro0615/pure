@@ -76,7 +76,7 @@ const NAVIGATION_ITEMS: readonly NavigationItem[] = [
     image: "/pure/menu/rental.webp",
     position: "50% 44%",
     sizes: "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 42vw",
-    status: "Coming soon",
+    status: "From ¥200,000",
   },
   {
     label: "Q&A",

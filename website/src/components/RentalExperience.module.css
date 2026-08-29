@@ -1,0 +1,1122 @@
+/* ============================================================
+   PURE Osaka — Rental / 貸切
+   Concept: "ひと晩、この部屋ごと" — one night, the whole room.
+
+   The page hands the floor over and walks every open question to
+   the same door: CONTACT. It is black paper with one lit object
+   per viewport — the room, then the number, then the door.
+
+   Signature move (one): the fee. ¥200,000 is set at display scale
+   with the room's own photograph clipped into the numerals, so the
+   figure you are quoted contains the thing you are renting. It
+   rises out of a mask once, on transform, and then stays still.
+
+   Colour: the brand accent only. The magenta and blue of the floor
+   belong to the photographs.
+   ============================================================ */
+
+.page {
+  /* The measure the editorial columns are cut from, one step wider
+     than the page gutter so copy never runs to the frame edge. */
+  --indent: calc(var(--gutter) + clamp(0px, 2vw, 40px));
+
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  color: var(--bone);
+  background: var(--ink-0);
+  font-family: var(--font-meta);
+  scrollbar-width: none;
+  isolation: isolate;
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+:global(html.clubraia-menu-is-open) .page {
+  overflow: hidden;
+}
+
+/* Hook only. GSAP reads `.${reveal}` to collect the quiet entrance groups,
+   so the class must exist in this stylesheet or CSS Modules resolves it to
+   `undefined` and the entrance silently never runs. It carries no visual
+   state: the settled look is the CSS default, so a scripting-off or
+   reduced-motion visit reads everything. */
+.reveal {
+  will-change: opacity, transform;
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 80;
+  top: calc(var(--nav-safe) + 6px);
+  left: var(--indent);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 22px;
+  align-items: center;
+  color: var(--ink-0);
+  background: var(--accent);
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--dur-panel) var(--ease-enter),
+    transform var(--dur-panel) var(--ease-enter);
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 3px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Film grain: fixed, pointer-events none, never on a scrolling layer. */
+.grain {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  opacity: 0.05;
+  background: url("/the-cross/static-noise.gif") repeat;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.navScrim {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: clamp(120px, 16vh, 190px);
+  background: linear-gradient(
+    180deg,
+    rgb(6 5 10 / 84%) 0%,
+    rgb(6 5 10 / 48%) 46%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ================================ SHARED ================================ */
+
+.eyebrow {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  gap: 14px;
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.eyebrow > span:first-child {
+  color: var(--accent);
+}
+
+.eyebrowRule {
+  width: clamp(26px, 5vw, 72px);
+  height: 1px;
+  background: var(--edge-strong);
+}
+
+.sectionIndex {
+  display: flex;
+  margin: 0 0 clamp(20px, 2.6vh, 30px);
+  align-items: center;
+  gap: 12px;
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.sectionIndex > span:first-child {
+  padding: 4px 9px;
+  border: 1px solid var(--edge-strong);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.head h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5.4vw, 86px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* ================================= COVER ================================= */
+
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--nav-safe) + clamp(6px, 1.6vh, 20px)) var(--gutter)
+    clamp(30px, 5vh, 56px) var(--indent);
+  /* The slack belongs to the middle row: the eyebrow holds the top edge, the
+     cue holds the bottom, and the title block falls to the foot of the
+     photograph rather than floating in the centre of it. */
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(26px, 5vh, 60px);
+  isolation: isolate;
+}
+
+.heroMedia {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ink-1);
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: 52% 46%;
+  /* Baked, never animated: the frame is exposed for type, not for the
+     photograph, and `filter` is paint-heavy. */
+  filter: saturate(0.86) contrast(1.06) brightness(0.66);
+  transform: scale(1.02);
+}
+
+/* Two ramps, because the copy occupies the bottom-left corner: one lifts the
+   floor off the base of the frame, one holds the left column. The lit bar and
+   the PURE sign on the right stay the brightest thing in the photograph. */
+.heroWash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      0deg,
+      rgb(6 5 10 / 94%) 0%,
+      rgb(6 5 10 / 74%) 34%,
+      rgb(6 5 10 / 10%) 78%,
+      transparent 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgb(6 5 10 / 82%) 0%,
+      rgb(6 5 10 / 34%) 44%,
+      transparent 74%
+    );
+  pointer-events: none;
+}
+
+.heroTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.heroBadge {
+  display: inline-flex;
+  margin: 0;
+  align-items: center;
+  gap: 9px;
+  min-height: 26px;
+  padding: 6px 13px;
+  border: 1px solid var(--edge-strong);
+  color: var(--bone);
+  background: rgb(6 7 11 / 76%);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heroBadge::before {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  content: "";
+  background: var(--accent);
+}
+
+.heroBody {
+  display: flex;
+  align-self: end;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heroTitle {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  font-weight: 400;
+}
+
+/* The mask the two words rise out of. Padding plus a negative margin keeps
+   descenders and the display face's overshoot inside the visible line. */
+.heroLine {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.heroWord {
+  display: block;
+  /* Optical hang: the R sits on the column edge, not a sidebearing left of it. */
+  margin-left: -0.045em;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 8.4vw, 136px);
+  line-height: 0.92;
+  letter-spacing: -0.048em;
+}
+
+.heroLine:last-child .heroWord {
+  color: var(--bone-soft);
+}
+
+.heroRule {
+  width: min(100%, 520px);
+  height: 1px;
+  margin: clamp(22px, 3vh, 36px) 0 0;
+  background: linear-gradient(
+    90deg,
+    var(--accent-deep),
+    color-mix(in oklch, var(--bone) 34%, transparent) 60%,
+    transparent
+  );
+  transform-origin: left center;
+}
+
+.heroFoot {
+  display: flex;
+  margin-top: clamp(22px, 3vh, 36px);
+  align-items: flex-end;
+  gap: clamp(28px, 6vw, 96px);
+  flex-wrap: wrap;
+}
+
+.heroLead {
+  /* One em is one Japanese character, so this is a 26-character measure —
+     the JP equivalent of 55–75ch. `ch` would measure a Latin zero this
+     paragraph never sets. */
+  max-width: 26em;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1.15vw, 15.5px);
+  line-height: 2;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.heroFacts {
+  display: flex;
+  margin: 0;
+  gap: clamp(20px, 3vw, 52px);
+  flex-wrap: wrap;
+}
+
+.heroFacts dt {
+  margin-bottom: 8px;
+  color: var(--bone-soft);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.heroFacts dd {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.factValue {
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(19px, 1.9vw, 27px);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.heroFacts div:first-child .factValue {
+  color: var(--accent);
+}
+
+.factJapanese {
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.scrollCue {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  gap: 12px;
+  justify-self: start;
+  color: var(--bone-soft);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.scrollCueRule {
+  width: 54px;
+  height: 1px;
+  background: var(--edge-strong);
+  transform-origin: left center;
+  animation: rental-cue 2.6s var(--ease-ui) infinite;
+}
+
+@keyframes rental-cue {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+
+  50% {
+    transform: scaleX(1);
+  }
+}
+
+/* ================================= FEE ================================= */
+
+.price {
+  position: relative;
+  padding: var(--section-pad) var(--gutter) clamp(70px, 10vw, 130px)
+    var(--indent);
+  background:
+    radial-gradient(
+      ellipse 60% 46% at 76% 4%,
+      color-mix(in oklch, var(--accent) 12%, transparent),
+      transparent 66%
+    ),
+    var(--ink-0);
+  container-type: inline-size;
+}
+
+.priceHead {
+  max-width: none;
+}
+
+.priceTitle {
+  /* One em is one Japanese character, so this is a 16-character measure.
+     `ch` measured a Latin zero this face never sets and broke the line
+     mid-word after four characters. */
+  max-width: 16em;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp-display);
+  font-size: clamp(24px, 3.2vw, 46px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+.priceStage {
+  margin: clamp(34px, 6vh, 76px) 0 0;
+}
+
+.priceFigure {
+  display: block;
+  margin: 0;
+}
+
+/* The mask the numeral rises out of. */
+.priceMask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+/* The signature. The room's own photograph is clipped into the figure under
+   a bright veil: the veil carries the contrast (the numeral never drops
+   below the 3:1 large-text floor) and the photograph supplies the lights of
+   the floor through it. Nothing here animates — the fill is static paint. */
+.priceDigits {
+  display: block;
+  margin-left: -0.03em;
+  color: var(--bone);
+  font-family: var(--font-display);
+  /* Sized to the measure, not to the viewport: at 27cqi the glyph run
+     lands at ~94% of the column at every width the page is read at, so
+     the figure reads as the width of the page and still clears the mask,
+     which clips. The cap stops a 2560px monitor drawing a 640px numeral. */
+  font-size: clamp(56px, 27cqi, 360px);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  font-variant-numeric: lining-nums;
+  white-space: nowrap;
+  background-image:
+    linear-gradient(
+      168deg,
+      rgb(255 251 247 / 88%) 0%,
+      rgb(255 226 239 / 76%) 30%,
+      rgb(255 170 206 / 64%) 62%,
+      rgb(246 132 175 / 62%) 100%
+    ),
+    url("/pure/rental/room-2400.webp");
+  background-repeat: no-repeat;
+  /* Framed on the lit half of the photograph — the bar, the sign and the
+     spotlights — so what reads through the veil is the room's own light and
+     not an even field of dark. */
+  background-position: center, 74% 40%;
+  background-size: cover, 190% auto;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .priceDigits {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* The 2 in this display face swings a ball terminal out to its left, so
+   the currency mark needs more air than a default sidebearing gives it —
+   the one glyph on the page that must never read as ambiguous. */
+.priceMark {
+  margin-right: 0.1em;
+  font-size: 0.52em;
+  vertical-align: 0.18em;
+}
+
+.priceTilde {
+  margin-left: 0.06em;
+  font-family: var(--font-jp-display);
+  font-size: 0.34em;
+  vertical-align: 0.28em;
+}
+
+.priceRule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  /* Clear of the comma, which descends a long way in this display face. */
+  margin-top: clamp(30px, 4.2vh, 52px);
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in oklch, var(--bone) 40%, transparent) 46%,
+    transparent 92%
+  );
+  transform-origin: left center;
+}
+
+.priceNote {
+  display: grid;
+  margin-top: clamp(28px, 4vh, 48px);
+  gap: clamp(20px, 3vw, 64px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.priceNote p {
+  max-width: 30em;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1.05vw, 14.5px);
+  line-height: 2;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.priceNoteRouting {
+  color: var(--bone-soft);
+}
+
+/* CONTACT is the destination of this whole page, so it is set as a word in
+   the sentence rather than parked in a button somewhere below it. */
+.inlineLink {
+  display: inline;
+  padding: 0 0.12em;
+  color: var(--accent);
+  font-family: var(--font-meta);
+  font-size: 0.92em;
+  letter-spacing: 0.14em;
+  border-bottom: 1px solid var(--accent-deep);
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui);
+}
+
+.inlineLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inlineLink:hover {
+    color: var(--bone);
+    border-color: var(--bone);
+  }
+}
+
+/* ================================ THE ROOM ================================ */
+
+.room {
+  display: grid;
+  padding: clamp(70px, 9vw, 130px) var(--gutter) clamp(70px, 9vw, 130px)
+    var(--indent);
+  gap: clamp(34px, 5vw, 88px);
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  align-items: start;
+  border-top: 1px solid var(--edge);
+  background: var(--ink-1);
+}
+
+.roomMedia {
+  position: sticky;
+  top: calc(var(--nav-safe) + 8px);
+}
+
+.roomFrame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--edge);
+  background: var(--ink-2);
+}
+
+.roomImage {
+  object-fit: cover;
+  object-position: var(--media-position, 50% 50%);
+  filter: saturate(0.88) contrast(1.04) brightness(0.82);
+}
+
+.roomWash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgb(6 5 10 / 72%) 0%,
+    rgb(6 5 10 / 12%) 52%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.roomCaption {
+  margin: 16px 0 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: 12px;
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+}
+
+.roomList {
+  display: flex;
+  margin: clamp(30px, 4vh, 52px) 0 0;
+  padding: 0;
+  flex-direction: column;
+  list-style: none;
+}
+
+.roomRow {
+  position: relative;
+  display: grid;
+  padding: clamp(20px, 2.6vh, 30px) 0;
+  gap: clamp(16px, 2vw, 34px);
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+}
+
+.roomRow:first-child {
+  padding-top: 0;
+}
+
+.roomNumber {
+  color: var(--accent);
+  font-family: var(--font-meta);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.9;
+}
+
+.roomText h3 {
+  display: flex;
+  margin: 0 0 10px;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.1vw, 30px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.roomText h3 span {
+  color: var(--bone-soft);
+  font-family: var(--font-jp-display);
+  font-size: clamp(11.5px, 0.95vw, 13.5px);
+  letter-spacing: 0.18em;
+}
+
+.roomText p {
+  max-width: 30em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 1vw, 14px);
+  line-height: 2;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.roomRule {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--edge);
+  transform-origin: left center;
+}
+
+.roomRow:last-child .roomRule {
+  display: none;
+}
+
+/* ================================ ENQUIRIES ================================ */
+
+.uses {
+  padding: clamp(70px, 9vw, 130px) var(--gutter) clamp(70px, 9vw, 130px)
+    var(--indent);
+  border-top: 1px solid var(--edge);
+  background: var(--ink-0);
+  container-type: inline-size;
+}
+
+.usesHead {
+  display: grid;
+  gap: clamp(18px, 3vw, 56px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+}
+
+.usesHead .sectionIndex {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.usesLead {
+  max-width: 30em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: clamp(12.5px, 1vw, 14px);
+  line-height: 2;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.useGrid {
+  display: grid;
+  margin: clamp(34px, 5vh, 64px) 0 0;
+  padding: 0;
+  gap: clamp(18px, 2vw, 34px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+}
+
+.useCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.useFrame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--edge);
+  background: var(--ink-2);
+}
+
+.useImage {
+  object-fit: cover;
+  object-position: var(--media-position, 50% 50%);
+  filter: saturate(0.86) contrast(1.05) brightness(0.78);
+}
+
+.useWash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgb(6 5 10 / 66%) 0%,
+    rgb(6 5 10 / 8%) 58%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.useTitle {
+  display: flex;
+  margin: 18px 0 0;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.5vw, 23px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.useTitle span {
+  color: var(--accent);
+  font-family: var(--font-jp-display);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+}
+
+.useText {
+  max-width: 22em;
+  margin: 12px 0 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: 12.5px;
+  line-height: 1.95;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+/* ================================== CLOSE ================================== */
+
+.close {
+  position: relative;
+  padding: clamp(80px, 11vw, 150px) var(--gutter) clamp(28px, 4vw, 48px)
+    var(--indent);
+  overflow: hidden;
+  border-top: 1px solid var(--edge);
+  background: var(--ink-0);
+  isolation: isolate;
+}
+
+.closeImage {
+  z-index: -2;
+  object-fit: cover;
+  object-position: var(--media-position, 50% 50%);
+  filter: saturate(0.8) contrast(1.06) brightness(0.5);
+}
+
+.closeWash {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(
+      0deg,
+      rgb(6 5 10 / 96%) 0%,
+      rgb(6 5 10 / 82%) 40%,
+      rgb(6 5 10 / 52%) 100%
+    ),
+    linear-gradient(90deg, rgb(6 5 10 / 76%) 0%, rgb(6 5 10 / 24%) 70%);
+  pointer-events: none;
+}
+
+.closeInner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 7vw, 96px);
+}
+
+.steps {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: clamp(20px, 3vw, 52px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+}
+
+.step {
+  padding-top: 18px;
+  border-top: 1px solid var(--edge-strong);
+}
+
+.stepIndex {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.step h3 {
+  display: flex;
+  margin: 0 0 10px;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: clamp(19px, 1.7vw, 26px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.step h3 span {
+  color: var(--bone-soft);
+  font-family: var(--font-jp-display);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+}
+
+.step p {
+  max-width: 22em;
+  margin: 0;
+  color: var(--bone-soft);
+  font-family: var(--font-jp);
+  font-size: 12.5px;
+  line-height: 1.95;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.closeCta h2 {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--font-jp-display);
+  font-size: clamp(32px, 5vw, 78px);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.closeAccent {
+  /* Migra sets a larger optical size than the Japanese face at the same
+     em, so the Latin word is stepped down to sit level with 詳細は. */
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.94em;
+  letter-spacing: -0.005em;
+}
+
+.closeLead {
+  max-width: 30em;
+  margin: clamp(20px, 3vh, 30px) 0 0;
+  color: var(--bone);
+  font-family: var(--font-jp);
+  font-size: clamp(13px, 1.05vw, 14.5px);
+  line-height: 2;
+  letter-spacing: 0.045em;
+  text-wrap: pretty;
+}
+
+.wideBreak {
+  display: initial;
+}
+
+.closeActions {
+  display: flex;
+  margin-top: clamp(26px, 4vh, 44px);
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 26px);
+  flex-wrap: wrap;
+}
+
+.footer {
+  display: flex;
+  margin-top: clamp(56px, 8vw, 104px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--edge);
+  color: var(--bone-soft);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.footer a {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 5px;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    text-decoration-color var(--dur-ui) var(--ease-ui);
+}
+
+.footer a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.year {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer a:hover {
+    color: var(--bone);
+    text-decoration-color: var(--accent);
+  }
+}
+
+/* =============================== CONTAINERS =============================== */
+
+/* Component responsiveness comes off the section's own width, not the
+   viewport: these grids sit inside a gutter that is itself fluid. */
+@container (max-width: 1080px) {
+  .useGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 880px) {
+  .usesHead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@container (max-width: 560px) {
+  .useGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .useFrame {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* =============================== RESPONSIVE =============================== */
+
+/* The room spread runs the full page width, so its own column count is a
+   viewport decision; only its children answer to a container. */
+@media (max-width: 980px) {
+  .room {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .roomMedia {
+    position: static;
+  }
+
+  .roomFrame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 1000px) {
+  .priceNote {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .step {
+    padding: 18px 0;
+  }
+
+  .step:last-child {
+    border-bottom: 1px solid var(--edge-strong);
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-right: var(--gutter);
+    padding-bottom: clamp(24px, 4vh, 40px);
+  }
+
+  /* The corridor is a portrait subject: the 16/10 band the tablet gets
+     crops it to a slot, so the phone keeps a square frame. */
+  .roomFrame {
+    aspect-ratio: 1 / 1;
+  }
+
+  .heroImage {
+    object-position: 56% 46%;
+    /* The phone frame is mostly ground, so the photograph is allowed a
+       little more light than the desktop plate, which is mostly picture. */
+    filter: saturate(0.9) contrast(1.05) brightness(0.74);
+  }
+
+  .heroFoot {
+    align-items: flex-start;
+    gap: clamp(20px, 4vh, 30px);
+    flex-direction: column;
+  }
+
+  .heroFacts {
+    width: 100%;
+    gap: 20px 28px;
+  }
+
+  .scrollCue {
+    display: none;
+  }
+
+  .closeActions > * {
+    width: 100%;
+  }
+
+  .wideBreak {
+    display: none;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+}
+
+/* ============================= REDUCED MOTION ============================= */
+
+@media (prefers-reduced-motion: reduce) {
+  /* The authored still state: everything is already where the motion would
+     have left it. The cue stops pulsing and simply reads as a rule. */
+  .scrollCueRule {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  .skipLink,
+  .footer a,
+  .inlineLink {
+    transition-duration: 1ms;
+  }
+}
+
+/* ============================== FORCED COLORS ============================== */
+
+@media (forced-colors: active) {
+  /* The clipped photograph is decoration; in a forced palette the figure has
+     to be a plain, legible numeral. */
+  .priceDigits {
+    background-image: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
