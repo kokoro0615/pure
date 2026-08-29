@@ -284,6 +284,8 @@
   color: var(--bone-soft);
 }
 
+/* The one thing that moves under the title: the same 1px gesture /vip rules
+   its prices with and the menu draws under a tile label. */
 .heroRule {
   width: min(100%, 520px);
   height: 1px;
@@ -389,180 +391,6 @@
 
   50% {
     transform: scaleX(1);
-  }
-}
-
-/* ================================= FEE ================================= */
-
-.price {
-  position: relative;
-  padding: var(--section-pad) var(--gutter) clamp(70px, 10vw, 130px)
-    var(--indent);
-  background:
-    radial-gradient(
-      ellipse 60% 46% at 76% 4%,
-      color-mix(in oklch, var(--accent) 12%, transparent),
-      transparent 66%
-    ),
-    var(--ink-0);
-  container-type: inline-size;
-}
-
-.priceHead {
-  max-width: none;
-}
-
-.priceTitle {
-  /* One em is one Japanese character, so this is a 16-character measure.
-     `ch` measured a Latin zero this face never sets and broke the line
-     mid-word after four characters. */
-  max-width: 16em;
-  margin: 0;
-  color: var(--bone);
-  font-family: var(--font-jp-display);
-  font-size: clamp(24px, 3.2vw, 46px);
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: 0.02em;
-}
-
-.priceStage {
-  margin: clamp(34px, 6vh, 76px) 0 0;
-}
-
-.priceFigure {
-  display: block;
-  margin: 0;
-}
-
-/* The mask the numeral rises out of. */
-.priceMask {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-}
-
-/* The signature. The room's own photograph is clipped into the figure under
-   a bright veil: the veil carries the contrast (the numeral never drops
-   below the 3:1 large-text floor) and the photograph supplies the lights of
-   the floor through it. Nothing here animates — the fill is static paint. */
-.priceDigits {
-  display: block;
-  margin-left: -0.03em;
-  color: var(--bone);
-  font-family: var(--font-display);
-  /* Sized to the measure, not to the viewport: at 27cqi the glyph run
-     lands at ~94% of the column at every width the page is read at, so
-     the figure reads as the width of the page and still clears the mask,
-     which clips. The cap stops a 2560px monitor drawing a 640px numeral. */
-  font-size: clamp(56px, 27cqi, 360px);
-  line-height: 0.86;
-  letter-spacing: -0.055em;
-  font-variant-numeric: lining-nums;
-  white-space: nowrap;
-  background-image:
-    linear-gradient(
-      168deg,
-      rgb(255 251 247 / 88%) 0%,
-      rgb(255 226 239 / 76%) 30%,
-      rgb(255 170 206 / 64%) 62%,
-      rgb(246 132 175 / 62%) 100%
-    ),
-    url("/pure/rental/room-2400.webp");
-  background-repeat: no-repeat;
-  /* Framed on the lit half of the photograph — the bar, the sign and the
-     spotlights — so what reads through the veil is the room's own light and
-     not an even field of dark. */
-  background-position: center, 74% 40%;
-  background-size: cover, 190% auto;
-}
-
-@supports (background-clip: text) or (-webkit-background-clip: text) {
-  .priceDigits {
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-}
-
-/* The 2 in this display face swings a ball terminal out to its left, so
-   the currency mark needs more air than a default sidebearing gives it —
-   the one glyph on the page that must never read as ambiguous. */
-.priceMark {
-  margin-right: 0.1em;
-  font-size: 0.52em;
-  vertical-align: 0.18em;
-}
-
-.priceTilde {
-  margin-left: 0.06em;
-  font-family: var(--font-jp-display);
-  font-size: 0.34em;
-  vertical-align: 0.28em;
-}
-
-.priceRule {
-  display: block;
-  width: 100%;
-  height: 1px;
-  /* Clear of the comma, which descends a long way in this display face. */
-  margin-top: clamp(30px, 4.2vh, 52px);
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    color-mix(in oklch, var(--bone) 40%, transparent) 46%,
-    transparent 92%
-  );
-  transform-origin: left center;
-}
-
-.priceNote {
-  display: grid;
-  margin-top: clamp(28px, 4vh, 48px);
-  gap: clamp(20px, 3vw, 64px);
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-}
-
-.priceNote p {
-  max-width: 30em;
-  margin: 0;
-  color: var(--bone);
-  font-family: var(--font-jp);
-  font-size: clamp(13px, 1.05vw, 14.5px);
-  line-height: 2;
-  letter-spacing: 0.045em;
-  text-wrap: pretty;
-}
-
-.priceNoteRouting {
-  color: var(--bone-soft);
-}
-
-/* CONTACT is the destination of this whole page, so it is set as a word in
-   the sentence rather than parked in a button somewhere below it. */
-.inlineLink {
-  display: inline;
-  padding: 0 0.12em;
-  color: var(--accent);
-  font-family: var(--font-meta);
-  font-size: 0.92em;
-  letter-spacing: 0.14em;
-  border-bottom: 1px solid var(--accent-deep);
-  transition:
-    color var(--dur-ui) var(--ease-ui),
-    border-color var(--dur-ui) var(--ease-ui);
-}
-
-.inlineLink:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .inlineLink:hover {
-    color: var(--bone);
-    border-color: var(--bone);
   }
 }
 
@@ -1026,10 +854,6 @@
 }
 
 @media (max-width: 1000px) {
-  .priceNote {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .steps {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -1103,20 +927,7 @@
   }
 
   .skipLink,
-  .footer a,
-  .inlineLink {
+  .footer a {
     transition-duration: 1ms;
-  }
-}
-
-/* ============================== FORCED COLORS ============================== */
-
-@media (forced-colors: active) {
-  /* The clipped photograph is decoration; in a forced palette the figure has
-     to be a plain, legible numeral. */
-  .priceDigits {
-    background-image: none;
-    color: CanvasText;
-    -webkit-text-fill-color: CanvasText;
   }
 }

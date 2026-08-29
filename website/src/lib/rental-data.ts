@@ -22,26 +22,18 @@ export const rentalPriceFloor = 200_000;
 /** Local, so this module stays readable on its own. Mirrors `vip-data`. */
 export const formatYen = (price: number) => `¥${price.toLocaleString("en-US")}`;
 
-/** Digits only, for the numeral that carries the room inside it. */
-export const rentalPriceDigits = rentalPriceFloor.toLocaleString("en-US");
-
 export type RentalFact = {
   readonly label: string;
   readonly value: string;
   readonly japanese: string;
 };
 
-/** The hero strip: the price, when the room is awake, and where it is. */
+/** The hero strip: the price and where the room is. */
 export const rentalFacts: readonly RentalFact[] = [
   {
     label: "From",
     value: `${formatYen(rentalPriceFloor)}〜`,
     japanese: "貸切料金",
-  },
-  {
-    label: "Hours",
-    value: "22:00 – 05:00",
-    japanese: "営業時間",
   },
   {
     label: "Where",

@@ -14,7 +14,6 @@ import { PHONE_HREF, PHONE_NUMBER } from "@/lib/qa-data";
 import {
   RENTAL_CONTACT_TOPIC,
   rentalFacts,
-  rentalPriceDigits,
   rentalRoom,
   rentalSteps,
   rentalUses,
@@ -36,12 +35,14 @@ const framePosition = (position: string) =>
  * The page hands the floor over, and every open question is walked to the
  * same door: CONTACT.
  *
- * Signature move (one, and only one): the price. ¥200,000 is set at display
- * scale with the room's own photograph cut into the numerals, so the number
- * you are quoted literally contains the thing you are renting. It rises out
- * of a mask once, on transform only, and then stays still. Everything else
- * on the page is the house vocabulary — a hairline that draws from the left,
- * and copy that arrives once, in order.
+ * Signature move (one, and only one): the cover. The two words rise out of
+ * their masks over the full-bleed floor and a hairline draws under them, on
+ * transform only, once. Everything below is the house vocabulary — a rule
+ * that draws from the left, and copy that arrives once, in order.
+ *
+ * The hire fee is carried by the cover's fact strip and by the menu tile
+ * badge. It had its own display-scale section; the venue asked for that
+ * removed, so the figure now lives in one place only.
  */
 export function RentalExperience() {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -91,31 +92,6 @@ export function RentalExperience() {
           { opacity: 0, y: 22 },
           { opacity: 1, y: 0, duration: 0.85 },
           0.72,
-        );
-
-      /* The signature: the whole figure rises out of one mask — currency
-         mark, digits and tilde share a single clipped fill, so they travel
-         together — and the rule lands underneath it. Once. */
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: `.${styles.priceStage}`,
-            scroller: page,
-            start: "top 78%",
-            once: true,
-          },
-          defaults: { ease: "expo.out" },
-        })
-        .fromTo(
-          `.${styles.priceDigits}`,
-          { yPercent: 116 },
-          { yPercent: 0, duration: 1.25 },
-        )
-        .fromTo(
-          `.${styles.priceRule}`,
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1, ease: "power2.out" },
-          0.38,
         );
 
       /* Quiet groups: heads, notes and the closing block arrive once. */
@@ -206,8 +182,8 @@ export function RentalExperience() {
   return (
     <>
       <main ref={pageRef} className={styles.page}>
-        <a className={styles.skipLink} href="#rental-price">
-          Skip to the hire fee
+        <a className={styles.skipLink} href="#rental-room-title">
+          Skip to the details
         </a>
 
         <div className={styles.grain} aria-hidden="true" />
@@ -278,54 +254,6 @@ export function RentalExperience() {
           </p>
         </section>
 
-        {/* ------------------------------ price ------------------------------ */}
-        <section
-          className={styles.price}
-          id="rental-price"
-          aria-labelledby="rental-price-title"
-        >
-          <div className={styles.priceHead}>
-            <p className={`${styles.sectionIndex} ${styles.reveal}`}>
-              <span>01</span>
-              <span>The fee</span>
-            </p>
-            <h2 className={`${styles.priceTitle} ${styles.reveal}`} id="rental-price-title" lang="ja">
-              貸切は、20万円から。
-            </h2>
-          </div>
-
-          <div className={styles.priceStage}>
-            {/* The numerals carry the room inside them; the accessible name
-                is the plain figure, so a screen reader hears the price and
-                not a decorated string. */}
-            <p className={styles.priceFigure}>
-              <span className="pure-visually-hidden">貸切料金 20万円から</span>
-              <span className={styles.priceMask} aria-hidden="true">
-                <span className={styles.priceDigits}>
-                  <span className={styles.priceMark}>¥</span>
-                  {rentalPriceDigits}
-                  <span className={styles.priceTilde}>〜</span>
-                </span>
-              </span>
-            </p>
-            <span className={styles.priceRule} aria-hidden="true" />
-          </div>
-
-          <div className={`${styles.priceNote} ${styles.reveal}`}>
-            {/* Written on one source line each: a JSX line break collapses to
-                a space, and a space after a Japanese full stop reads as a
-                typographic error. */}
-            <p lang="ja">フロア・DJブース・音響・照明・バーを含むフロア貸切のご利用は、20万円から承っています。最終的な金額は、日程・ご人数・ご利用内容によって変わります。</p>
-            <p className={styles.priceNoteRouting} lang="ja">
-              空き状況、お見積り、当日の進行など、詳しいご案内は
-              <button className={styles.inlineLink} type="button" onClick={openContact}>
-                CONTACT
-              </button>
-              からご相談ください。
-            </p>
-          </div>
-        </section>
-
         {/* ------------------------------ the room ------------------------------ */}
         <section className={styles.room} aria-labelledby="rental-room-title">
           <div className={styles.roomMedia}>
@@ -350,7 +278,7 @@ export function RentalExperience() {
           <div className={styles.roomBody}>
             <div className={`${styles.head} ${styles.reveal}`}>
               <p className={styles.sectionIndex}>
-                <span>02</span>
+                <span>01</span>
                 <span>The room</span>
               </p>
               <h2 id="rental-room-title">
@@ -384,7 +312,7 @@ export function RentalExperience() {
         <section className={styles.uses} aria-labelledby="rental-uses-title">
           <div className={`${styles.head} ${styles.usesHead} ${styles.reveal}`}>
             <p className={styles.sectionIndex}>
-              <span>03</span>
+              <span>02</span>
               <span>Enquiries</span>
             </p>
             <h2 id="rental-uses-title">
