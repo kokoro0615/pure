@@ -174,6 +174,29 @@ export function RentalExperience() {
         );
       });
 
+      /* The timeline's ticks draw onto the rule as their step arrives — the
+         same 1px gesture the room rows use, on the page's last object. */
+      const stepList = page.querySelector<HTMLElement>(`.${styles.steps}`);
+
+      if (stepList) {
+        gsap.fromTo(
+          `.${styles.stepTick}`,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            stagger: 0.09,
+            scrollTrigger: {
+              trigger: stepList,
+              scroller: page,
+              start: "top 86%",
+              once: true,
+            },
+          },
+        );
+      }
+
       ScrollTrigger.refresh();
     },
     { scope: pageRef },
@@ -350,54 +373,70 @@ export function RentalExperience() {
         </section>
 
         {/* ------------------------------ close ------------------------------ */}
+        {/* The door. The call is the dominant object; the photograph is a
+            framed plate beside it, not a full-bleed field the type has to
+            survive; and the three steps sit under the button as one ruled
+            timeline answering "what happens if I press it". */}
         <section className={styles.close} aria-labelledby="rental-close-title">
-          <Image
-            className={styles.closeImage}
-            src="/pure/about/hero-crowd.webp"
-            alt="PUREのフロアを埋めたゲストたち"
-            fill
-            sizes="100vw"
-            style={framePosition("50% 42%")}
-          />
-          <span className={styles.closeWash} aria-hidden="true" />
-
-          <div className={styles.closeInner}>
-            <ol className={styles.steps}>
-              {rentalSteps.map((step, index) => (
-                <li className={styles.step} key={step.label}>
-                  <span className={styles.stepIndex} aria-hidden="true">
-                    {(index + 1).toString().padStart(2, "0")}
+          <div className={styles.closeGrid}>
+            <div className={styles.closeBody}>
+              <div className={`${styles.closeCta} ${styles.reveal}`}>
+                <h2 id="rental-close-title" lang="ja">
+                  <span className={styles.closeLine}>詳細は、</span>
+                  <span className={styles.closeLine}>
+                    <span className={styles.closeAccent}>CONTACT</span>
+                    <span className={styles.closeParticle}>へ</span>
                   </span>
-                  <h3>
-                    {step.label}
-                    <span lang="ja">{step.japaneseLabel}</span>
-                  </h3>
-                  <p lang="ja">{step.japanese}</p>
-                </li>
-              ))}
-            </ol>
+                </h2>
 
-            <div className={`${styles.closeCta} ${styles.reveal}`}>
-              <h2 id="rental-close-title" lang="ja">
-                詳細は、
-                <span className={styles.closeAccent}>CONTACT</span>
-                へ。
-              </h2>
-              <p className={styles.closeLead} lang="ja">
-                ご希望日・ご人数・ご利用内容をお送りいただければ、
-                <br className={styles.wideBreak} />
-                お見積りとご案内をお返しします。お電話でも承ります。
-              </p>
+                {/* Deliberately says something the steps below do not: the
+                    steps already carry "ご希望日・ご人数・ご利用内容". */}
+                <p className={styles.closeLead} lang="ja">
+                  空き状況の確認から、当日の進行のご相談まで。
+                  <br className={styles.closeBreak} />
+                  フォームからでも、お電話でも承ります。
+                </p>
 
-              <div className={styles.closeActions}>
-                <button className="pure-cta" type="button" onClick={openContact}>
-                  <span>Open contact</span>
-                  <CtaMark />
-                </button>
-                <a className="pure-cta is-ghost" href={PHONE_HREF}>
-                  <span>Call {PHONE_NUMBER}</span>
-                  <CtaMark />
-                </a>
+                <div className={styles.closeActions}>
+                  <button className="pure-cta" type="button" onClick={openContact}>
+                    <span>Open contact</span>
+                    <CtaMark />
+                  </button>
+                  <a className="pure-cta is-ghost" href={PHONE_HREF}>
+                    <span>Call {PHONE_NUMBER}</span>
+                    <CtaMark />
+                  </a>
+                </div>
+              </div>
+
+              <ol className={styles.steps}>
+                {rentalSteps.map((step, index) => (
+                  <li className={styles.step} key={step.label}>
+                    <span className={styles.stepTick} aria-hidden="true" />
+                    <span className={styles.stepIndex} aria-hidden="true">
+                      {(index + 1).toString().padStart(2, "0")}
+                    </span>
+                    <h3>
+                      {step.label}
+                      <span lang="ja">{step.japaneseLabel}</span>
+                    </h3>
+                    <p lang="ja">{step.japanese}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className={styles.closeMedia}>
+              <div className={styles.closeFrame}>
+                <Image
+                  className={styles.closeImage}
+                  src="/pure/vip/procession.webp"
+                  alt="スパークラーを灯したボトルとバースデーサインを掲げるPUREのスタッフ"
+                  fill
+                  sizes="(max-width: 1000px) 92vw, 34vw"
+                  style={framePosition("52% 44%")}
+                />
+                <span className={styles.closeWash} aria-hidden="true" />
               </div>
             </div>
           </div>
