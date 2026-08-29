@@ -31,3 +31,9 @@ website/ushuaia-*.json
 
 pure-video-hero-*.png
 .vercel
+
+# Video masters: source files only. The web derivatives that actually ship
+# live in website/public/pure/videos/optimized/, and Vercel already skips
+# this directory via website/.vercelignore. Tracking the masters put a
+# 270MB file in history, which GitHub rejects on every push.
+website/media-masters/
