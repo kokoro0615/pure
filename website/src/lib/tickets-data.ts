@@ -105,10 +105,10 @@ export const doorFacts: readonly DoorFact[] = [
   {
     id: "age",
     label: "Age & ID",
-    value: "20 and over",
+    value: "18 and over",
     isNumeric: false,
     note: [
-      "20歳未満の方はご入場いただけません。",
+      "18歳未満の方はご入場いただけません。",
       "運転免許証・パスポート・マイナンバーカードなど、写真付きの身分証をお持ちください。",
     ],
   },
