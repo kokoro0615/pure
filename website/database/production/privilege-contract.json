@@ -1,0 +1,799 @@
+{
+  "source": "production migration bundle head 20260917230000_ghost_ticket_unlimited_sales_v79.sql",
+  "tables": {
+    "abuse_audit_events": [
+      "SELECT"
+    ],
+    "admin_action_requests": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "admin_pin_credentials": [
+      "SELECT"
+    ],
+    "admin_pin_ip_rate_limits": [
+      "SELECT"
+    ],
+    "admin_sessions": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "admin_users": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "app_settings": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "audit_logs": [
+      "SELECT"
+    ],
+    "booking_offerings": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "booking_slots": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "customer_profiles": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "customer_tags": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "customers": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "event_days": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "external_finance_reviews": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "floor_sections": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "incident_channels": [
+      "SELECT"
+    ],
+    "incident_events": [
+      "SELECT"
+    ],
+    "incident_heartbeats": [
+      "SELECT"
+    ],
+    "incident_line_events": [
+      "SELECT"
+    ],
+    "incident_major_line_state": [
+      "SELECT"
+    ],
+    "incident_plans": [
+      "SELECT"
+    ],
+    "incident_provider_checks": [
+      "SELECT"
+    ],
+    "incident_scan_cursors": [
+      "SELECT"
+    ],
+    "incident_signals": [
+      "SELECT"
+    ],
+    "incident_snapshots": [
+      "SELECT"
+    ],
+    "incidents": [
+      "SELECT"
+    ],
+    "late_cancel_cases": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "ledger_entries": [
+      "SELECT"
+    ],
+    "no_show_cases": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "notification_jobs": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "off_session_charge_attempts": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "offering_resource_requirements": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "payment_methods": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "payments": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "policy_versions": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "public_hold_rate_limits": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "refund_cases": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_assignment_events": [
+      "INSERT",
+      "SELECT"
+    ],
+    "reservation_block_targets": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_blocks": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_cancellations": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_charge_terms": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_customer_link_events": [
+      "INSERT",
+      "SELECT"
+    ],
+    "reservation_hold_requests": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_lock_requirements_snapshot": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_notes": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_resources": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_seat_extensions": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "reservation_service_events": [
+      "INSERT",
+      "SELECT"
+    ],
+    "reservations": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "resource_group_members": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "resource_groups": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "seat_resources": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "stripe_balance_transactions": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "stripe_disputes": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "stripe_intent_bindings": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "stripe_object_states": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "stripe_refunds": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "ticket_admission_challenges": [
+      "SELECT"
+    ],
+    "ticket_admission_operation_audits": [
+      "SELECT"
+    ],
+    "ticket_admission_operation_items": [
+      "SELECT"
+    ],
+    "ticket_admission_operations": [
+      "SELECT"
+    ],
+    "ticket_admissions": [
+      "SELECT"
+    ],
+    "ticket_alert_dispatch_state": [
+      "SELECT"
+    ],
+    "ticket_auth_email_retention_aggregates": [],
+    "ticket_checkout_actions": [
+      "SELECT"
+    ],
+    "ticket_checkout_rate_limit_buckets": [],
+    "ticket_daily_line_reports": [
+      "SELECT"
+    ],
+    "ticket_demo_admission_windows_v56": [],
+    "ticket_entry_exceptions": [],
+    "ticket_event_session_policy_audits": [
+      "SELECT"
+    ],
+    "ticket_event_sessions": [
+      "SELECT"
+    ],
+    "ticket_holder_email_identities": [
+      "SELECT"
+    ],
+    "ticket_holder_orders": [
+      "SELECT"
+    ],
+    "ticket_mail_capacity_audits": [
+      "SELECT"
+    ],
+    "ticket_mail_capacity_policy": [
+      "SELECT"
+    ],
+    "ticket_manager_search_audits": [
+      "SELECT"
+    ],
+    "ticket_order_entry_links": [],
+    "ticket_order_entry_operations": [],
+    "ticket_order_entry_sessions": [],
+    "ticket_orders": [
+      "SELECT"
+    ],
+    "ticket_purchase_browser_bindings": [
+      "SELECT"
+    ],
+    "ticket_purchase_notices": [
+      "SELECT"
+    ],
+    "ticket_refund_allocations": [
+      "SELECT"
+    ],
+    "ticket_refund_events": [
+      "SELECT"
+    ],
+    "ticket_refund_observations": [
+      "SELECT"
+    ],
+    "ticket_sale_interruptions": [
+      "SELECT"
+    ],
+    "ticket_sale_products": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "ticket_sale_publications": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "ticket_wallet_credential_audits": [
+      "SELECT"
+    ],
+    "ticket_wallet_credentials": [
+      "SELECT"
+    ],
+    "ticket_wallet_holders": [
+      "SELECT"
+    ],
+    "ticket_wallet_manager_audits": [],
+    "ticket_wallet_otp_challenges": [],
+    "ticket_wallet_passkey_challenges": [
+      "SELECT"
+    ],
+    "ticket_wallet_preauth_flows": [],
+    "ticket_wallet_rate_limit_buckets": [],
+    "ticket_wallet_sessions": [],
+    "ticket_worker_heartbeats": [
+      "SELECT"
+    ],
+    "transactional_email_jobs": [],
+    "transactional_email_provider_circuits": [],
+    "transactional_email_provider_events": [],
+    "transactional_email_suppressions": [],
+    "vip_floor_day_revisions": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "vip_manager_metrics": [
+      "DELETE",
+      "INSERT",
+      "SELECT"
+    ],
+    "vip_staff_members": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "vip_table_staff_assignments": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "vip_waitlist_entries": [
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "webhook_events": [
+      "DELETE",
+      "INSERT",
+      "SELECT",
+      "UPDATE"
+    ],
+    "vip_manager_trial_baselines": [],
+    "vip_manager_trial_run_events": [],
+    "vip_manager_trial_runs": []
+  },
+  "functions": {
+    "ack_incident_line_event_v1(text,uuid,text,integer)": true,
+    "active_reservation_assignment_v8(uuid,timestamp with time zone)": false,
+    "admin_constant_time_text_equal_v7(text,text)": false,
+    "admin_hold_default_expires_at_v7(timestamp with time zone)": true,
+    "admin_pin_hash_v7(text,text)": false,
+    "admit_legacy_ticket_v27(text,uuid,uuid,text)": false,
+    "admit_ticket_at_door_v27(text,uuid,uuid,text)": true,
+    "admit_ticket_v23(text,uuid)": false,
+    "advance_incident_scan_v1(text,text,bigint,uuid)": true,
+    "append_vip_floor_audit_v8(uuid,uuid,uuid,text,uuid,text,text,text,bigint,bigint,bigint,text[],jsonb,jsonb,jsonb)": false,
+    "apply_external_dispute_fact_v8(text,text,text,text,bigint,text,text,text,text,jsonb,text,timestamp with time zone)": true,
+    "apply_external_refund_fact_v8(text,text,text,text,bigint,text,text,text,jsonb,jsonb,text,timestamp with time zone,uuid)": true,
+    "apply_stripe_provider_event_v21(text,text,text,text,text,text,timestamp with time zone,jsonb,boolean,text)": true,
+    "apply_stripe_provider_event_v22(text,text,text,text,text,text,timestamp with time zone,jsonb,boolean,text)": true,
+    "apply_ticket_checkout_refund_v28(uuid,uuid,uuid,text,text,text,text,text,text,text,text,timestamp with time zone,text,integer,text,integer[],text,boolean,text)": true,
+    "apply_ticket_refund_v25(text,text,text,text,integer,text,integer[],text)": true,
+    "apply_ticket_refund_v26(text,text,text,text,integer,text,integer[],text,boolean,text)": true,
+    "approve_admin_late_cancel_case_v7(uuid,text,text,text,text,uuid,boolean,text)": true,
+    "approve_admin_no_show_case_v7(uuid,text,text,text,text,uuid,boolean,text)": true,
+    "approve_admin_refund_case_v7(uuid,text,text,text,text,uuid,boolean,text)": true,
+    "approve_incident_plan_v1(uuid,text,uuid,text)": false,
+    "archive_admin_reservation_note_v8(uuid,text,text,text,uuid,bigint,uuid,bigint,text)": true,
+    "assert_assignment_conflict_free_v8(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,timestamp with time zone)": false,
+    "assert_reservation_version_v8(uuid,bigint)": false,
+    "assert_vip_floor_helper_success_v8(jsonb,text[])": false,
+    "assign_admin_reservation_resource_v7(uuid,text,text,text,text,uuid,text,text)": true,
+    "assign_ticket_wallet_holder_v34()": false,
+    "attach_public_reservation_gclid_v58(uuid,text)": true,
+    "authenticate_admin_session_v7(text,text)": true,
+    "backfill_legacy_ticket_event_sessions_v27()": true,
+    "begin_public_reservation_hold_v7(text,text,text,text,text,integer,text,text,text,text,integer,integer)": true,
+    "begin_public_reservation_hold_v8(text,text,text,text,text,integer,text,text,text,text,integer,integer)": true,
+    "begin_ticket_passkey_challenge_v34(text,text,uuid,text,text,uuid,text,text,text)": true,
+    "begin_ticket_wallet_event_session_drain_v30(uuid,text,text,text,uuid,bigint,text)": true,
+    "bind_verified_ticket_checkout_payment_v28(uuid,uuid,uuid,text,text,text,text,text,text,text,text,timestamp with time zone)": false,
+    "bootstrap_ticket_wallet_preauth_v29(timestamp with time zone,uuid,text,uuid,text,text,timestamp with time zone,text,text,integer,integer,integer,integer,integer)": true,
+    "bump_ticket_order_authority_version_v30()": false,
+    "bump_ticket_order_from_admission_delete_v30()": false,
+    "bump_ticket_order_from_admission_insert_v30()": false,
+    "bump_ticket_order_from_admission_update_v30()": false,
+    "bump_ticket_order_from_refund_delete_v30()": false,
+    "bump_ticket_order_from_refund_insert_v30()": false,
+    "bump_ticket_order_from_refund_update_v30()": false,
+    "bump_ticket_wallet_entity_version_v29()": false,
+    "bump_vip_floor_day_revision_v8(uuid,uuid)": false,
+    "bump_vip_floor_legacy_revision_deferred()": false,
+    "calculate_public_availability_v7(date,integer)": true,
+    "calculate_public_availability_v8(date,integer)": true,
+    "calculate_public_seat_availability_v7(date,integer)": true,
+    "calculate_public_seat_availability_v8(date,integer)": true,
+    "cancel_admin_reservation_block_v8(uuid,text,text,text,uuid,bigint,text)": true,
+    "cancel_admin_reservation_v7(uuid,text,text,text,text,uuid,text,integer)": true,
+    "cancel_admin_reservation_v8(uuid,text,text,text,uuid,bigint,text,text,text,integer,boolean)": true,
+    "cancel_incident_plan_v1(uuid,text,uuid)": false,
+    "change_admin_reservation_assignments_v8(uuid,text,text,text,uuid,bigint,text,uuid[],boolean,boolean,text)": true,
+    "check_in_admin_reservation_v7(uuid,text,text,text,text,uuid,text)": true,
+    "check_in_admin_reservation_v8(uuid,text,text,text,uuid,bigint,timestamp with time zone,text)": true,
+    "check_public_hold_rate_limit_v7(text,text,text,text,text)": true,
+    "claim_email_notification_jobs_v10(uuid,integer,integer)": true,
+    "claim_email_notification_jobs_v11(uuid,integer,integer)": true,
+    "claim_email_notification_jobs_v25(uuid,integer,integer)": true,
+    "claim_incident_notification_jobs_v1(uuid,integer,integer)": true,
+    "claim_major_incident_notification_jobs_v57(uuid,integer,integer,boolean)": true,
+    "claim_notification_jobs_v7(uuid,integer,integer)": true,
+    "claim_off_session_charge_attempts_v7(uuid,integer,integer)": true,
+    "claim_refund_cases_v7(uuid,integer,integer)": true,
+    "claim_reservation_hold_finalizers_v7(uuid,integer,integer)": true,
+    "claim_ticket_checkout_action_v28(text,text,text,text,uuid,text,boolean,text,text,text,date,text,integer,integer,jsonb)": true,
+    "claim_ticket_checkout_action_v33(text,text,text,text,uuid,text,boolean,text,text,text,date,text,integer,integer,jsonb)": true,
+    "claim_ticket_checkout_action_v36(text,text,text,text,uuid,text,boolean,text,text,text,date,text,integer,integer,jsonb,text)": true,
+    "claim_ticket_checkout_recovery_batch_v28(text,integer,integer)": true,
+    "claim_transactional_email_job_v29(uuid,text,integer,integer,uuid)": true,
+    "claim_webhook_events_v7(uuid,integer,integer)": true,
+    "cleanup_ticket_checkout_recovery_v28(integer)": true,
+    "cleanup_ticket_wallet_auth_email_v29(integer)": true,
+    "commit_ticket_admission_v30(text,uuid,text,uuid,text,text,text)": true,
+    "commit_ticket_order_entry_v52(uuid,uuid,text,text,text,text,text,uuid,text,text,text)": true,
+    "complete_admin_action_request_v8(uuid,text,text,jsonb)": false,
+    "complete_ticket_admission_operation_v30(uuid,text,text,timestamp with time zone,integer,bigint,text,uuid,uuid,text)": false,
+    "complete_ticket_checkout_recovery_v28(uuid,uuid,text,text,text,text,timestamp with time zone,text,timestamp with time zone,timestamp with time zone)": true,
+    "complete_ticket_checkout_review_action_v1(uuid,text,jsonb)": false,
+    "complete_ticket_manager_admission_action_v30(uuid,text,jsonb)": false,
+    "complete_ticket_passkey_authentication_v34(uuid,uuid,text,text,text,text,bigint,bigint,uuid,text,text,text)": true,
+    "complete_ticket_passkey_registration_v34(uuid,uuid,text,text,text,bytea,bigint,text[],text,boolean)": true,
+    "complete_ticket_refund_review_action_v26(uuid,text,jsonb)": false,
+    "complete_ticket_wallet_begin_drain_v30(uuid,text,jsonb)": false,
+    "complete_ticket_wallet_gate_disable_v30(uuid,text,jsonb)": false,
+    "complete_ticket_wallet_manager_action_v29(uuid,text,text,jsonb)": false,
+    "confirm_admin_reservation_v7(uuid,text,text,text,text,uuid,text)": true,
+    "confirm_admin_reservation_v8(uuid,text,text,text,uuid,bigint,text)": true,
+    "confirm_reservation_locks_v7(text,text,text,text,text,jsonb)": true,
+    "consume_incident_signal_v1(uuid)": true,
+    "consume_ticket_checkout_rate_limit_v28(text,text,timestamp with time zone)": true,
+    "consume_ticket_checkout_replay_budget_v1(text,text,text,text,text,timestamp with time zone)": true,
+    "consume_ticket_wallet_rate_limit_v29(text,text,integer,integer)": false,
+    "create_admin_late_cancel_case_v7(uuid,text,text,text,text,uuid,integer,jsonb,text)": true,
+    "create_admin_no_show_case_v7(uuid,text,text,text,text,uuid,integer,jsonb,text)": true,
+    "create_admin_reservation_block_series_v21(uuid,text,text,text,uuid,integer,text,text,timestamp with time zone,timestamp with time zone,text,uuid[],uuid[],boolean,text)": true,
+    "create_admin_reservation_block_v8(uuid,text,text,text,uuid,text,text,timestamp with time zone,timestamp with time zone,text,uuid[],uuid[],boolean,text)": true,
+    "create_admin_reservation_hold_v7(uuid,text,text,text,text,text,text,integer,text,text,integer)": true,
+    "create_admin_reservation_v13(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],jsonb,uuid,bytea,bytea,bytea,text,text,text,text,text,text,vip_service_status,uuid,text,boolean,text)": true,
+    "create_admin_reservation_v22(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],jsonb,uuid,bytea,bytea,bytea,text,text,text,text,text,text,vip_service_status,uuid,text,boolean,text)": true,
+    "create_admin_session_v7(text,text,text,text,timestamp with time zone,text)": false,
+    "create_admin_session_v8(text,text,text,text,timestamp with time zone,text,boolean,text)": true,
+    "create_admin_vip_staff_member_v12(uuid,text,text,text,text,text)": true,
+    "create_admin_waitlist_entry_v11(uuid,text,text,text,uuid,integer,bytea,bytea,text)": true,
+    "create_admin_walk_in_reservation_v19(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],text,text,jsonb,uuid,boolean,text)": true,
+    "create_admin_walk_in_reservation_v20(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],text,text,jsonb,uuid,boolean,text)": true,
+    "create_admin_walk_in_reservation_v22(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],text,text,jsonb,uuid,boolean,text)": true,
+    "create_admin_walk_in_reservation_v7(uuid,text,text,text,text,text,text,integer,text,text,text,text)": true,
+    "create_admin_walk_in_reservation_v8(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],text,text,jsonb,boolean,text)": true,
+    "create_ticket_order_v23(text,text,text,date,text,text,text,integer,integer,jsonb)": false,
+    "dedupe_legacy_ticket_notice_v33()": false,
+    "derive_vip_payment_refund_state_v8(uuid)": true,
+    "email_recipient_suppressed_v59(text)": true,
+    "enforce_refund_case_binding_v8()": false,
+    "enforce_stripe_dispute_identity_v8()": false,
+    "enforce_stripe_refund_identity_v8()": false,
+    "enqueue_admin_reservation_email_v10(uuid,text,text,text,uuid,bigint,text,text)": true,
+    "enqueue_ticket_alerts_v42(text,jsonb,jsonb)": true,
+    "enqueue_ticket_daily_line_report_v41(text,date)": true,
+    "exchange_public_reservation_status_capability_v21(text,text,timestamp with time zone)": true,
+    "exchange_ticket_order_entry_v52(uuid,text,text,text,text,uuid,text,text)": true,
+    "execute_incident_plan_v1(uuid,text,text)": false,
+    "expire_admin_holds_v7()": true,
+    "expire_public_reservation_holds_v7()": true,
+    "expire_stale_ticket_orders_v23(integer)": true,
+    "expire_ticket_checkout_action_v28(uuid,text,text,timestamp with time zone)": false,
+    "expire_ticket_checkout_action_verified_v28(uuid,uuid,text,text,text,text,timestamp with time zone,text,uuid,uuid,text,boolean,text,timestamp with time zone)": true,
+    "extend_admin_reservation_hold_v7(uuid,text,text,text,text,uuid,integer,text)": true,
+    "extend_checked_in_reservation_seat_legacy_v8(uuid,text,text,text,uuid,bigint,integer,text)": false,
+    "extend_checked_in_reservation_seat_v7(uuid,text,text,text,text,uuid,integer,text)": true,
+    "extend_checked_in_reservation_seat_v8(uuid,text,text,text,uuid,bigint,integer,text)": true,
+    "finalize_public_reservation_hold_stripe_v7(text,text,text,text,text,text,text,text,text,text,jsonb)": true,
+    "freeze_incident_notification_v1()": false,
+    "freeze_ticket_entry_records_v53()": false,
+    "fulfill_ticket_order_v23(uuid,text,text,text,text,integer,text,bytea,text[])": true,
+    "fulfill_ticket_order_v35(uuid,text,text,text,text,integer,text,bytea,text[],timestamp with time zone)": true,
+    "get_admin_customer_profile_v14(uuid,uuid)": true,
+    "get_admin_customer_profile_v8(uuid,uuid)": true,
+    "get_admin_vip_floor_board_v14(uuid,date)": true,
+    "get_admin_vip_floor_board_v22(uuid,date)": true,
+    "get_admin_vip_floor_board_v8(uuid,date)": true,
+    "get_admin_vip_floor_revision_v20(uuid,date)": true,
+    "get_admin_vip_floor_revision_v22(uuid,date)": true,
+    "get_public_reservation_status_v21(text)": true,
+    "get_public_reservation_status_v7(text)": true,
+    "get_vip_manager_slo_v15(uuid,integer)": true,
+    "grant_ticket_order_to_verified_holder_v34()": false,
+    "guard_ticket_commercial_snapshot_v39()": false,
+    "guard_ticket_entry_obligation_v53()": false,
+    "guard_ticket_group_consumption_v52()": false,
+    "guard_ticket_group_prepare_v52()": false,
+    "guard_ticket_mail_capacity_v47()": false,
+    "guard_ticket_order_entry_policy_v52()": false,
+    "guard_ticket_wallet_auth_obligation_v30()": false,
+    "guard_ticket_wallet_legacy_email_obligation_v30()": false,
+    "guard_transactional_email_job_immutability_v29()": false,
+    "guarded_disable_ticket_wallet_event_session_v30(uuid,text,text,text,uuid,bigint,text)": true,
+    "import_stripe_balance_transaction_v7(text,text,text,text,text,text,integer,integer,integer,jsonb)": true,
+    "import_stripe_balance_transaction_v8(text,text,text,text,text,text,integer,integer,integer,jsonb)": true,
+    "incident_charge_policy_conflict_v1(uuid)": true,
+    "incident_notification_state_hash_v1(uuid)": true,
+    "list_reconciliation_differences_v8(text,text,timestamp with time zone,timestamp with time zone,boolean,integer)": true,
+    "list_ticket_checkout_review_queue_v1(text,integer)": true,
+    "lock_ticket_order_entry_v52(uuid)": false,
+    "lock_transactional_email_job_v33(uuid)": false,
+    "lock_vip_floor_day_revision_v32(uuid)": false,
+    "manager_admit_ticket_admissions_v30(uuid,text,text,text,text,uuid,uuid,uuid[],bigint,text)": true,
+    "manager_retry_transactional_email_job_v29(uuid,text,text,text,uuid,boolean,bigint,text)": true,
+    "manager_revoke_ticket_wallet_session_v29(uuid,text,text,text,text,uuid,bigint,text)": true,
+    "manager_ticket_entry_v53(uuid,text,text,text,uuid,text,bigint,text,text,text,uuid,integer,integer,text,text,uuid,text,text,text,text)": true,
+    "mark_email_notification_job_result_v10(uuid,uuid,boolean,integer,text,text)": true,
+    "mark_incident_recovery_checked_v1(uuid)": true,
+    "mark_notification_job_result_v7(uuid,text,jsonb,jsonb,uuid)": true,
+    "mark_off_session_charge_attempt_result_v7(uuid,text,text,jsonb,jsonb,uuid)": true,
+    "mark_public_reservation_hold_stripe_unknown_v7(text,text,text,text,text)": true,
+    "mark_refund_case_result_v7(uuid,text,text,jsonb,jsonb,uuid)": false,
+    "mark_refund_case_result_v8(uuid,text,text,jsonb,jsonb,uuid)": true,
+    "mark_reservation_hold_finalized_v7(uuid,text,text,text,text,text,text,text,jsonb,uuid)": true,
+    "mark_reservation_hold_finalizer_retry_v7(uuid,text,text,uuid)": true,
+    "mark_transactional_email_job_outcome_v29(uuid,uuid,text,text,text,text,text,integer)": true,
+    "mark_webhook_event_ignored_v7(uuid,text,uuid)": true,
+    "mark_webhook_event_processed_v7(uuid,uuid)": true,
+    "mark_webhook_event_retry_v7(uuid,text,jsonb,uuid)": true,
+    "materialize_ticket_entry_v53(uuid,uuid,text,text,text,uuid,text,text,text,text)": true,
+    "materialize_ticket_event_session_v27(uuid,text,date,text,text,text,timestamp with time zone,timestamp with time zone,timestamp with time zone,timestamp with time zone,text)": true,
+    "materialize_ticket_purchase_notices_v33(text,text,text,integer)": true,
+    "observe_incident_batch_v1(jsonb)": true,
+    "observe_incident_v1(jsonb,text,text,integer)": true,
+    "persist_ticket_purchase_notice_v33()": false,
+    "preclaim_admin_action_request_v8(uuid,text,text,text)": false,
+    "prepare_major_incident_line_v57(boolean)": false,
+    "prepare_ticket_admission_v30(text,uuid,text,text,text,uuid[],text)": true,
+    "prepare_ticket_order_entry_v52(uuid,uuid,text,text,text,text,text,uuid[],text,text,text,uuid)": true,
+    "prepare_transactional_email_payload_v29(uuid,uuid,text)": true,
+    "project_vip_floor_legacy_version_write()": false,
+    "project_vip_floor_v1_assignment_history()": false,
+    "project_vip_floor_v1_assignment_interval()": false,
+    "project_vip_floor_v1_assignment_write()": false,
+    "project_vip_floor_v1_reservation_write()": false,
+    "propose_incident_notification_retry_v1(uuid,uuid,text)": false,
+    "protect_ticket_admission_challenge_v30()": false,
+    "protect_ticket_admission_operation_v30()": false,
+    "purge_vip_manager_metrics_v15(integer)": true,
+    "purge_webhook_event_payloads_v1(interval)": false,
+    "purge_webhook_event_payloads_v2(interval,integer)": true,
+    "queue_ticket_entry_delivery_v53(uuid,text,text)": false,
+    "read_incident_operations_v1(text,text)": true,
+    "read_incident_provider_work_v1(text,integer)": true,
+    "read_incident_scan_v1(text,text,uuid,integer)": true,
+    "read_incident_schema_fingerprint_v1()": true,
+    "read_major_incident_line_candidates_v57(boolean)": true,
+    "read_ticket_admission_readiness_v30(text,uuid,text,uuid)": true,
+    "read_ticket_admission_result_v30(text,uuid,text,uuid)": true,
+    "read_ticket_alert_delivery_health_v42()": true,
+    "read_ticket_delivery_health_v38()": true,
+    "read_ticket_entry_manager_v53(uuid,text)": true,
+    "read_ticket_entry_pending_v53(text,text,integer)": true,
+    "read_ticket_incident_dispatch_health_v48()": true,
+    "read_ticket_incident_provider_work_v48(text,integer)": true,
+    "read_ticket_incident_scan_v48(text,text,uuid,integer)": true,
+    "read_ticket_mail_capacity_v47(text)": true,
+    "read_ticket_order_entry_authority_v52(uuid,uuid,text,text,text,text,text)": true,
+    "read_ticket_order_entry_result_v52(uuid,uuid,text,text,text,text,uuid)": true,
+    "read_ticket_order_entry_v52(uuid,uuid,text,text,text,text)": true,
+    "read_ticket_public_sales_v33(text,text)": true,
+    "read_ticket_purchase_deliveries_v55(text,text,text)": true,
+    "read_ticket_purchase_entry_v53(text,uuid,text,text,text)": true,
+    "read_ticket_purchase_receipts_v36(text,text,text)": true,
+    "read_ticket_wallet_manager_order_v29(text,text,uuid)": true,
+    "read_ticket_wallet_manager_queue_v29(text,text[])": true,
+    "read_ticket_wallet_session_v29(text,timestamp with time zone,uuid,text,text)": true,
+    "read_ticket_wallet_v30(text,uuid,text)": true,
+    "read_transactional_email_dead_items_v59(integer)": true,
+    "reconcile_ticket_checkout_action_v28(uuid,text,text,text,text,timestamp with time zone)": true,
+    "reconcile_vip_floor_v2_phase_c_v8(uuid,text,boolean)": true,
+    "record_admin_audit_event_v1(uuid,text,text,text,jsonb,text,uuid)": true,
+    "record_external_stripe_money_event_v8(text,text,text,text,text,text,timestamp with time zone,jsonb)": true,
+    "record_incident_heartbeat_v1(text,text,boolean)": true,
+    "record_incident_payment_signal_v1()": false,
+    "record_incident_provider_check_v1(text,uuid,text,text,text,text,jsonb,text)": true,
+    "record_incident_snapshot_v1(text,jsonb)": true,
+    "record_public_hold_abuse_audit_v7(text,text,text,text,text,text,text,text,text)": true,
+    "record_public_reservation_hold_stripe_created_v7(text,text,text,text,text,text,jsonb)": true,
+    "record_stripe_object_state_v7(text,text,text,text,text,text,timestamp with time zone,jsonb)": true,
+    "record_ticket_checkout_provider_result_v28(uuid,text,text,text,timestamp with time zone)": true,
+    "record_ticket_sales_interruption_v35()": false,
+    "record_ticket_worker_heartbeat_v38(text,boolean)": true,
+    "record_transactional_email_provider_event_v29(text,text,text,boolean,timestamp with time zone,text,text,uuid,text)": true,
+    "record_vip_floor_legacy_compat_audit()": false,
+    "record_vip_manager_metric_v15(text,text,integer,text,text,jsonb)": true,
+    "reject_ticket_admission_fixed_row_mutation_v30()": false,
+    "reject_ticket_admission_operation_v30(uuid,uuid,text,text,text,uuid,uuid,text)": false,
+    "reject_ticket_event_session_audit_mutation_v27()": false,
+    "reject_ticket_refund_observation_mutation_v26()": false,
+    "reject_ticket_wallet_manager_audit_mutation_v29()": false,
+    "reject_transactional_email_provider_event_update_v29()": false,
+    "reject_vip_floor_history_mutation()": false,
+    "release_admin_reservation_hold_v7(uuid,text,text,text,text,uuid,text)": true,
+    "relink_admin_reservation_customer_v14(uuid,text,text,text,uuid,bigint,uuid,text)": true,
+    "request_ticket_wallet_otp_v29(text,timestamp with time zone,uuid,text,text,text,text,text,text,uuid,text,bytea,timestamp with time zone,timestamp with time zone,integer,text,integer,integer,integer,integer,integer,integer,integer,integer,integer,integer,text,text,text,text)": true,
+    "request_ticket_wallet_otp_v33(text,timestamp with time zone,uuid,text,text,text,text,text,text,uuid,text,bytea,timestamp with time zone,timestamp with time zone,integer,text,integer,integer,integer,integer,integer,integer,integer,integer,integer,integer,text,text,text,text)": true,
+    "requeue_stale_webhook_events_v7()": true,
+    "requeue_worker_dead_item_v7(uuid,text,text,text,text,text,uuid,text)": true,
+    "require_admin_capability_v8(uuid,text)": false,
+    "reservation_effective_interval_v8(uuid)": false,
+    "resolve_admin_refund_review_v7(uuid,text,text,text,text,uuid,text,integer,text)": true,
+    "resolve_business_day_for_timestamp_v8(timestamp with time zone)": false,
+    "resolve_external_finance_review_v8(uuid,uuid,text,text,uuid,text)": true,
+    "resolve_ticket_checkout_dispute_v1(uuid,uuid,uuid,text,text,text,text,text,text,text,text,timestamp with time zone,text,text,text,timestamp with time zone,jsonb)": true,
+    "resolve_ticket_checkout_review_v1(uuid,text,text,uuid,text,text,text,timestamp with time zone,text,timestamp with time zone,integer)": true,
+    "resolve_ticket_dispute_closed_v1(uuid,text,text,text,text,text,text,timestamp with time zone,jsonb)": true,
+    "resolve_ticket_refund_review_v26(uuid,text,text,text,uuid,bigint,bigint,text,text,integer[],text)": true,
+    "resolve_vip_service_transition_v8(uuid,vip_service_status,vip_service_status,text)": false,
+    "retire_admin_session_v7(text,text)": true,
+    "retire_ticket_purchase_delivery_v38(integer)": true,
+    "reuse_ticket_order_entry_session_v53(uuid,uuid,uuid,text,text,text,text)": true,
+    "revoke_ticket_admissions_v25(uuid,text,integer[],text,uuid)": true,
+    "revoke_ticket_checkout_payment_v28(uuid,uuid,uuid,text,text,text,text,text,text,text,text,timestamp with time zone,text,text)": true,
+    "revoke_ticket_order_v24(uuid,text,text,boolean,uuid)": true,
+    "revoke_ticket_wallet_credentials_v34(uuid,text,text,text,boolean)": true,
+    "revoke_ticket_wallet_session_v29(text,timestamp with time zone,uuid,text,text,text)": true,
+    "seal_ticket_checkout_provider_request_v28(uuid,text,text,text,timestamp with time zone,text)": true,
+    "search_ticket_orders_v37(uuid,text,text,text,date,date,text,timestamp with time zone,uuid)": true,
+    "seat_admin_waitlist_entry_v21(uuid,text,text,text,uuid,bigint,text,uuid,text)": true,
+    "seat_resource_satisfies_offering_requirement_v7(uuid,uuid)": true,
+    "serialize_ticket_wallet_legacy_email_statement_v30()": false,
+    "serialize_ticket_wallet_provider_obligation_v30()": false,
+    "set_admin_pin_v7(text,text,text,text,text)": false,
+    "set_admin_reservation_arrival_time_v9(uuid,text,text,text,uuid,bigint,timestamp with time zone,text)": true,
+    "set_admin_reservation_schedule_v8(uuid,text,text,text,uuid,bigint,timestamp with time zone,timestamp with time zone,text)": true,
+    "set_admin_reservation_service_status_v8(uuid,text,text,text,uuid,bigint,vip_service_status,timestamp with time zone,text)": true,
+    "set_admin_vip_table_staff_assignment_v12(uuid,text,text,text,uuid,uuid,uuid,bigint,text)": true,
+    "set_ticket_event_session_policy_v27(uuid,text,uuid,bigint,text,text,text,boolean,timestamp with time zone,timestamp with time zone,timestamp with time zone,timestamp with time zone,text)": true,
+    "set_ticket_mail_capacity_policy_v47(uuid,text,bigint,timestamp with time zone,timestamp with time zone,integer,integer,integer,integer,integer,text)": true,
+    "set_transactional_email_provider_circuit_v29(text,boolean,text,timestamp with time zone)": true,
+    "set_updated_at()": false,
+    "store_stripe_webhook_event_v7(text,text,text,text,text,text,text,text,text,jsonb,text,text)": true,
+    "summarize_reconciliation_v7(text,text)": true,
+    "summarize_reconciliation_v8(text,text,timestamp with time zone,timestamp with time zone,text,boolean)": true,
+    "summarize_worker_queues_v7()": true,
+    "sync_public_customer_profile_v10(uuid,uuid,text,bytea,bytea)": true,
+    "sync_reservation_floor_note_v22(uuid,uuid,text)": false,
+    "sync_reservation_origin_from_legacy_v22()": false,
+    "ticket_admission_execution_closes_v56(uuid)": false,
+    "ticket_admission_execution_opens_v56(uuid)": false,
+    "ticket_admission_execution_window_v56(uuid)": false,
+    "ticket_admission_policy_compatible_v30(uuid,bigint,bigint)": false,
+    "ticket_auth_digest_equal_v29(text,text)": false,
+    "ticket_daily_line_service_date_v41(timestamp with time zone)": true,
+    "ticket_entry_delivery_active_v53(uuid,jsonb)": false,
+    "ticket_event_session_is_admission_open_v27(uuid,timestamp with time zone)": true,
+    "ticket_group_entry_selection_v52(uuid,uuid[])": true,
+    "ticket_holder_has_order_v34(uuid,uuid)": false,
+    "ticket_order_has_settled_payment_v30(uuid)": false,
+    "ticket_refund_observation_hash_v26(text,integer,text,integer[],boolean,text)": false,
+    "ticket_wallet_gate_fence_v30()": false,
+    "ticket_wallet_gate_obligations_v30(uuid)": false,
+    "transition_admin_waitlist_entry_v11(uuid,text,text,text,uuid,bigint,text,uuid,text)": true,
+    "transition_claimed_waitlist_entry_v32(uuid,text,text,text,uuid,bigint,text,uuid,text)": false,
+    "update_admin_customer_attributes_v14(uuid,text,text,text,uuid,uuid,uuid,bigint,text,date,date,text,text)": true,
+    "update_admin_reservation_block_v8(uuid,text,text,text,uuid,bigint,text,text,timestamp with time zone,timestamp with time zone,text,uuid[],uuid[],boolean,text)": true,
+    "update_admin_reservation_v14(uuid,text,text,text,uuid,bigint,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],jsonb,text,text,text,vip_service_status,uuid,text,boolean,text)": true,
+    "update_admin_reservation_v22(uuid,text,text,text,uuid,bigint,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],jsonb,text,text,text,vip_service_status,uuid,text,boolean,text)": true,
+    "update_admin_vip_staff_member_v12(uuid,text,text,text,uuid,bigint,text,boolean,text)": true,
+    "update_admin_vipapp_reservation_v7(uuid,text,text,text,text,uuid,timestamp with time zone,text,text,timestamp with time zone,text)": true,
+    "upsert_admin_customer_profile_v8(uuid,text,text,text,uuid,uuid,uuid,bigint,bytea,bytea,bytea,bytea,text,text,bytea,bytea,text)": true,
+    "upsert_admin_reservation_note_v8(uuid,text,text,text,uuid,bigint,uuid,bigint,text,text,boolean,text)": true,
+    "upsert_public_customer_profile_v8(uuid,uuid,text,bytea,bytea)": true,
+    "validate_reservation_resource_requirement_v7()": true,
+    "verify_admin_pin_session_v7(text,text,timestamp with time zone,text,text)": true,
+    "verify_ticket_wallet_otp_v29(text,timestamp with time zone,uuid,text,text,text,text,uuid,text,text,text,timestamp with time zone,timestamp with time zone,integer)": true,
+    "vip_floor_compat_changed_fields(text,jsonb,jsonb)": true,
+    "vip_floor_compat_event_day_ids(text,jsonb,jsonb)": true,
+    "vip_floor_reconciliation_counts_v8()": false,
+    "vip_floor_v2_dual_write_enabled()": true,
+    "ensure_admin_event_day_v80(uuid,text,text,text,date,text)": true,
+    "ensure_admin_booking_slots_v80(uuid)": true,
+    "create_admin_reservation_v23(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],jsonb,uuid,bytea,bytea,bytea,text,text,text,text,text,text,vip_service_status,uuid,text,boolean,text)": true,
+    "create_admin_walk_in_reservation_v23(uuid,text,text,text,uuid,uuid,timestamp with time zone,timestamp with time zone,integer,uuid[],text,text,jsonb,uuid,boolean,text)": true,
+    "cleanup_vip_manager_trial_restricted_rows_v17(text)": false,
+    "ghost_vip_stamp_trial_run_id_v16()": false,
+    "ghost_vip_trial_run_id_v16()": false
+  },
+  "sequences": {
+    "vip_manager_metrics_id_seq": [
+      "SELECT",
+      "USAGE"
+    ],
+    "ticket_sale_interruptions_id_seq": [],
+    "ticket_wallet_credential_audits_id_seq": []
+  }
+}
